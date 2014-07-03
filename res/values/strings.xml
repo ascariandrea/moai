@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gift!</string>
+
+
+    <!-- Facebook -->
+    <string name="successfull_fb_post_creation">Post publication success!</string>
+    <string name="canceled_fb_post_creation">Post publication canceled..</string>
+</resources>

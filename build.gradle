@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.+'
+
+    }
+}
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
+
+    defaultConfig {
+        minSdkVersion 4
+        targetSdkVersion 19
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+
+    buildTypes {
+        debug {}
+
+        release {}
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.loopj.android:android-async-http:1.4.5@jar'
+    compile 'com.squareup.picasso:picasso:2.1.1@jar'
+    compile 'com.jakewharton:butterknife:4.0.1@jar'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.+'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.2.+'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.+'
+    compile 'joda-time:joda-time:2.3@jar'
+    compile 'ch.acra:acra:4.5.0RC@jar'
+    compile project(':facebook')
+}
