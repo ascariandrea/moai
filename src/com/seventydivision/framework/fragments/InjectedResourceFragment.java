@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.seventydivision.framework.client.AsyncResourceHandler;
 import com.seventydivision.framework.interfaces.OnFetchResourceInterface;
 import com.seventydivision.framework.models.BaseModel;
+import com.seventydivision.framework.utils.Utils;
 
 
 /**
@@ -14,17 +15,25 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
 
     private T mResource;
 
-    private AsyncResourceHandler<T> asyncResourceHandler = new AsyncResourceHandler<T>() {
-        @Override
-        public void onSuccess(T res) {
-            setResource(res);
-        }
-    };
+    private AsyncResourceHandler<T> asyncResourceHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fetchData(asyncResourceHandler);
+        initHandler();
+        fetchData();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void initHandler() {
+        asyncResourceHandler = new AsyncResourceHandler<T>((Class<T>) Utils.getTypeParameter(this)) {
+
+            @Override
+            public void onSuccess(T res) {
+                setResource(res);
+            }
+
+        };
     }
 
 

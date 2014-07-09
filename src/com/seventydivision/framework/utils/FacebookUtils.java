@@ -14,6 +14,7 @@ import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
+import com.seventydivision.framework.R;
 import com.seventydivision.framework.activities.MainActivity;
 import com.seventydivision.framework.models.FacebookUser;
 import com.seventydivision.framework.models.ModelCollection;
@@ -46,10 +47,11 @@ public class FacebookUtils {
     public static final int ONLY_USERS_WITHOUT_APP = 2;
 
 
-    private static int mToastMessageResource = com.facebook.android.R.string.com_facebook_choose_friends;
+    private static int mToastMessageResource = android.R.string.cancel;
 
 
     private static String TAG = FacebookUtils.class.getSimpleName();
+
 
 
     public static void getMeProfilePicture(MainActivity context, int size, ImageRequestCallback callback) {
@@ -67,7 +69,7 @@ public class FacebookUtils {
                 callback.onSuccess(preferences.getFbImage(fbUserId, size));
             }
         }
-        getProfileImageReq(MainActivity, fbUserId, size, callback);
+        getProfileImageReq(context, fbUserId, size, callback);
     }
 
     public static String getProfilePictureUrl(String fbUserId) {
@@ -223,7 +225,7 @@ public class FacebookUtils {
                     } else {
                         //toastMessageResource = com.R.string.error_fb_post_creation;
                     }
-                    toastMessageResource = com.facebook.android.R.string.com_facebook_choose_friends;
+                    toastMessageResource = R.string.com_facebook_choose_friends;
                     Utils.Views.showLongToast(activity, toastMessageResource);
 
                 }
@@ -286,6 +288,7 @@ public class FacebookUtils {
 //                mToastMessageResource = R.string.successfull_fb_post_creation;
 
             }
+
             Utils.Views.showLongToast(mActivity, mToastMessageResource);
 
 
@@ -298,7 +301,7 @@ public class FacebookUtils {
             } else {
                 //toastMessageResource = R.string.error_fb_post_creation;
             }
-            Utils.Views.showLongToast(mActivity, mToastMessageResource);
+            Utils.Views.showLongToast(mActivity, android.R.string.cancel);
         }
     }
 

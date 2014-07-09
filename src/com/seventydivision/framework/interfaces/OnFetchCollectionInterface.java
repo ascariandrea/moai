@@ -10,7 +10,6 @@ import java.util.List;
  * Created by andreaascari on 03/02/14.
  */
 public interface OnFetchCollectionInterface<T extends BaseModel> {
-    //public void initHandler();
 
     public void fetchData(AsyncCollectionHandler<T> asyncCollectionHandler );
 

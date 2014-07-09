@@ -6,33 +6,29 @@ import android.support.v4.app.FragmentActivity;
 
 import com.facebook.Session;
 import com.seventydivision.framework.persist.PersistentPreferences;
+import com.seventydivision.framework.utils.Utils;
 
-import butterknife.ButterKnife;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+
 
 /**
  * Created by andreaascari on 22/01/14.
  */
-
+@EActivity
 public abstract class MainActivity extends FragmentActivity {
 
     private Session mFbSession;
-    private PersistentPreferences mPrefs;
+    protected PersistentPreferences mPrefs;
 
     private boolean mLaunching;
-    private boolean mViewInjectionEnabled;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initFacebookSession(false);
-        if (!isViewInjectionEnabled())
-        injectInView();
 
-    }
-
-    private boolean isViewInjectionEnabled() {
-        return mViewInjectionEnabled;
     }
 
     protected void initFacebookSession(boolean b) {
@@ -40,17 +36,19 @@ public abstract class MainActivity extends FragmentActivity {
     }
 
 
-    protected void injectInView() {
-        ButterKnife.inject(this);
+    @AfterViews
+    public void afterViews() {
         onViewInjected();
     }
+
 
     public abstract void onViewInjected();
 
 
     protected void enableBackButton() {
         if (getActionBar() != null) {
-            getActionBar().setHomeButtonEnabled(true);
+            if (Utils.API.isGreatEqualsThan(24))
+                getActionBar().setHomeButtonEnabled(true);
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -76,7 +74,6 @@ public abstract class MainActivity extends FragmentActivity {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -85,10 +82,6 @@ public abstract class MainActivity extends FragmentActivity {
 
     public boolean isLaunching() {
         return mLaunching;
-    }
-
-    protected void setViewInjectionEnabled(boolean enabled) {
-        this.mViewInjectionEnabled = enabled;
     }
 
 

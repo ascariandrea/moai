@@ -4,24 +4,33 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.+'
 
     }
 }
 apply plugin: 'com.android.library'
+apply plugin: 'android-apt'
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile
+        resourcePackageName 'com.seventydivision.framework'
+        logConsoleAppender true
+    }
+}
+
 
 android {
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
 
     defaultConfig {
-        minSdkVersion 4
-        targetSdkVersion 19
+        minSdkVersion 11
     }
 
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
+            java.srcDirs = ['src', 'build/generated/source/apt/${variant.dirName}']
             res.srcDirs = ['res']
         }
     }
@@ -38,15 +47,17 @@ android {
         release {}
     }
 }
+def AAVersion = '3.0.+'
 
 dependencies {
     compile 'com.android.support:support-v4:19.1.0'
     compile 'com.loopj.android:android-async-http:1.4.5@jar'
     compile 'com.squareup.picasso:picasso:2.1.1@jar'
-    compile 'com.jakewharton:butterknife:4.0.1@jar'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.+'
     compile 'com.fasterxml.jackson.core:jackson-core:2.2.+'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.+'
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'joda-time:joda-time:2.3@jar'
     compile 'ch.acra:acra:4.5.0RC@jar'
     compile project(':facebook')

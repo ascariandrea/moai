@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -11,6 +12,14 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.facebook.android.Util;
+import com.seventydivision.framework.BuildConfig;
+import com.seventydivision.framework.fragments.InjectedResourceFragment;
+import com.seventydivision.framework.models.BaseModel;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -18,6 +27,45 @@ import java.util.Calendar;
  */
 public class Utils {
 
+    public static final java.lang.String TAG = Utils.class.getSimpleName();
+
+    @SuppressWarnings("unchecked")
+    public static <T extends BaseModel> Class<T> getTypeParameter(Object o) {
+
+        boolean typeFound = false;
+        Class klass = o.getClass();
+        Class<T> tClass = null;
+        if (BuildConfig.DEBUG)
+            Log.d(Utils.class.getSimpleName(), Arrays.toString(((ParameterizedType) klass.getSuperclass().getGenericSuperclass()).getActualTypeArguments()));
+        int count = 0;
+        while (!typeFound) {
+            count++;
+            if (BuildConfig.DEBUG) Log.d(Utils.class.getSimpleName(), klass.getName());
+            try {
+                if (BuildConfig.DEBUG) Log.d(TAG, "Trying to get parameterizedtype: " + ((ParameterizedType) klass.getGenericSuperclass()).toString());
+
+                ParameterizedType parameterizedType = (ParameterizedType) klass.getGenericSuperclass();
+                Type[] actualTypes = parameterizedType.getActualTypeArguments();
+                tClass = (Class<T>) actualTypes[0];
+                typeFound = true;
+            } catch (ClassCastException e) {
+                if (klass.getSuperclass() != null) {
+                    if (BuildConfig.DEBUG) Log.d(TAG, "No type parameters for this class, get its superclass: " + klass.getSuperclass().toString());
+
+                    klass = klass.getSuperclass();
+                } else {
+                    if (BuildConfig.DEBUG) Log.d(TAG, "No super class for this class["+klass.toString()+"], return");
+                    typeFound = true;
+                }
+            }
+
+            if (count == 10)
+                typeFound = true;
+        }
+
+        return tClass;
+
+    }
 
     public static class Views {
 
@@ -49,7 +97,6 @@ public class Utils {
         }
 
 
-
         public static void showKeyboard(final Context context, final View view) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(view, 0);
@@ -75,11 +122,10 @@ public class Utils {
     }
 
 
-
     public static java.lang.String getLoremPixel(int w, int h, boolean g) {
         java.lang.String loremPixelEndpoint = "http://lorempixel.com/";
         if (g) loremPixelEndpoint += "g/";
-        return loremPixelEndpoint + w + "/" + h +"/?" + Calendar.getInstance().getTimeInMillis() + Math.random();
+        return loremPixelEndpoint + w + "/" + h + "/?" + Calendar.getInstance().getTimeInMillis() + Math.random();
     }
 
     /**
@@ -111,5 +157,13 @@ public class Utils {
             return out.toString();
         }
 
+    }
+
+    public static class API {
+
+
+        public static boolean isGreatEqualsThan(int targetSdk) {
+            return Build.VERSION.SDK_INT >= targetSdk;
+        }
     }
 }

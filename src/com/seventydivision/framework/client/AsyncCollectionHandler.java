@@ -2,6 +2,7 @@ package com.seventydivision.framework.client;
 
 import android.util.Log;
 
+import com.seventydivision.framework.BuildConfig;
 import com.seventydivision.framework.models.BaseModel;
 import com.seventydivision.framework.models.ModelCollection;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -55,6 +56,9 @@ public abstract class AsyncCollectionHandler<T extends BaseModel> extends AsyncH
     }
 
     public final void onSuccess(String json) {
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, json);
+
         try {
             JSONObject jsonResponse = new JSONObject(json);
             if (wrapProperty != null) {

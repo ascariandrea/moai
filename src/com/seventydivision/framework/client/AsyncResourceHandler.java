@@ -13,8 +13,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHttpResponseHandler {
+
     private String TAG = AsyncResourceHandler.class.getSimpleName();
     private String wrapProperty;
+    private Class<T> mType;
+
 
     public AsyncResourceHandler() {
         wrapProperty = "data";
@@ -24,8 +27,15 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
         wrapProperty = wp;
     }
 
+    public AsyncResourceHandler(Class<T> type) {
+        wrapProperty = "data";
+        mType = type;
+    }
+
     @SuppressWarnings("unchecked")
     public Class<T> getTypeParameterClass() {
+        if (mType != null) return mType;
+
         Type type = getClass().getGenericSuperclass();
         ParameterizedType paramType = (ParameterizedType) type;
         return (Class<T>) paramType.getActualTypeArguments()[0];
