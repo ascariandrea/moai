@@ -41,7 +41,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
     private FragmentManager fragmentManager;
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
 
-
+    private int mContainerId;
     protected int mActiveFragmentIndex;
 
     protected LinearLayout fragmentContainerView;
@@ -58,23 +58,35 @@ public abstract class FragmentManagerActivity extends MainActivity {
         fragmentManager = getSupportFragmentManager();
     }
 
-    @AfterViews
+    @Override
     public void afterViews() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        for (Fragment f : getSupportFragmentManager().getFragments()) {
-            transaction.hide(f);
+        if (fragmentManager.getFragments() != null && fragmentManager.getFragments().size() > 0) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            for (Fragment f : fragmentManager.getFragments()) {
+                transaction.hide(f);
+            }
+            transaction.commit();
         }
-        transaction.commit();
         onViewInjected();
     }
 
+
+    protected void setContainerId(int containerId) {
+        mContainerId = containerId;
+    }
+
     protected void addFragment(int fragmentIndex, InjectedFragment fragment) {
-        Log.d(TAG, "Added fragment[" + fragment.toString() + "] at index " + fragmentIndex);
         fragments.add(fragmentIndex, fragment);
+        fragmentManager.beginTransaction().add(mContainerId, fragment).commit();
     }
 
     protected void setFragment(int fragmentIndex, InjectedFragment fragmentInstance) {
-        fragments.set(fragmentIndex, fragmentInstance);
+        if (fragments.size() <= fragmentIndex) {
+            this.addFragment(fragmentIndex, fragmentInstance);
+        } else {
+            fragments.set(fragmentIndex, fragmentInstance);
+            fragmentManager.beginTransaction().remove(fragments.get(fragmentIndex)).add(mContainerId, fragmentInstance).commit();
+        }
     }
 
     protected void showFragment(int fragmentIndex) {
@@ -84,16 +96,13 @@ public abstract class FragmentManagerActivity extends MainActivity {
         if (fragmentIndex >= 0 && fragmentIndex <= fragments.size() && fragments.get(fragmentIndex) != null) {
             mActiveFragmentIndex = fragmentIndex;
             FragmentTransaction t = fragmentManager.beginTransaction();
-            if (fragmentManager.findFragmentById(fragments.get(fragmentIndex).getId()) == null) {
-                t.add(R.id.fragmentManagerContainer, fragments.get(fragmentIndex));
-            } else {
-                t.show(fragments.get(fragmentIndex));
-            }
-            t.setTransitionStyle(FragmentTransaction.TRANSIT_ENTER_MASK);
+            Log.d(TAG, "Fragment to show: " + fragments.get(fragmentIndex));
+            t.show(fragments.get(fragmentIndex));
             t.commit();
         } else {
             Log.d(TAG, Arrays.toString(fragments.toArray()));
         }
+
     }
 
     public void hideFragment(int fragmentIndex) {
@@ -108,7 +117,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
         Fragment f = fragments.get(index);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentManagerContainer, f)
+                .replace(mContainerId, f)
                 .addToBackStack(f.getTag())
                 .commit();
     }

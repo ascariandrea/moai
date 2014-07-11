@@ -81,5 +81,4 @@ public abstract class BaseModel {
         return PLURAL_NAME;
     }
 
-
 }

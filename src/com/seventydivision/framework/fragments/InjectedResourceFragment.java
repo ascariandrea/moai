@@ -7,6 +7,8 @@ import com.seventydivision.framework.interfaces.OnFetchResourceInterface;
 import com.seventydivision.framework.models.BaseModel;
 import com.seventydivision.framework.utils.Utils;
 
+import org.androidannotations.annotations.AfterInject;
+
 
 /**
  * Created by andreaascari on 01/07/14.
@@ -36,6 +38,11 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
         };
     }
 
+    @Override
+    public void afterViewsInjected() {
+        super.afterViewsInjected();
+        fetchData();
+    }
 
     protected void fetchData() {
         fetchData(asyncResourceHandler);
