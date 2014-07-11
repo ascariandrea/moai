@@ -65,6 +65,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
             transaction.hide(f);
         }
         transaction.commit();
+        onViewInjected();
     }
 
     protected void addFragment(int fragmentIndex, InjectedFragment fragment) {
