@@ -41,7 +41,6 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     @Override
     public void afterViewsInjected() {
         super.afterViewsInjected();
-        fetchData();
     }
 
     protected void fetchData() {
