@@ -68,4 +68,12 @@ public class PersistentPreferences {
     public void saveFbImage(String fbUserId, int size, String fbImageUrl) {
         putPref("fb-image-" + fbUserId + "-" + size, fbImageUrl);
     }
+
+    public String getFbFriends() {
+        return getPref("fb-friends");
+    }
+
+    public void saveFbFriends(String fbFriends) {
+        putPref("fb-friends",fbFriends);
+    }
 }

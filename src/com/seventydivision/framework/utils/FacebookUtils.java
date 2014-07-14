@@ -12,6 +12,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.android.Facebook;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.seventydivision.framework.R;
@@ -45,6 +46,7 @@ public class FacebookUtils {
 
     public static final int ONLY_USERS_WITH_APP = 1;
     public static final int ONLY_USERS_WITHOUT_APP = 2;
+    public static final int BOTH_USERS = 3;
 
 
     private static int mToastMessageResource = android.R.string.cancel;
@@ -135,15 +137,13 @@ public class FacebookUtils {
         });
     }
 
-
-
-    public static void getUserFriends(int usersType, FriendsRequestCallback callback) {
-        getUserFriendsReq(usersType, callback);
-    }
-
-    public static void getUserFriendsReq(final int usersType, final FriendsRequestCallback callback) {
+    public static void getUserFriends(Context context, final int usersType, final FriendsRequestCallback callback) {
         String path = "me/friends";
         Bundle params = new Bundle();
+
+        final PersistentPreferences preferences = ((MainActivity) context).getPrefs();
+        if (preferences.getFbFriends() != null && !preferences.getFbFriends().equals("{}"))
+            callback.onSuccess(new ModelCollection<FacebookUser>("data").fromJSONList(preferences.getFbFriends(), FacebookUser.class));
 
         params.putString("fields", "first_name,last_name,name,installed,picture.type(large)");
 
@@ -157,6 +157,7 @@ public class FacebookUtils {
                     public void onCompleted(Response response) {
                         if (isValidFbRes(response)) {
                             JSONObject friendsList = response.getGraphObject().getInnerJSONObject();
+                            preferences.saveFbFriends(friendsList.toString());
                             List<FacebookUser> tmpFacebookUsers = new ModelCollection<FacebookUser>("data").fromJSONList(friendsList.toString(), FacebookUser.class);
                             List<FacebookUser> finalFacebookUsers = new ArrayList<FacebookUser>();
                             if (usersType == ONLY_USERS_WITH_APP) {
