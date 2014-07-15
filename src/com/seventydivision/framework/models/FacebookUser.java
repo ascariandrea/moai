@@ -18,9 +18,6 @@ public class FacebookUser extends BaseModel {
     @JsonProperty("id")
     public String id;
 
-    @JsonProperty("fbId")
-    public String fbId;
-
     @JsonProperty("name")
     public String name;
 
