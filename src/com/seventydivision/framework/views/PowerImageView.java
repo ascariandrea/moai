@@ -16,22 +16,22 @@ import com.squareup.picasso.Target;
 /**
  * Created by andreaascari on 27/01/14.
  */
-public class ImageViewForUrl extends ImageView implements Target {
+public class PowerImageView extends ImageView implements Target {
 
     private Drawable mAvatar;
     private Bitmap mBitmapAvatar;
     private Paint mCirclePaint;
-    private String TAG = ImageViewForUrl.class.getSimpleName();
+    private String TAG = PowerImageView.class.getSimpleName();
 
-    public ImageViewForUrl(Context context) {
+    public PowerImageView(Context context) {
         super(context);
     }
 
-    public ImageViewForUrl(Context context, AttributeSet attrs) {
+    public PowerImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ImageViewForUrl(Context context, AttributeSet attrs, int defStyle) {
+    public PowerImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

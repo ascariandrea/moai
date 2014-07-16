@@ -166,4 +166,13 @@ public class Utils {
             return Build.VERSION.SDK_INT >= targetSdk;
         }
     }
+
+    public static class Assets {
+
+        private static final java.lang.String S3_ENDPOINT = "http://gift-app-uploads.s3.amazonaws.com";
+
+        public static java.lang.String defaultGiftImageUrl() {
+            return S3_ENDPOINT + "/default-gift-image@2x.png";
+        }
+    }
 }

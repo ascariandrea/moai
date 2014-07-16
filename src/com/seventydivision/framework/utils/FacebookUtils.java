@@ -12,7 +12,6 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
-import com.facebook.android.Facebook;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.seventydivision.framework.R;
@@ -20,7 +19,7 @@ import com.seventydivision.framework.activities.MainActivity;
 import com.seventydivision.framework.models.FacebookUser;
 import com.seventydivision.framework.models.ModelCollection;
 import com.seventydivision.framework.persist.PersistentPreferences;
-import com.seventydivision.framework.views.ImageViewForUrl;
+import com.seventydivision.framework.views.PowerImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,8 +59,8 @@ public class FacebookUtils {
         getProfilePicture(context, "me", size, callback);
     }
 
-    public static void getProfilePicture(MainActivity context, long fbUserId, ImageRequestCallback callback) {
-        getProfilePicture(context, String.valueOf(fbUserId), 50, callback);
+    public static void getProfilePicture(MainActivity context, String fbUserId, ImageRequestCallback callback) {
+        getProfilePicture(context, fbUserId, 50, callback);
     }
 
     public static void getProfilePicture(final MainActivity context, final String fbUserId, int size, final ImageRequestCallback callback) {
@@ -120,7 +119,7 @@ public class FacebookUtils {
         request.executeAsync();
     }
 
-    public static void loadProfilePictureInto(MainActivity mContext, long fbId, final ImageViewForUrl targetView) {
+    public static void loadProfilePictureInto(MainActivity mContext, String fbId, final PowerImageView targetView) {
         FacebookUtils.getProfilePicture(mContext, fbId, new ImageRequestCallback() {
             @Override
             public void onSuccess(String url) {
@@ -128,7 +127,7 @@ public class FacebookUtils {
             }
         });
     }
-    public static void loadProfilePictureInto(MainActivity mContext, String fbUserId, int i, final ImageViewForUrl targetView) {
+    public static void loadProfilePictureInto(MainActivity mContext, String fbUserId, int i, final PowerImageView targetView) {
         FacebookUtils.getProfilePicture(mContext, fbUserId, i, new ImageRequestCallback() {
             @Override
             public void onSuccess(String url) {

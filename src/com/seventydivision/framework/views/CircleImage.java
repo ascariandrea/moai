@@ -15,7 +15,7 @@ import android.util.AttributeSet;
 /**
  * Created by andreaascari on 27/01/14.
  */
-public class CircleImage extends ImageViewForUrl {
+public class CircleImage extends PowerImageView {
 
 
     public CircleImage(Context context) {
