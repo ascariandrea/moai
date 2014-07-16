@@ -60,5 +60,6 @@ dependencies {
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'joda-time:joda-time:2.3@jar'
     compile 'ch.acra:acra:4.5.0RC@jar'
+    compile files('../libraries/simple.facebook-2.1.jar')
     compile project(':facebook')
 }

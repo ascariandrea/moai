@@ -18,6 +18,7 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     private T mResource;
 
     private AsyncResourceHandler<T> asyncResourceHandler;
+    private boolean mNeedRepopulate = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,5 +56,24 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     protected void setResource(T resource) {
         this.mResource = resource;
         fetchCompleted(true);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mNeedRepopulate = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mResource == null)
+            fetchData();
+        else if (mNeedRepopulate)
+            populateViewAgain();
+    }
+
+    private void populateViewAgain() {
+        populateView(mResource);
     }
 }

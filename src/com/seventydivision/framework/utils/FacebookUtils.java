@@ -137,11 +137,10 @@ public class FacebookUtils {
         });
     }
 
-    public static void getUserFriends(Context context, final int usersType, final FriendsRequestCallback callback) {
+    public static void getUserFriends(final PersistentPreferences preferences, final int usersType, final FriendsRequestCallback callback) {
         String path = "me/friends";
         Bundle params = new Bundle();
 
-        final PersistentPreferences preferences = ((MainActivity) context).getPrefs();
         if (preferences.getFbFriends() != null && !preferences.getFbFriends().equals("{}"))
             callback.onSuccess(new ModelCollection<FacebookUser>("data").fromJSONList(preferences.getFbFriends(), FacebookUser.class));
 

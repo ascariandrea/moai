@@ -19,6 +19,7 @@ import org.androidannotations.annotations.UiThread;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 /**
@@ -39,7 +40,8 @@ public abstract class FragmentManagerActivity extends MainActivity {
 
 
     private FragmentManager fragmentManager;
-    private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+
+    private HashMap<Integer, Fragment> fragments = new HashMap<Integer, Fragment>();
 
     private int mContainerId;
     private int mPreviousActiveFragmentIndex;
@@ -77,9 +79,11 @@ public abstract class FragmentManagerActivity extends MainActivity {
     }
 
     protected void addFragment(int fragmentIndex, InjectedFragment fragment) {
-        fragments.add(fragmentIndex, fragment);
+        fragments.put(fragmentIndex, fragment);
         if (fragment != null)
             fragmentManager.beginTransaction().add(mContainerId, fragment).commit();
+
+        Log.d(TAG, "Stored fragment: " + fragment + " at index: " + fragmentIndex);
     }
 
     protected void setFragment(int fragmentIndex, InjectedFragment fragmentInstance) {
@@ -95,15 +99,12 @@ public abstract class FragmentManagerActivity extends MainActivity {
     }
 
     protected void showFragment(int fragmentIndex, boolean b) {
-        if (fragmentIndex == -1)
-            fragmentIndex = 0;
 
         mPreviousActiveFragmentIndex = mActiveFragmentIndex;
 
-        Log.d(TAG, Arrays.toString(fragments.toArray()));
-
-        if (fragmentIndex >= 0 && fragmentIndex <= fragments.size() && fragments.get(fragmentIndex) != null) {
+        if (fragments.containsKey(fragmentIndex) && fragments.get(fragmentIndex) != null) {
             FragmentTransaction t = fragmentManager.beginTransaction();
+            Log.d(TAG, "Fragment to hide: " + fragments.get(mActiveFragmentIndex));
             Log.d(TAG, "Fragment to show: " + fragments.get(fragmentIndex));
             t.hide(fragments.get(mActiveFragmentIndex));
             t.show(fragments.get(fragmentIndex));
@@ -112,7 +113,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
             t.commit();
             mActiveFragmentIndex = fragmentIndex;
         } else {
-            Log.d(TAG, Arrays.toString(fragments.toArray()));
+            throw new RuntimeException("Check passed index to show [fragment " + fragmentIndex + "]");
         }
     }
 
@@ -146,7 +147,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
     protected void removeFragment(int fragmentIndex) {
         if (fragments.get(fragmentIndex) != null) {
             fragmentManager.beginTransaction().remove(fragments.get(fragmentIndex)).commit();
-            fragments.set(fragmentIndex, null);
+            fragments.put(fragmentIndex, null);
         }
     }
 
@@ -162,7 +163,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
 
 
     protected ArrayList<Fragment> getFragments() {
-        return fragments;
+        return new ArrayList<Fragment>(fragments.values());
     }
 
 

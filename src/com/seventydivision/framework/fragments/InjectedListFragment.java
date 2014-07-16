@@ -32,6 +32,8 @@ public abstract class InjectedListFragment<T extends BaseModel> extends Injected
     private AsyncCollectionHandler<T> asyncCollectionHandler;
     private Class<? extends BaseModel> mExtendedBaseModelClass;
 
+    private boolean mNeedRepopulate = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,5 +87,25 @@ public abstract class InjectedListFragment<T extends BaseModel> extends Injected
     protected void setModel(Class<? extends BaseModel> extendedBaseModel) {
         mExtendedBaseModelClass = extendedBaseModel;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mNeedRepopulate = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mCollection == null)
+            fetchData();
+        else if (mNeedRepopulate)
+            populateViewAgain();
+    }
+
+    protected void populateViewAgain() {
+        populateView(mCollection);
+    }
+
 
 }
