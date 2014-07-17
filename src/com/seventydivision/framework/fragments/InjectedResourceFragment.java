@@ -49,6 +49,11 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     }
 
     @Override
+    public boolean isFetching() {
+        return mFetching;
+    }
+
+    @Override
     protected void canPopulateView() {
         populateView(mResource);
     }

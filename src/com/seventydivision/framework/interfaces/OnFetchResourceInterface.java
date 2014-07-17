@@ -15,4 +15,6 @@ public interface OnFetchResourceInterface<T extends BaseModel> {
     public void fetchCompleted(boolean completed);
 
     public void populateView(T res);
+
+    public boolean isFetching();
 }
