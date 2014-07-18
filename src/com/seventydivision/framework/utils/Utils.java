@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -106,6 +108,43 @@ public class Utils {
             params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
             listView.setLayoutParams(params);
             listView.requestLayout();
+        }
+
+        public static void setExpandableListViewHeightBasedOnContent(ExpandableListView expandableListView) {
+            ExpandableListAdapter expandableListAdapter = expandableListView.getExpandableListAdapter();
+
+            if (expandableListAdapter == null)
+                return;
+
+            int desiredWidth = View.MeasureSpec.makeMeasureSpec(expandableListView.getWidth(), View.MeasureSpec.AT_MOST);
+            int totalHeight = 0;
+            View view = null;
+            View groupView = null;
+
+            Log.d(TAG, expandableListAdapter.getGroupCount() + "");
+
+            for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+
+                groupView = expandableListAdapter.getGroupView(i, true, groupView, expandableListView);
+
+                view = expandableListAdapter.getChildView(i, 0, false, view, expandableListView);
+
+                if (i == 0) {
+                    Log.d(TAG, groupView + "");
+                    groupView.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+                }
+
+                groupView.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+                view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+
+                totalHeight += groupView.getMeasuredHeight() + view.getMeasuredHeight() * expandableListAdapter.getChildrenCount(i) + (expandableListView.getDividerHeight() * (expandableListAdapter.getChildrenCount(i) - 1));
+            }
+            ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
+            params.height = totalHeight;
+            expandableListView.setLayoutParams(params);
+            expandableListView.requestLayout();
+
         }
 
 
