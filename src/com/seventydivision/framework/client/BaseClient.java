@@ -36,6 +36,7 @@ public abstract class BaseClient {
         client.get(url, new RequestParams(), responseHandler);
     }
 
+
     public void post(String url, String json, AsyncHttpResponseHandler responseHandler) {
         try {
             StringEntity entity = new StringEntity(json);

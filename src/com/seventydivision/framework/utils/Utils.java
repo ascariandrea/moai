@@ -1,7 +1,9 @@
 package com.seventydivision.framework.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
@@ -12,9 +14,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.facebook.android.Util;
 import com.seventydivision.framework.BuildConfig;
-import com.seventydivision.framework.fragments.InjectedResourceFragment;
+import com.seventydivision.framework.R;
 import com.seventydivision.framework.models.BaseModel;
 
 import java.lang.reflect.ParameterizedType;
@@ -174,5 +175,40 @@ public class Utils {
         public static java.lang.String defaultGiftImageUrl() {
             return S3_ENDPOINT + "/default-gift-image@2x.png";
         }
+    }
+
+    public static class Alerts {
+        public static AlertDialog.Builder buildError(final Activity activity) {
+            return build(
+                    activity,
+                    activity.getString(R.string.an_error_has_occured),
+                    activity.getString(R.string.alert_error_message),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            activity.finish();
+                        }
+                    },
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            activity.finish();
+                        }
+                    }
+            );
+        }
+
+
+
+        public static AlertDialog.Builder build(Activity activity, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+            return new AlertDialog.Builder(activity)
+                    .setTitle((CharSequence) title)
+                    .setMessage((CharSequence) message)
+                    .setPositiveButton(activity.getString(R.string.done), positiveListener)
+                    .setNegativeButton(activity.getString(R.string.cancel), negativeListener);
+
+        }
+
+
     }
 }

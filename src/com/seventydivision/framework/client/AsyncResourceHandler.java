@@ -59,7 +59,6 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
     }
 
 
-
     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
         if (bytes == null)
             onFailure(throwable, new String());

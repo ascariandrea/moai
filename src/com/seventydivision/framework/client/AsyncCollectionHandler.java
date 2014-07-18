@@ -71,11 +71,6 @@ public abstract class AsyncCollectionHandler<T extends BaseModel> extends AsyncH
         }
     }
 
-
-    public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-        onFailure(throwable, new String(bytes));
-    }
-
     public void onFailure(Throwable t, String res) {
         if (res != null)
             Log.i(TAG, res);
@@ -96,7 +91,28 @@ public abstract class AsyncCollectionHandler<T extends BaseModel> extends AsyncH
 
     }
 
-    public void onUnauthorized(Throwable t, String res) {}
+    public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+        if (bytes == null)
+            onFailure(throwable, new String());
+        else {
+            String res = new String(bytes);
+            onFailure(throwable, res);
+            try {
+                JSONObject jsonRes = new JSONObject(res);
+                int code = jsonRes.getInt("code");
+                if (code != 0) {
+                    onFailure(throwable, jsonRes, code);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
     public abstract void onSuccess(List<T> res);
+
+    public void onUnauthorized(Throwable t, String res) {}
+
+    protected void onFailure(Throwable throwable, JSONObject jsonRes, int code) {}
 }
