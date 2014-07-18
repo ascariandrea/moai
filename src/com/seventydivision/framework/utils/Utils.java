@@ -130,7 +130,6 @@ public class Utils {
                 view = expandableListAdapter.getChildView(i, 0, false, view, expandableListView);
 
                 if (i == 0) {
-                    Log.d(TAG, groupView + "");
                     groupView.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
                     view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
                 }
