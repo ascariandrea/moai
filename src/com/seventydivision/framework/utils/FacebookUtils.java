@@ -140,7 +140,7 @@ public class FacebookUtils {
         String path = "me/friends";
         Bundle params = new Bundle();
 
-        if (preferences.getFbFriends() != null && !preferences.getFbFriends().equals("{}"))
+        if (preferences != null && preferences.getFbFriends() != null && !preferences.getFbFriends().equals("{}"))
             callback.onSuccess(new ModelCollection<FacebookUser>("data").fromJSONList(preferences.getFbFriends(), FacebookUser.class));
 
         params.putString("fields", "first_name,last_name,name,installed,picture.type(large)");
