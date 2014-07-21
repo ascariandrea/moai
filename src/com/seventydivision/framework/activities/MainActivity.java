@@ -3,6 +3,7 @@ package com.seventydivision.framework.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.facebook.Session;
 import com.seventydivision.framework.persist.PersistentPreferences;
@@ -18,17 +19,21 @@ import org.androidannotations.annotations.EActivity;
 @EActivity
 public abstract class MainActivity extends FragmentActivity {
 
+    private String TAG = MainActivity.class.getSimpleName();
+
+    public static final int RESULT_DONE = 4;
+
     private Session mFbSession;
     protected PersistentPreferences mPrefs;
 
     private boolean mLaunching;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initFacebookSession(false);
-
     }
 
     protected void initFacebookSession(boolean b) {
@@ -87,5 +92,11 @@ public abstract class MainActivity extends FragmentActivity {
 
     public PersistentPreferences getPrefs() {
         return mPrefs;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

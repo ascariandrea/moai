@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
@@ -20,6 +21,8 @@ import com.seventydivision.framework.models.FacebookUser;
 import com.seventydivision.framework.models.ModelCollection;
 import com.seventydivision.framework.persist.PersistentPreferences;
 import com.seventydivision.framework.views.PowerImageView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,15 +58,15 @@ public class FacebookUtils {
 
 
 
-    public static void getMeProfilePicture(MainActivity context, int size, ImageRequestCallback callback) {
+    public static void getMeProfilePicture(Context context, int size, ImageRequestCallback callback) {
         getProfilePicture(context, "me", size, callback);
     }
 
-    public static void getProfilePicture(MainActivity context, String fbUserId, ImageRequestCallback callback) {
+    public static void getProfilePicture(Context context, String fbUserId, ImageRequestCallback callback) {
         getProfilePicture(context, fbUserId, 50, callback);
     }
 
-    public static void getProfilePicture(final MainActivity context, final String fbUserId, int size, final ImageRequestCallback callback) {
+    public static void getProfilePicture(final Context context, final String fbUserId, int size, final ImageRequestCallback callback) {
         if (context != null) {
             PersistentPreferences preferences = ((MainActivity) context).getPrefs();
             if (!preferences.getFbImage(fbUserId, size).equals("{}")) {
@@ -119,11 +122,11 @@ public class FacebookUtils {
         request.executeAsync();
     }
 
-    public static void loadProfilePictureInto(MainActivity mContext, String fbId, final PowerImageView targetView) {
+    public static void loadProfilePictureInto(final Context mContext, String fbId, final ImageView targetView) {
         FacebookUtils.getProfilePicture(mContext, fbId, new ImageRequestCallback() {
             @Override
             public void onSuccess(String url) {
-                targetView.setImageUrl(url);
+                Picasso.with(mContext).load(url).into(targetView);
             }
         });
     }

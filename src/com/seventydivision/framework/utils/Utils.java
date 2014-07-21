@@ -192,10 +192,25 @@ public class Utils {
                 canvas.drawBitmap(roundBitmap, 0, 0, null);
             } else {
                 try {
+                    Log.d(TAG, v.getClass().getSuperclass().toString());
+                    Log.d(TAG, Arrays.toString(v.getClass().getSuperclass().getMethods()));
                     Method superClassOnDraw = v.getClass().getSuperclass().getMethod("onDraw", Canvas.class);
                     superClassOnDraw.invoke(v, canvas);
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                    Method imageViewOnDraw = null;
+                    try {
+                        Log.d(TAG, v.getClass().getSuperclass().getSuperclass().toString());
+                        Log.d(TAG, Arrays.toString(v.getClass().getSuperclass().getSuperclass().getMethods()));
+                        Log.d(TAG, v.getClass().getSuperclass().getSuperclass().getMethod("onDraw", Canvas.class).toString());
+                        imageViewOnDraw = v.getClass().getSuperclass().getSuperclass().getMethod("onDraw", Canvas.class);
+                        imageViewOnDraw.invoke(v, canvas);
+                    } catch (NoSuchMethodException e1) {
+                        e1.printStackTrace();
+                    } catch (InvocationTargetException e1) {
+                        e1.printStackTrace();
+                    } catch (IllegalAccessException e1) {
+                        e1.printStackTrace();
+                    }
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {

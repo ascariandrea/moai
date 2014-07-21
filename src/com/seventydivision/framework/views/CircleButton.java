@@ -25,6 +25,7 @@ public class CircleButton extends ImageButton {
         super(context, attrs, defStyle);
     }
 
+
     @Override
     protected void onDraw(Canvas canvas) {
         Utils.Views.drawCircle(this, canvas);

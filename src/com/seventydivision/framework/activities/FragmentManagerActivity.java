@@ -1,24 +1,19 @@
 package com.seventydivision.framework.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.seventydivision.framework.R;
 import com.seventydivision.framework.fragments.InjectedFragment;
-import com.seventydivision.framework.interfaces.FragmentsCount;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -177,5 +172,13 @@ public abstract class FragmentManagerActivity extends MainActivity {
     public void onBackPressed() {
         super.onBackPressed();
         mActiveFragmentIndex = mPreviousActiveFragmentIndex;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "here");
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "here 2");
     }
 }

@@ -2,44 +2,32 @@ package com.seventydivision.framework.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Target;
 
-
 /**
- * Created by andreaascari on 27/01/14.
+ * Created by andreaascari on 21/07/14.
  */
-public class PowerImageView extends ImageView implements Target {
-
-    private Drawable mAvatar;
-    private Bitmap mBitmapAvatar;
-    private Paint mCirclePaint;
-    private String TAG = PowerImageView.class.getSimpleName();
-
-    public PowerImageView(Context context) {
+public class PowerButtonView extends ImageButton implements Target {
+    public PowerButtonView(Context context) {
         super(context);
     }
 
-    public PowerImageView(Context context, AttributeSet attrs) {
+    public PowerButtonView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public PowerImageView(Context context, AttributeSet attrs, int defStyle) {
+    public PowerButtonView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-    }
 
     public void setImageUrl(String imageUrl) {
         setImageUrl(imageUrl, true);
@@ -68,6 +56,5 @@ public class PowerImageView extends ImageView implements Target {
     public void onPrepareLoad(Drawable drawable) {
 
     }
-
 
 }
