@@ -17,22 +17,22 @@ import com.squareup.picasso.Target;
 /**
  * Created by andreaascari on 27/01/14.
  */
-public class PowerImageView extends ImageView implements Target {
+public class PoweredImageView extends ImageView implements Target {
 
     private Drawable mAvatar;
     private Bitmap mBitmapAvatar;
     private Paint mCirclePaint;
-    private String TAG = PowerImageView.class.getSimpleName();
+    private String TAG = PoweredImageView.class.getSimpleName();
 
-    public PowerImageView(Context context) {
+    public PoweredImageView(Context context) {
         super(context);
     }
 
-    public PowerImageView(Context context, AttributeSet attrs) {
+    public PoweredImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public PowerImageView(Context context, AttributeSet attrs, int defStyle) {
+    public PoweredImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

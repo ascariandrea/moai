@@ -10,18 +10,18 @@ import com.seventydivision.framework.utils.Utils;
 /**
  * Created by andreaascari on 22/05/14.
  */
-public class PowerfullEditText extends EditText {
+public class PoweredEditText extends EditText {
     private OnClickListener mOnBackPressedListener;
 
-    public PowerfullEditText(Context context) {
+    public PoweredEditText(Context context) {
         super(context);
     }
 
-    public PowerfullEditText(Context context, AttributeSet attrs) {
+    public PoweredEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public PowerfullEditText(Context context, AttributeSet attrs, int defStyle) {
+    public PoweredEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

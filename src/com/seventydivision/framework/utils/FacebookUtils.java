@@ -20,9 +20,8 @@ import com.seventydivision.framework.activities.MainActivity;
 import com.seventydivision.framework.models.FacebookUser;
 import com.seventydivision.framework.models.ModelCollection;
 import com.seventydivision.framework.persist.PersistentPreferences;
-import com.seventydivision.framework.views.PowerImageView;
+import com.seventydivision.framework.views.PoweredImageView;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,7 +129,7 @@ public class FacebookUtils {
             }
         });
     }
-    public static void loadProfilePictureInto(MainActivity mContext, String fbUserId, int i, final PowerImageView targetView) {
+    public static void loadProfilePictureInto(MainActivity mContext, String fbUserId, int i, final PoweredImageView targetView) {
         FacebookUtils.getProfilePicture(mContext, fbUserId, i, new ImageRequestCallback() {
             @Override
             public void onSuccess(String url) {
