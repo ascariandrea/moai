@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Target;
+import com.squareup.picasso.Transformation;
 
 
 /**
@@ -42,13 +43,17 @@ public class PoweredImageView extends ImageView implements Target {
     }
 
     public void setImageUrl(String imageUrl) {
-        setImageUrl(imageUrl, true);
+        setImageUrl(imageUrl, true, null);
     }
 
-    public void setImageUrl(String imageUrl, boolean fromCache) {
+    public void setImageUrl(String imageUrl, boolean fromCache, Transformation transformation) {
         RequestCreator rc = Picasso.with(getContext()).load(imageUrl);
         if (!fromCache)
             rc.skipMemoryCache();
+
+        if (transformation != null) {
+            rc.transform(transformation);
+        }
 
         rc.into((Target) this);
     }
