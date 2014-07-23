@@ -73,6 +73,10 @@ public abstract class FragmentManagerActivity extends MainActivity {
         mContainerId = containerId;
     }
 
+    protected void addFragment(int fragmentIndex) {
+        addFragment(fragmentIndex, getFragmentAtIndex(fragmentIndex));
+    }
+
     protected void addFragment(int fragmentIndex, InjectedFragment fragment) {
         fragments.put(fragmentIndex, fragment);
         if (fragment != null)
@@ -111,6 +115,18 @@ public abstract class FragmentManagerActivity extends MainActivity {
             throw new RuntimeException("Check passed index to show [fragment " + fragmentIndex + "]");
         }
     }
+
+    public void showNextFragment(boolean addToBackStack) {
+        int nextFragmentIndex = getCurrentActiveIndex() + 1;
+        InjectedFragment f = getFragmentAtIndex(nextFragmentIndex);
+        if (!fragments.containsKey(nextFragmentIndex))
+            addFragment(nextFragmentIndex, f);
+
+        showFragment(nextFragmentIndex, true);
+
+    }
+
+    protected abstract <F extends InjectedFragment> F getFragmentAtIndex(int nextFragmentIndex);
 
     protected void toggleFragment(int index, boolean addToBackStack) {
 
@@ -181,4 +197,5 @@ public abstract class FragmentManagerActivity extends MainActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "here 2");
     }
+
 }
