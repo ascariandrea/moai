@@ -42,6 +42,12 @@ public class JSONUtils {
         return dt.toString("HH:mm:ss");
     }
 
+    public static String parseTimeNoSecsWithJoda(String date) {
+        DateTimeFormatter dfm = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        DateTime dt = dfm.parseDateTime(date);
+        return dt.toString("HH:mm");
+    }
+
     public static DateTime parseDateTimeWithJoda(String date) {
         DateTimeFormatter dfm = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         DateTime dt = dfm.parseDateTime(date);
