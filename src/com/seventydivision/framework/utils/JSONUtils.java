@@ -76,4 +76,5 @@ public class JSONUtils {
     public static boolean isNullDate(String date) {
         return date.equals(DEFAULT_NULL_DATE_FORMATTED);
     }
+
 }

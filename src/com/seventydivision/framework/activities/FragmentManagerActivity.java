@@ -122,7 +122,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
         if (!fragments.containsKey(nextFragmentIndex))
             addFragment(nextFragmentIndex, f);
 
-        showFragment(nextFragmentIndex, true);
+        showFragment(nextFragmentIndex, addToBackStack);
 
     }
 

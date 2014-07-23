@@ -6,6 +6,7 @@ import com.seventydivision.framework.models.BaseModel;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,8 +69,10 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
             try {
                 JSONObject jsonRes = new JSONObject(res);
                 int code = jsonRes.getInt("code");
+                String message = jsonRes.getString("message");
+                JSONArray errors = jsonRes.getJSONArray("errors");
                 if (code != 0) {
-                    onFailure(throwable, jsonRes, code);
+                    onFailure(throwable, message, errors, code);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -86,7 +89,7 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
         }
     }
 
-    protected void onFailure(Throwable throwable, JSONObject jsonRes, int apiCode) {
+    protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {
 
     }
 
