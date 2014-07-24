@@ -2,7 +2,9 @@ package com.seventydivision.framework.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.seventydivision.framework.utils.Utils;
 
@@ -11,6 +13,8 @@ import com.seventydivision.framework.utils.Utils;
  */
 public class CircleImage extends PoweredImageView {
 
+
+    private String TAG = CircleImage.class.getSimpleName();
 
     public CircleImage(Context context) {
         super(context);

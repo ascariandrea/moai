@@ -37,10 +37,6 @@ public class PoweredImageView extends ImageView implements Target {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-    }
 
     public void setImageUrl(String imageUrl) {
         setImageUrl(imageUrl, true, null);
@@ -60,8 +56,8 @@ public class PoweredImageView extends ImageView implements Target {
 
 
     @SuppressWarnings("deprecation")
-    public void onBitmapLoaded(Bitmap arg0, Picasso.LoadedFrom arg1) {
-        setImageDrawable(new BitmapDrawable(arg0));
+    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        setImageDrawable(new BitmapDrawable(bitmap));
     }
 
     @Override

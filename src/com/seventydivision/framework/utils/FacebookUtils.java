@@ -121,16 +121,16 @@ public class FacebookUtils {
         request.executeAsync();
     }
 
-    public static void loadProfilePictureInto(final Context mContext, String fbId, final ImageView targetView) {
-        FacebookUtils.getProfilePicture(mContext, fbId, new ImageRequestCallback() {
+    public static void loadProfilePictureInto(final Context context, String fbId, final PoweredImageView targetView) {
+        FacebookUtils.getProfilePicture(context, fbId, new ImageRequestCallback() {
             @Override
             public void onSuccess(String url) {
-                Picasso.with(mContext).load(url).into(targetView);
+                Picasso.with(context).load(url).into((com.squareup.picasso.Target) targetView);
             }
         });
     }
-    public static void loadProfilePictureInto(MainActivity mContext, String fbUserId, int i, final PoweredImageView targetView) {
-        FacebookUtils.getProfilePicture(mContext, fbUserId, i, new ImageRequestCallback() {
+    public static void loadProfilePictureInto(Context context, String fbUserId, int i, final PoweredImageView targetView) {
+        FacebookUtils.getProfilePicture(context, fbUserId, i, new ImageRequestCallback() {
             @Override
             public void onSuccess(String url) {
                 targetView.setImageUrl(url);
