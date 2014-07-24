@@ -93,8 +93,8 @@ public abstract class FragmentManagerActivity extends MainActivity {
     }
 
 
-    protected void showFragment(int productIndex) {
-        showFragment(productIndex, false);
+    protected void showFragment(int fragmentIndex) {
+        showFragment(fragmentIndex, false);
     }
 
     protected void showFragment(int fragmentIndex, boolean b) {
@@ -105,7 +105,10 @@ public abstract class FragmentManagerActivity extends MainActivity {
             FragmentTransaction t = fragmentManager.beginTransaction();
             Log.d(TAG, "Fragment to hide: " + fragments.get(mActiveFragmentIndex));
             Log.d(TAG, "Fragment to show: " + fragments.get(fragmentIndex));
-            t.hide(fragments.get(mActiveFragmentIndex));
+
+            if (fragments.get(mActiveFragmentIndex) != null)
+                t.hide(fragments.get(mActiveFragmentIndex));
+
             t.show(fragments.get(fragmentIndex));
             if (b)
                 t.addToBackStack(null);
