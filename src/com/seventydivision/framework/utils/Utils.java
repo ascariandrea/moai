@@ -43,6 +43,20 @@ public class Utils {
 
     public static final java.lang.String TAG = Utils.class.getSimpleName();
 
+
+
+    public static class Color {
+
+        public static int getTransparentColor(int color, float factor) {
+            int alpha = Math.round(android.graphics.Color.alpha(color) * factor);
+            int red = android.graphics.Color.red(color);
+            int green = android.graphics.Color.green(color);
+            int blue = android.graphics.Color.blue(color);
+            return android.graphics.Color.argb(alpha, red, green, blue);
+        }
+
+    }
+
     @SuppressWarnings("unchecked")
     public static <T extends BaseModel> Class<T> getTypeParameter(Object o) {
 
@@ -217,7 +231,7 @@ public class Utils {
             paint.setFilterBitmap(true);
             paint.setDither(true);
             canvas.drawARGB(0, 0, 0, 0);
-            paint.setColor(Color.parseColor("#BAB399"));
+            paint.setColor(android.graphics.Color.parseColor("#BAB399"));
             canvas.drawCircle(
                     radius / 2 + 0.7f,
                     radius / 2 + 0.7f,
