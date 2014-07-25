@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,7 +15,11 @@ import java.util.ArrayList;
  */
 public class PoweredViewPager extends ViewPager {
 
+    private static final String TAG = PoweredViewPager.class.getSimpleName();
+
     private ArrayList<Integer> childScrollableIds = new ArrayList<Integer>();
+
+    private boolean scrollDisable;
 
     public PoweredViewPager(Context context) {
         super(context);
@@ -26,6 +31,7 @@ public class PoweredViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
+
         if (childScrollableIds.size() > 0) {
             for(int childId : childScrollableIds) {
                 View scroll = findViewById(childId);
@@ -42,11 +48,24 @@ public class PoweredViewPager extends ViewPager {
 
         return super.onInterceptTouchEvent(event);
 
+
     }
 
-    public void  addScrollableChildren(int childId) {
+    public void addTouchableChild(int childId) {
         childScrollableIds.add(childId);
     }
 
+    public void  addScrollableChildren(int... childIds) {
+        for (int childId : childIds)
+            addTouchableChild(childId);
+    }
 
+
+    public void enableScroll() {
+        scrollDisable = false;
+    }
+
+    public void disableScroll() {
+        scrollDisable = true;
+    }
 }
