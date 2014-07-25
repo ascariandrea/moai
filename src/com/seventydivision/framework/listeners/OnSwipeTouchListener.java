@@ -1,6 +1,7 @@
 package com.seventydivision.framework.listeners;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,8 +31,9 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
-        private static final int SWIPE_THRESHOLD = 30;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 30;
+        private static final int SWIPE_THRESHOLD = 20;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 300;
+        private final String TAG = GestureListener.class.getSimpleName();
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -43,6 +45,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
             onClick(mView);
             return false;
         }
+
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
