@@ -90,17 +90,25 @@ public abstract class InjectedListFragment<T extends BaseModel> extends Injected
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         mNeedRepopulate = true;
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        mCollection = null;
+        mNeedRepopulate = true;
+        super.onDestroy();
     }
 
     @Override
     public void onResume() {
-        super.onResume();
+
         if (mCollection == null)
             fetchData();
         else if (mNeedRepopulate)
             populateViewAgain();
+        super.onResume();
     }
 
     protected void populateViewAgain() {

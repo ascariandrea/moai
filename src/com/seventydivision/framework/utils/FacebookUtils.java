@@ -13,6 +13,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.android.Facebook;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.seventydivision.framework.R;
@@ -200,6 +201,8 @@ public class FacebookUtils {
 
     public static void postOnUserWall(final Activity activity, UiLifecycleHelper uiHelper, List<String> fbUsers, Bundle params) {
         if (FacebookDialog.canPresentShareDialog(activity.getApplicationContext(), FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
+            if (fbUsers == null) fbUsers = new ArrayList<String>();
+
             FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(activity)
                     .setLink(params.getString(PARAM_LINK))
                     .setName(params.getString(PARAM_NAME))
@@ -271,29 +274,26 @@ public class FacebookUtils {
 
 
 
-    public static class OnPostCallback implements FacebookDialog.Callback {
-
-        private final Activity mActivity;
-
-        public OnPostCallback(Activity activity) {
-            super();
-            mActivity = activity;
-        }
+    public static abstract class OnPostCallback implements FacebookDialog.Callback {
 
         @Override
         public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
-            if (data != null && FacebookDialog.getNativeDialogDidComplete(data) && FacebookDialog.getNativeDialogCompletionGesture(data).equals("post")) {
-//                mToastMessageResource = 0; //R.string.canceled_fb_post_creation
-                mActivity.finish();
-            } else {
-//                mToastMessageResource = R.string.successfull_fb_post_creation;
-
+            if (data != null) {
+                Log.d(TAG, data + "");
+                if (FacebookDialog.getNativeDialogDidComplete(data)) {
+                    if (FacebookDialog.getNativeDialogCompletionGesture(data).equals("post")) {
+                        onSuccess(pendingCall, data);
+                    } else if (FacebookDialog.getNativeDialogCompletionGesture(data).equals("cancel")) {
+                        onCancel(pendingCall, data);
+                    }
+                }
             }
 
-            Utils.Views.showLongToast(mActivity, mToastMessageResource);
-
-
         }
+
+        public abstract void onCancel(FacebookDialog.PendingCall pendingCall, Bundle data);
+
+        public abstract void onSuccess(FacebookDialog.PendingCall pendingCall, Bundle data);
 
         @Override
         public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
@@ -302,7 +302,6 @@ public class FacebookUtils {
             } else {
                 //toastMessageResource = R.string.error_fb_post_creation;
             }
-            Utils.Views.showLongToast(mActivity, android.R.string.cancel);
         }
     }
 

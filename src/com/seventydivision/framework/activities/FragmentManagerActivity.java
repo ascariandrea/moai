@@ -196,9 +196,9 @@ public abstract class FragmentManagerActivity extends MainActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "here");
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "here 2");
+        if (fragments.get(getCurrentActiveIndex()) != null)
+            fragments.get(getCurrentActiveIndex()).onActivityResult(requestCode, resultCode, data);
     }
 
 }
