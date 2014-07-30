@@ -6,6 +6,7 @@ import com.seventydivision.framework.models.BaseModel;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.apache.http.client.HttpResponseException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,16 +76,30 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
                 String message = jsonRes.getString("message");
                 JSONArray errors = new JSONArray();
                 if (jsonRes.has("errors"))
-                    errors = jsonRes.getJSONArray("errors");
+                      errors = jsonRes.getJSONArray("errors");
 
-
-                onFailure(throwable, message, errors, code);
+                if (throwable instanceof HttpResponseException) {
+                    HttpResponseException httpResponseException = (HttpResponseException) throwable;
+                    switch(httpResponseException.getStatusCode()) {
+                        case 404:
+                            onNotFound(throwable, message, errors, code);
+                            break;
+                        case 401:
+                            onNotAuthorized(throwable, message, errors, code);
+                            break;
+                        default:
+                            onFailure(throwable, message, errors, code);
+                    }
+                } else {
+                    onFailure(throwable, message, errors, code);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
     }
+
 
     public void onFailure(Throwable t, String res) {
         Log.d(TAG, t.getStackTrace().toString());
@@ -94,10 +109,18 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
         }
     }
 
-    protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {
+    protected void onNotAuthorized(Throwable throwable, String message, JSONArray errors, int code) {}
 
-    }
+    public void onNotFound(Throwable throwable, String message, JSONArray errors, int code) {}
+
+    protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {}
+
 
 
     public abstract void onSuccess(T res);
+
+
+
+
+
 }
