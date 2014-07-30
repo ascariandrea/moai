@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -179,8 +180,12 @@ public class Utils {
         }
 
 
-        public static void showLongToast(Activity activity, int resource) {
-            Toast.makeText(activity, activity.getString(resource), Toast.LENGTH_LONG).show();
+        public static void showLongToast(Context context, int resource) {
+            Toast.makeText(context, context.getString(resource), Toast.LENGTH_LONG).show();
+        }
+
+        public static void showLongToast(Context context, java.lang.String message) {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         }
 
         public static void drawCircle(ImageView v, Canvas canvas) {
@@ -242,6 +247,8 @@ public class Utils {
 
             return output;
         }
+
+
     }
 
 

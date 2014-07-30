@@ -68,12 +68,17 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
             onFailure(throwable, res);
             try {
                 JSONObject jsonRes = new JSONObject(res);
-                int code = jsonRes.getInt("code");
+                int code = 500;
+                if (jsonRes.has("code") && !jsonRes.getString("code").isEmpty())
+                    code = Integer.parseInt(jsonRes.getString("code"));
+
                 String message = jsonRes.getString("message");
-                JSONArray errors = jsonRes.getJSONArray("errors");
-                if (code != 0) {
-                    onFailure(throwable, message, errors, code);
-                }
+                JSONArray errors = new JSONArray();
+                if (jsonRes.has("errors"))
+                    errors = jsonRes.getJSONArray("errors");
+
+
+                onFailure(throwable, message, errors, code);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

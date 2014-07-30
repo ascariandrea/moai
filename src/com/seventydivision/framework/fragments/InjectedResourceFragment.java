@@ -1,5 +1,7 @@
 package com.seventydivision.framework.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.seventydivision.framework.client.AsyncResourceHandler;
@@ -7,7 +9,9 @@ import com.seventydivision.framework.interfaces.OnFetchResourceInterface;
 import com.seventydivision.framework.models.BaseModel;
 import com.seventydivision.framework.utils.Utils;
 
+import org.acra.ACRA;
 import org.androidannotations.annotations.AfterInject;
+import org.json.JSONArray;
 
 
 /**
@@ -36,6 +40,16 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
                 setResource(res);
             }
 
+
+            @Override
+            protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {
+                Utils.Views.showLongToast(getActivity(), errorMessage);
+            }
+
+            @Override
+            public void onFailure(Throwable t, String res) {
+                super.onFailure(t, res);
+            }
         };
     }
 
