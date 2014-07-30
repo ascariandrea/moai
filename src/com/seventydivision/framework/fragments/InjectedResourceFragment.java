@@ -59,6 +59,7 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     }
 
     protected void fetchData() {
+        mFetching = true;
         fetchData(asyncResourceHandler);
     }
 

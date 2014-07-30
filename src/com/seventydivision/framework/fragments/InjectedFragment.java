@@ -30,7 +30,7 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
     private boolean mViewInjected = false;
     private boolean mFetchingCompleted = false;
     protected boolean mFetchDataIsDisabled = false;
-    protected boolean mFetching;
+    protected boolean mFetching = false;
 
     public static InjectedFragment newInstance(Bundle args) {
         return null;
