@@ -171,13 +171,16 @@ public abstract class FragmentManagerActivity extends MainActivity {
     }
 
     protected boolean isFragmentPresent(int productIndex) {
-
         return fragments.size() > productIndex && fragments.get(productIndex) != null;
     }
 
 
     protected ArrayList<Fragment> getFragments() {
         return new ArrayList<Fragment>(fragments.values());
+    }
+
+    protected Fragment getFragmentInstance(int index) {
+        return getFragments().get(index);
     }
 
 
@@ -189,9 +192,17 @@ public abstract class FragmentManagerActivity extends MainActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        mActiveFragmentIndex = mPreviousActiveFragmentIndex;
+        if (fragments.get(getCurrentActiveIndex()) != null) {
+            if (!((InjectedFragment) fragments.get(getCurrentActiveIndex())).onBackPressed()) {
+                super.onBackPressed();
+                mActiveFragmentIndex = mPreviousActiveFragmentIndex;
+            }
+        } else {
+            super.onBackPressed();
+        }
     }
+
+
 
 
     @Override

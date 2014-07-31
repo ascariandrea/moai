@@ -86,21 +86,23 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
     }
 
 
-    public void onBackPressed() {
+    public boolean onBackPressed() {
         if (isFirstBackPress()) {
-            onFirstBackPressed();
+            Log.d(TAG, "firstpress");
             mFirstBackPress = false;
+            return onFirstBackPressed();
         } else {
-            onAnotherBackPressed();
+            Log.d(TAG, "anotherpress");
+            return onAnotherBackPressed();
         }
     }
 
-    public void onAnotherBackPressed() {
-        onBackPressed();
+    public boolean onAnotherBackPressed() {
+        return false;
     }
 
-    public void onFirstBackPressed() {
-        onBackPressed();
+    public boolean onFirstBackPressed() {
+        return false;
     }
 
     protected DataObserver mObserver = new DataObserver();
