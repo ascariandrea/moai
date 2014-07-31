@@ -31,6 +31,7 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
     private boolean mFetchingCompleted = false;
     protected boolean mFetchDataIsDisabled = false;
     protected boolean mFetching = false;
+    private boolean mFirstBackPress = true;
 
     public static InjectedFragment newInstance(Bundle args) {
         return null;
@@ -86,9 +87,27 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
 
 
     public void onBackPressed() {
+        if (isFirstBackPress()) {
+            onFirstBackPressed();
+            mFirstBackPress = false;
+        } else {
+            onAnotherBackPressed();
+        }
+    }
+
+    public void onAnotherBackPressed() {
+        onBackPressed();
+    }
+
+    public void onFirstBackPressed() {
+        onBackPressed();
     }
 
     protected DataObserver mObserver = new DataObserver();
+
+    public boolean isFirstBackPress() {
+        return mFirstBackPress;
+    }
 
     protected class DataObserver implements Observer {
 
@@ -113,5 +132,6 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
     public String getTitle() {
         return "";
     }
+
 
 }
