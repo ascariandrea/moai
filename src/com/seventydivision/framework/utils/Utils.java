@@ -308,6 +308,8 @@ public class Utils {
 
 
         public static AlertDialog showError(final Activity activity, java.lang.String message) {
+            clearScreen();
+
             if (message == null)
                 message = activity.getString(R.string.alert_error_message);
 
@@ -333,6 +335,9 @@ public class Utils {
 
 
         public static AlertDialog show(Context context, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+
+            clearScreen();
+
             return (AlertDialog) (mLastDialog = new AlertDialog.Builder(context)
                                 .setTitle(title)
                                 .setMessage(message)
@@ -341,7 +346,9 @@ public class Utils {
                                 .show());
         }
 
-        public static AlertDialog buildOk(Context context, java.lang.String title, java.lang.String message, java.lang.String buttonText, DialogInterface.OnClickListener neutralListener) {
+        public static AlertDialog showOk(Context context, java.lang.String title, java.lang.String message, java.lang.String buttonText, DialogInterface.OnClickListener neutralListener) {
+            clearScreen();
+
             if (buttonText == null)
                 buttonText = context.getString(R.string.done);
 
@@ -353,15 +360,16 @@ public class Utils {
         }
 
         public static void showCircleProgress(Context context) {
+            clearScreen();
             mLastDialog = new ProgressDialog(context);
             mLastDialog.show();
+            mLastDialog.setContentView(R.layout.transparent_progress_dialog);
         }
 
 
         public static void clearScreen() {
             if (mLastDialog != null && mLastDialog.isShowing())
                 mLastDialog.dismiss();
-
         }
 
 
