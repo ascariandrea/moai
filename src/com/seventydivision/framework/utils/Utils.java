@@ -328,13 +328,19 @@ public class Utils {
 
 
 
-        public static AlertDialog.Builder build(Activity activity, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
-            return new AlertDialog.Builder(activity)
-                    .setTitle((CharSequence) title)
-                    .setMessage((CharSequence) message)
-                    .setPositiveButton(activity.getString(R.string.done), positiveListener)
-                    .setNegativeButton(activity.getString(R.string.cancel), negativeListener);
+        public static AlertDialog.Builder build(Context context, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+            return new AlertDialog.Builder(context)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(context.getString(R.string.done), positiveListener)
+                    .setNegativeButton(context.getString(R.string.cancel), negativeListener);
+        }
 
+        public static AlertDialog.Builder buildOk(Context context, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener neutralListener) {
+            return new AlertDialog.Builder(context)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setNeutralButton(R.string.done, neutralListener);
         }
 
 
