@@ -52,7 +52,7 @@ public abstract class MainActivity extends FragmentActivity {
 
     protected void enableBackButton() {
         if (getActionBar() != null) {
-            if (Utils.API.isGreatEqualsThan(24))
+            if (Utils.API.isGreatEqualsThan(14))
                 getActionBar().setHomeButtonEnabled(true);
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }

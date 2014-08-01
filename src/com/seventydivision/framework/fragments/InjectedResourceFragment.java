@@ -89,7 +89,7 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
         super.onResume();
         if (mResource == null && !isFetching())
             fetchData();
-        else if (mNeedRepopulate)
+        else if (mNeedRepopulate && getActivity() != null)
             populateViewAgain();
     }
 
