@@ -8,7 +8,7 @@
 
     <!-- The ant.properties file can be created by you. It is only edited by the
          'android' tool to add properties to it.
-         This is the place to change some Ant specific build properties.
+         This is the place to change some Ant specific show properties.
          Here are some properties you may want to change/update:
 
          source.dir
@@ -17,12 +17,12 @@
              The name of the output directory. Default is 'bin'.
 
          For other overridable properties, look at the beginning of the rules
-         files in the SDK, at tools/ant/build.xml
+         files in the SDK, at tools/ant/show.xml
 
          Properties related to the SDK location or the project target should
          be updated using the 'android' tool with the 'update' action.
 
-         This file is an integral part of the build system for your
+         This file is an integral part of the show system for your
          application and should be checked into Version Control Systems.
 
          -->
@@ -32,10 +32,10 @@
          tool, as well as ADT.
 
          This contains project specific properties such as project target, and library
-         dependencies. Lower level build properties are stored in ant.properties
+         dependencies. Lower level show properties are stored in ant.properties
          (or in .classpath for Eclipse projects).
 
-         This file is an integral part of the build system for your
+         This file is an integral part of the show system for your
          application and should be checked into Version Control Systems. -->
     <loadproperties srcFile="project.properties" />
 
@@ -46,27 +46,27 @@
     />
 
     <!--
-        Import per project custom build rules if present at the root of the project.
+        Import per project custom show rules if present at the root of the project.
         This is the place to put custom intermediary targets such as:
-            -pre-build
+            -pre-show
             -pre-compile
             -post-compile (This is typically used for code obfuscation.
                            Compiled code location: ${out.classes.absolute.dir}
                            If this is not done in place, override ${out.dex.input.absolute.dir})
             -post-package
-            -post-build
+            -post-show
             -pre-clean
     -->
     <import file="custom_rules.xml" optional="true" />
 
-    <!-- Import the actual build file.
+    <!-- Import the actual show file.
 
          To customize existing targets, there are two options:
          - Customize only one target:
              - copy/paste the target into this file, *before* the
                <import> task.
              - customize it to your needs.
-         - Customize the whole content of build.xml
+         - Customize the whole content of show.xml
              - copy/paste the content of the rules files (minus the top node)
                into this file, replacing the <import> task.
              - customize to your needs.

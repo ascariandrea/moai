@@ -2,11 +2,12 @@ package com.seventydivision.framework.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -14,7 +15,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +30,6 @@ import com.seventydivision.framework.BuildConfig;
 import com.seventydivision.framework.R;
 import com.seventydivision.framework.models.BaseModel;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
@@ -305,12 +303,15 @@ public class Utils {
         }
     }
 
-    public static class Alerts {
-        public static AlertDialog.Builder buildError(final Activity activity, java.lang.String message) {
+    public static class Dialogs {
+        private static Dialog mLastDialog;
+
+
+        public static AlertDialog showError(final Activity activity, java.lang.String message) {
             if (message == null)
                 message = activity.getString(R.string.alert_error_message);
 
-            return build(
+            return show(
                     activity,
                     activity.getString(R.string.an_error_has_occured),
                     message,
@@ -331,24 +332,39 @@ public class Utils {
 
 
 
-        public static AlertDialog.Builder build(Context context, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
-            return new AlertDialog.Builder(context)
-                    .setTitle(title)
-                    .setMessage(message)
-                    .setPositiveButton(context.getString(R.string.done), positiveListener)
-                    .setNegativeButton(context.getString(R.string.cancel), negativeListener);
+        public static AlertDialog show(Context context, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
+            return (AlertDialog) (mLastDialog = new AlertDialog.Builder(context)
+                                .setTitle(title)
+                                .setMessage(message)
+                                .setPositiveButton(context.getString(R.string.done), positiveListener)
+                                .setNegativeButton(context.getString(R.string.cancel), negativeListener)
+                                .show());
         }
 
-        public static AlertDialog.Builder buildOk(Context context, java.lang.String title, java.lang.String message, java.lang.String buttonText, DialogInterface.OnClickListener neutralListener) {
+        public static AlertDialog buildOk(Context context, java.lang.String title, java.lang.String message, java.lang.String buttonText, DialogInterface.OnClickListener neutralListener) {
             if (buttonText == null)
                 buttonText = context.getString(R.string.done);
 
-            return new AlertDialog.Builder(context)
-                    .setTitle(title)
-                    .setMessage(message)
-                    .setNeutralButton(buttonText, neutralListener);
+            return (AlertDialog) (mLastDialog = new AlertDialog.Builder(context)
+                                .setTitle(title)
+                                .setMessage(message)
+                                .setNeutralButton(buttonText, neutralListener)
+                                .show());
+        }
+
+        public static void showCircleProgress(Context context) {
+            mLastDialog = new ProgressDialog(context);
+            mLastDialog.show();
+        }
+
+
+        public static void clearScreen() {
+            if (mLastDialog != null && mLastDialog.isShowing())
+                mLastDialog.dismiss();
+
         }
 
 
     }
+
 }

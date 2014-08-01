@@ -554,7 +554,7 @@ public class AppEventsLogger {
     }
 
     /**
-     * Constructor is private, newLogger() methods should be used to build an instance.
+     * Constructor is private, newLogger() methods should be used to show an instance.
      */
     private AppEventsLogger(Context context, String applicationId, Session session) {
 
