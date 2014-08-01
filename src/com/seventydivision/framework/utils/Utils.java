@@ -306,11 +306,14 @@ public class Utils {
     }
 
     public static class Alerts {
-        public static AlertDialog.Builder buildError(final Activity activity) {
+        public static AlertDialog.Builder buildError(final Activity activity, java.lang.String message) {
+            if (message == null)
+                message = activity.getString(R.string.alert_error_message);
+
             return build(
                     activity,
                     activity.getString(R.string.an_error_has_occured),
-                    activity.getString(R.string.alert_error_message),
+                    message,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -336,11 +339,14 @@ public class Utils {
                     .setNegativeButton(context.getString(R.string.cancel), negativeListener);
         }
 
-        public static AlertDialog.Builder buildOk(Context context, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener neutralListener) {
+        public static AlertDialog.Builder buildOk(Context context, java.lang.String title, java.lang.String message, java.lang.String buttonText, DialogInterface.OnClickListener neutralListener) {
+            if (buttonText == null)
+                buttonText = context.getString(R.string.done);
+
             return new AlertDialog.Builder(context)
                     .setTitle(title)
                     .setMessage(message)
-                    .setNeutralButton(R.string.done, neutralListener);
+                    .setNeutralButton(buttonText, neutralListener);
         }
 
 
