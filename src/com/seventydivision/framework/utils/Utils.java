@@ -15,6 +15,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -246,6 +247,9 @@ public class Utils {
         }
 
 
+        public static int getDpMeasure(Context context, int i) {
+            return (int) ((context.getResources().getDisplayMetrics().density * i) + 0.5f);
+        }
     }
 
 

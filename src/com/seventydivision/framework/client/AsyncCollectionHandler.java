@@ -74,19 +74,20 @@ public abstract class AsyncCollectionHandler<T extends BaseModel> extends AsyncH
     public void onFailure(Throwable t, String res) {
         if (res != null)
             Log.i(TAG, res);
-
-        try {
-            HttpResponseException httpResponseException = (HttpResponseException) t;
-            int statusCode = httpResponseException.getStatusCode();
-            switch (statusCode) {
-                case 403: {
-                    onUnauthorized(t, res);
+        if (t != null) {
+            try {
+                HttpResponseException httpResponseException = (HttpResponseException) t;
+                int statusCode = httpResponseException.getStatusCode();
+                switch (statusCode) {
+                    case 403: {
+                        onUnauthorized(t, res);
+                    }
+                    default:
+                        break;
                 }
-                default:
-                    break;
+            } catch (ClassCastException e) {
+                e.printStackTrace();
             }
-        } catch (ClassCastException e) {
-            e.printStackTrace();
         }
 
     }
@@ -99,7 +100,7 @@ public abstract class AsyncCollectionHandler<T extends BaseModel> extends AsyncH
             onFailure(throwable, res);
             try {
                 JSONObject jsonRes = new JSONObject(res);
-                int code = jsonRes.getInt("code");
+                int code = jsonRes.get("code").equals("") ? 0 : jsonRes.getInt("code");
                 if (code != 0) {
                     onFailure(throwable, jsonRes, code);
                 }
