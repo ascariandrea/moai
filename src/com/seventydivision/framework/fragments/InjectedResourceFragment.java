@@ -96,4 +96,5 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     private void populateViewAgain() {
         populateView(mResource);
     }
+
 }

@@ -44,7 +44,6 @@ public class Utils {
     public static final java.lang.String TAG = Utils.class.getSimpleName();
 
 
-
     public static class Color {
 
         public static int getTransparentColor(int color, float factor) {
@@ -70,7 +69,8 @@ public class Utils {
             count++;
             if (BuildConfig.DEBUG) Log.d(Utils.class.getSimpleName(), klass.getName());
             try {
-                if (BuildConfig.DEBUG) Log.d(TAG, "Trying to get parameterizedtype: " + ((ParameterizedType) klass.getGenericSuperclass()).toString());
+                if (BuildConfig.DEBUG)
+                    Log.d(TAG, "Trying to get parameterizedtype: " + ((ParameterizedType) klass.getGenericSuperclass()).toString());
 
                 ParameterizedType parameterizedType = (ParameterizedType) klass.getGenericSuperclass();
                 Type[] actualTypes = parameterizedType.getActualTypeArguments();
@@ -78,11 +78,13 @@ public class Utils {
                 typeFound = true;
             } catch (ClassCastException e) {
                 if (klass.getSuperclass() != null) {
-                    if (BuildConfig.DEBUG) Log.d(TAG, "No type parameters for this class, get its superclass: " + klass.getSuperclass().toString());
+                    if (BuildConfig.DEBUG)
+                        Log.d(TAG, "No type parameters for this class, get its superclass: " + klass.getSuperclass().toString());
 
                     klass = klass.getSuperclass();
                 } else {
-                    if (BuildConfig.DEBUG) Log.d(TAG, "No super class for this class["+klass.toString()+"], return");
+                    if (BuildConfig.DEBUG)
+                        Log.d(TAG, "No super class for this class[" + klass.toString() + "], return");
                     typeFound = true;
                 }
             }
@@ -148,7 +150,6 @@ public class Utils {
             View view = null;
             View groupView = null;
 
-            Log.d(TAG, expandableListAdapter.getGroupCount() + "");
 
             for (int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
 
@@ -161,13 +162,18 @@ public class Utils {
                     view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
                 }
 
+
                 groupView.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
                 view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-
+                Log.d(TAG, "totalHeight: " + totalHeight);
+                Log.d(TAG, "groupView [measuredHeight" + groupView.getMeasuredHeight() + "]");
+                Log.d(TAG, "view [measuredHeight " + view.getMeasuredHeight() + "]");
+                Log.d(TAG, "divider [height " + expandableListView.getDividerHeight() + "] [count " + (expandableListAdapter.getChildrenCount(i) - 1) + "]");
                 totalHeight += groupView.getMeasuredHeight() + view.getMeasuredHeight() * expandableListAdapter.getChildrenCount(i) + (expandableListView.getDividerHeight() * (expandableListAdapter.getChildrenCount(i) - 1));
             }
             ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
             params.height = totalHeight;
+            Log.d(TAG, "height: " + totalHeight);
             expandableListView.setLayoutParams(params);
             expandableListView.requestLayout();
         }
@@ -342,17 +348,16 @@ public class Utils {
         }
 
 
-
         public static AlertDialog show(Context context, java.lang.String title, java.lang.String message, DialogInterface.OnClickListener positiveListener, DialogInterface.OnClickListener negativeListener) {
 
             clearScreen();
 
             return (AlertDialog) (mLastDialog = new AlertDialog.Builder(context)
-                                .setTitle(title)
-                                .setMessage(message)
-                                .setPositiveButton(context.getString(R.string.done), positiveListener)
-                                .setNegativeButton(context.getString(R.string.cancel), negativeListener)
-                                .show());
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(context.getString(R.string.done), positiveListener)
+                    .setNegativeButton(context.getString(R.string.cancel), negativeListener)
+                    .show());
         }
 
         public static AlertDialog showOk(Context context, java.lang.String title, java.lang.String message, java.lang.String buttonText, DialogInterface.OnClickListener neutralListener) {
@@ -362,10 +367,10 @@ public class Utils {
                 buttonText = context.getString(R.string.done);
 
             return (AlertDialog) (mLastDialog = new AlertDialog.Builder(context)
-                                .setTitle(title)
-                                .setMessage(message)
-                                .setNeutralButton(buttonText, neutralListener)
-                                .show());
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setNeutralButton(buttonText, neutralListener)
+                    .show());
         }
 
         public static void showCircleProgress(Context context) {
