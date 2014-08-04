@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.seventydivision.framework.fragments.InjectedFragment;
+import com.seventydivision.framework.utils.Utils;
 
 import org.androidannotations.annotations.EActivity;
 
@@ -105,6 +106,8 @@ public abstract class FragmentManagerActivity extends MainActivity {
             FragmentTransaction t = fragmentManager.beginTransaction();
             Log.d(TAG, "Fragment to hide: " + fragments.get(mActiveFragmentIndex));
             Log.d(TAG, "Fragment to show: " + fragments.get(fragmentIndex));
+
+            Utils.Views.hideKeyBoard(this, getWindow().getDecorView());
 
             if (fragments.get(mActiveFragmentIndex) != null)
                 t.hide(fragments.get(mActiveFragmentIndex));

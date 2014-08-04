@@ -97,9 +97,22 @@ public class Utils {
 
     public static class Views {
 
-        public static void hideKeyBoard(Context context, View view) {
+        private static boolean mKeyboardOpened;
+
+        public static void showKeyboard(final Context context, final View view) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            imm.showSoftInput(view, 0);
+            mKeyboardOpened = true;
+            //imm.showSoftInputFromInputMethod(view.getWindowToken(), InputMethodManager.SHOW_IMPLICIT);
+
+        }
+
+        public static void hideKeyBoard(Context context, View view) {
+            if (mKeyboardOpened) {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                mKeyboardOpened = false;
+            }
         }
 
         public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -157,14 +170,6 @@ public class Utils {
             params.height = totalHeight;
             expandableListView.setLayoutParams(params);
             expandableListView.requestLayout();
-        }
-
-
-        public static void showKeyboard(final Context context, final View view) {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(view, 0);
-            //imm.showSoftInputFromInputMethod(view.getWindowToken(), InputMethodManager.SHOW_IMPLICIT);
-
         }
 
 
