@@ -109,12 +109,16 @@ public class Utils {
 
         }
 
-        public static void hideKeyBoard(Context context, View view) {
-            if (mKeyboardOpened) {
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                mKeyboardOpened = false;
-            }
+        public static void hideKeyBoard(final Context context, final View view) {
+            view.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    mKeyboardOpened = false;
+                }
+            }, 300);
+
         }
 
         public static void setListViewHeightBasedOnChildren(ListView listView) {
