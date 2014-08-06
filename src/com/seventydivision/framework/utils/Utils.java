@@ -62,8 +62,7 @@ public class Utils {
         boolean typeFound = false;
         Class klass = o.getClass();
         Class<T> tClass = null;
-        if (BuildConfig.DEBUG)
-            Log.d(Utils.class.getSimpleName(), Arrays.toString(((ParameterizedType) klass.getSuperclass().getGenericSuperclass()).getActualTypeArguments()));
+
         int count = 0;
         while (!typeFound) {
             count++;
