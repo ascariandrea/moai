@@ -34,4 +34,4 @@ proguard/
 build/
 .gradle
 .DS_Store
-libraries/framework/
+libraries/framework/.iml

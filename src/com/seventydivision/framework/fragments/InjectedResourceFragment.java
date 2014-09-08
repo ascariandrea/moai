@@ -70,7 +70,8 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
 
     @Override
     protected void canPopulateView() {
-        populateView(mResource);
+        if (getActivity() != null)
+            populateView(mResource);
     }
 
     protected void setResource(T resource) {
