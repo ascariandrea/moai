@@ -187,7 +187,7 @@ public class Utils {
                 totalHeight += groupView.getMeasuredHeight() + view.getMeasuredHeight() * expandableListAdapter.getChildrenCount(i) + (expandableListView.getDividerHeight() * (expandableListAdapter.getChildrenCount(i) - 1));
             }
             ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
-            params.height = totalHeight;
+            params.height = totalHeight / 2;
             Log.d(TAG, "height: " + totalHeight);
             expandableListView.setLayoutParams(params);
             expandableListView.requestLayout();
