@@ -54,6 +54,18 @@ public class Utils {
             return android.graphics.Color.argb(alpha, red, green, blue);
         }
 
+        public static boolean isTooLight(int color) {
+
+            int r = (color >> 16) & 0xFF;
+            int g = (color >> 8) & 0xFF;
+            int b = (color >> 0) & 0xFF;
+
+            double luma = 0.299 * r + 0.587 * g + 0.114 * b; // per ITU-R BT.709
+
+            return luma > 160;
+
+        }
+
     }
 
     @SuppressWarnings("unchecked")
