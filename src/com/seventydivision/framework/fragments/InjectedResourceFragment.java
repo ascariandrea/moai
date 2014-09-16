@@ -1,22 +1,19 @@
 package com.seventydivision.framework.fragments;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-
 import com.seventydivision.framework.client.AsyncResourceHandler;
 import com.seventydivision.framework.interfaces.OnFetchResourceInterface;
 import com.seventydivision.framework.models.BaseModel;
 import com.seventydivision.framework.utils.Utils;
 
-import org.acra.ACRA;
 import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EFragment;
 import org.json.JSONArray;
 
 
 /**
  * Created by andreaascari on 01/07/14.
  */
+@EFragment
 public abstract class InjectedResourceFragment<T extends BaseModel> extends InjectedFragment implements OnFetchResourceInterface<T> {
 
     private T mResource;
@@ -24,11 +21,22 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     private AsyncResourceHandler<T> asyncResourceHandler;
     private boolean mNeedRepopulate = false;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+    @AfterInject
+    protected void afterCreation() {
+        onCreated();
         initHandler();
-        fetchData();
+        if (!mFetchDataIsDisabled)
+            fetchData();
+    }
+
+    protected void onCreated(){};
+
+
+    protected void fetchData() {
+        mFetching = true;
+        if (mResource == null)
+            fetchData(asyncResourceHandler);
     }
 
     @SuppressWarnings("unchecked")
@@ -56,11 +64,6 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     @Override
     public void afterViewsInjected() {
         super.afterViewsInjected();
-    }
-
-    protected void fetchData() {
-        mFetching = true;
-        fetchData(asyncResourceHandler);
     }
 
     @Override

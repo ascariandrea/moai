@@ -56,11 +56,13 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
         return (T) InjectedFragment.newInstance(args);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        afterCreation();
+
+    @AfterInject
+    protected void afterCreation() {
+        onCreated();
     }
+
+    protected void onCreated(){};
 
     @AfterViews
     public void afterViewsInjected() {
@@ -128,7 +130,6 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
 
     protected void populateView() {}
 
-    protected void afterCreation() {}
 
 
     public String getTitle() {

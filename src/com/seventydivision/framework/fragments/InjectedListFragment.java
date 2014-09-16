@@ -9,6 +9,7 @@ import com.seventydivision.framework.interfaces.OnFetchCollectionInterface;
 import com.seventydivision.framework.models.BaseModel;
 import com.seventydivision.framework.utils.Utils;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * Created by andreaascari on 01/07/14.
  */
-
+@EFragment
 public abstract class InjectedListFragment<T extends BaseModel> extends InjectedFragment implements OnFetchCollectionInterface<T> {
 
     protected static final String TAG = InjectedListFragment.class.getSimpleName();
@@ -38,13 +39,22 @@ public abstract class InjectedListFragment<T extends BaseModel> extends Injected
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @AfterInject
+    protected void afterCreation() {
+        onCreated();
         initHandler();
+        fetchData();
         if (!mFetchDataIsDisabled)
             fetchData();
     }
 
+    protected void onCreated() {}
+
+
     @SuppressWarnings("unchecked")
-    private void initHandler() {
+    protected void initHandler() {
         asyncCollectionHandler = new AsyncCollectionHandler<T>(getBaseModelExtensionClassPluralName(), (Class<T>) Utils.getTypeParameter(this)) {
             @Override
             public void onSuccess(List<T> res) {

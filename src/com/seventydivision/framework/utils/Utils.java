@@ -25,6 +25,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.seventydivision.framework.BuildConfig;
@@ -129,7 +130,13 @@ public class Utils {
                     mKeyboardOpened = false;
                 }
             }, 300);
+        }
 
+
+        public static void setColorToMany(int color, TextView... views) {
+            for(TextView v : views) {
+                v.setTextColor(color);
+            }
         }
 
         public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -180,10 +187,10 @@ public class Utils {
 
                 groupView.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
                 view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                Log.d(TAG, "totalHeight: " + totalHeight);
-                Log.d(TAG, "groupView [measuredHeight" + groupView.getMeasuredHeight() + "]");
-                Log.d(TAG, "view [measuredHeight " + view.getMeasuredHeight() + "]");
-                Log.d(TAG, "divider [height " + expandableListView.getDividerHeight() + "] [count " + (expandableListAdapter.getChildrenCount(i) - 1) + "]");
+//                Log.d(TAG, "totalHeight: " + totalHeight);
+//                Log.d(TAG, "groupView [measuredHeight" + groupView.getMeasuredHeight() + "]");
+//                Log.d(TAG, "view [measuredHeight " + view.getMeasuredHeight() + "]");
+//                Log.d(TAG, "divider [height " + expandableListView.getDividerHeight() + "] [count " + (expandableListAdapter.getChildrenCount(i) - 1) + "]");
                 totalHeight += groupView.getMeasuredHeight() + view.getMeasuredHeight() * expandableListAdapter.getChildrenCount(i) + (expandableListView.getDividerHeight() * (expandableListAdapter.getChildrenCount(i) - 1));
             }
             ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
