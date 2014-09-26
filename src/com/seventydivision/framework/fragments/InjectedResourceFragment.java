@@ -73,7 +73,7 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
 
     @Override
     protected void canPopulateView() {
-        if (getActivity() != null)
+        if (getActivity() != null && mResource != null)
             populateView(mResource);
     }
 
@@ -85,6 +85,7 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        invalidateResource();
         mNeedRepopulate = true;
     }
 
@@ -95,6 +96,10 @@ public abstract class InjectedResourceFragment<T extends BaseModel> extends Inje
             fetchData();
         else if (mNeedRepopulate && getActivity() != null)
             populateViewAgain();
+    }
+
+    protected void invalidateResource() {
+        this.mResource = null;
     }
 
     private void populateViewAgain() {
