@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.seventydivision.framework"
+    package="com.ascariandrea.afw"
     android:versionCode="1"
     android:versionName="0.0.1">
 
