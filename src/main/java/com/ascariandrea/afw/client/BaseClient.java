@@ -1,6 +1,7 @@
 package com.ascariandrea.afw.client;
 
 
+import com.ascariandrea.afw.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 
 public abstract class BaseClient {
     private static final String TAG = BaseClient.class.getSimpleName();
+    protected static final String PATH_SEPARATOR = "/";
     protected static AsyncHttpClient client = new AsyncHttpClient();
     private String authHeader = null;
 
@@ -114,6 +116,5 @@ public abstract class BaseClient {
     public String getAuthHeader() {
         return authHeader;
     }
-
 
 }

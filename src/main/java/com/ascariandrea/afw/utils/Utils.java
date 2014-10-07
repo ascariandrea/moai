@@ -301,7 +301,7 @@ public class Utils {
             return join(parts, "/");
         }
 
-        protected static java.lang.String join(java.lang.String[] s, java.lang.String glue) {
+        public static java.lang.String join(java.lang.String[] s, java.lang.String glue) {
             int k = s.length;
             if (k == 0) return "";
             StringBuilder out = new StringBuilder();
