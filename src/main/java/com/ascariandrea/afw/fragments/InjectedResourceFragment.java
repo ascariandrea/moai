@@ -2,7 +2,7 @@ package com.ascariandrea.afw.fragments;
 
 import com.ascariandrea.afw.client.AsyncResourceHandler;
 import com.ascariandrea.afw.interfaces.OnFetchResourceInterface;
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 import com.ascariandrea.afw.utils.Utils;
 
 import org.androidannotations.annotations.AfterInject;
@@ -14,7 +14,7 @@ import org.json.JSONArray;
  * Created by andreaascari on 01/07/14.
  */
 @EFragment
-public abstract class InjectedResourceFragment<T extends BaseModel> extends InjectedFragment implements OnFetchResourceInterface<T> {
+public abstract class InjectedResourceFragment<T extends Model> extends InjectedFragment implements OnFetchResourceInterface<T> {
 
     private T mResource;
 

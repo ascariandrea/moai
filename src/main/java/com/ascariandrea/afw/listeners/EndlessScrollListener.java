@@ -2,14 +2,14 @@ package com.ascariandrea.afw.listeners;
 
 import android.widget.AbsListView;
 
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 
 import java.util.List;
 
 /**
  * Created by andreaascari on 01/07/14.
  */
-public abstract class EndlessScrollListener<T extends BaseModel> implements AbsListView.OnScrollListener {
+public abstract class EndlessScrollListener<T extends Model> implements AbsListView.OnScrollListener {
     private List<T> itemsList;
     // The minimum amount of items to have below your current scroll position
     // before loading more.

@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ascariandrea.afw.R;
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -67,7 +67,7 @@ public class Utils {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends BaseModel> Class<T> getTypeParameter(Object o) {
+    public static <T extends Model> Class<T> getTypeParameter(Object o) {
 
         boolean typeFound = false;
         Class klass = o.getClass();

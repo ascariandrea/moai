@@ -16,7 +16,7 @@ import java.util.List;
  * Created by andreaascari on 22/01/14.
  */
 
-public class ModelCollection<T extends BaseModel> {
+public class ModelCollection<T extends Model> {
     private String wrap;
     private String TAG = ModelCollection.class.getName();
 

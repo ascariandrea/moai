@@ -4,12 +4,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 
 /**
  * Created by andreaascari on 09/07/14.
  */
-public class ModelAdapter<T extends BaseModel> extends BaseAdapter {
+public class ModelAdapter<T extends Model> extends BaseAdapter {
 
     @Override
     public int getCount() {

@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.ascariandrea.afw.client.AsyncResourceHandler;
 import com.ascariandrea.afw.interfaces.OnFetchManyResourceInterface;
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +15,21 @@ import java.util.List;
  */
 public abstract class InjectedManyResourcesFragment extends InjectedFragment implements OnFetchManyResourceInterface {
 
-    private Class<? extends BaseModel> mResource;
+    private Class<? extends Model> mResource;
 
-    private AsyncResourceHandler<? extends BaseModel> asyncResourceHandler;
-    private List<Class<? extends BaseModel>> mResources = new ArrayList<Class<? extends BaseModel>>();
+    private AsyncResourceHandler<? extends Model> asyncResourceHandler;
+    private List<Class<? extends Model>> mResources = new ArrayList<Class<? extends Model>>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        for (Class<? extends BaseModel> model : mResources) {
+        for (Class<? extends Model> model : mResources) {
 
         }
     }
 
     @Override
-    public void addResourceToFetch(Class<? extends BaseModel> model) {
+    public void addResourceToFetch(Class<? extends Model> model) {
         mResources.add(model);
     }
 }

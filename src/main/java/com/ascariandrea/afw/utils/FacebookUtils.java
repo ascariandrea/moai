@@ -14,7 +14,7 @@ import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
-import com.ascariandrea.afw.activities.MainActivity;
+import com.ascariandrea.afw.activities.AFWFragmentActivity;
 import com.ascariandrea.afw.models.FacebookUser;
 import com.ascariandrea.afw.models.ModelCollection;
 import com.ascariandrea.afw.persist.PersistentPreferences;
@@ -65,7 +65,7 @@ public class FacebookUtils {
 
     public static void getProfilePicture(final Context context, final String fbUserId, int size, final ImageRequestCallback callback) {
         if (context != null) {
-            PersistentPreferences preferences = ((MainActivity) context).getPrefs();
+            PersistentPreferences preferences = ((AFWFragmentActivity) context).getPrefs();
             if (!preferences.getFbImage(fbUserId, size).equals("{}")) {
                 callback.onSuccess(preferences.getFbImage(fbUserId, size));
             }
@@ -100,7 +100,7 @@ public class FacebookUtils {
                                 String fbAvatar = responseData.getString("url");
                                 Log.d(TAG, fbAvatar);
                                 if (context != null) {
-                                    PersistentPreferences preferences = ((MainActivity) context).getPrefs();
+                                    PersistentPreferences preferences = ((AFWFragmentActivity) context).getPrefs();
                                     if (preferences.getFbImage(fbUserId, size).equals("{}")) {
                                         preferences.saveFbImage(fbUserId, size, fbAvatar);
                                     }
@@ -302,7 +302,7 @@ public class FacebookUtils {
     }
 
     private static boolean isValidFbRes(Response response) {
-        return (response != null && response.getGraphObject() != null) == true;
+        return (response != null && response.getGraphObject() != null);
     }
 
 

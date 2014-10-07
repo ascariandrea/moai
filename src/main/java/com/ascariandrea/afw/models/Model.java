@@ -1,5 +1,6 @@
 package com.ascariandrea.afw.models;
 
+import com.ascariandrea.afw.interfaces.ModelNamingInterface;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -13,8 +14,8 @@ import java.io.IOException;
 /**
  * Created by andreaascari on 22/01/14.
  */
-public abstract class BaseModel {
-    private static final String TAG = BaseModel.class.getSimpleName();
+public abstract class Model {
+    private static final String TAG = Model.class.getSimpleName();
     protected static ObjectMapper mapper;
 
     public static String SINGLE_NAME = "baseModel";
@@ -71,14 +72,6 @@ public abstract class BaseModel {
         }
 
         return instance;
-    }
-
-    public static String getSingleName() {
-        return SINGLE_NAME;
-    }
-
-    public static String getPluralName() {
-        return PLURAL_NAME;
     }
 
 }

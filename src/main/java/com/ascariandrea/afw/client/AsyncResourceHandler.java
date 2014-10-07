@@ -2,7 +2,7 @@ package com.ascariandrea.afw.client;
 
 import android.util.Log;
 
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHttpResponseHandler {
+public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpResponseHandler {
 
     private String TAG = AsyncResourceHandler.class.getSimpleName();
     private String wrapProperty;
@@ -54,7 +54,7 @@ public abstract class AsyncResourceHandler<T extends BaseModel> extends AsyncHtt
             if (wrapProperty != null) {
                 json = jsonResponse.getJSONObject(wrapProperty).toString();
             }
-            onSuccess(BaseModel.fromJSON(json, getTypeParameterClass()));
+            onSuccess(Model.fromJSON(json, getTypeParameterClass()));
         } catch (JSONException e) {
             e.printStackTrace();
         }

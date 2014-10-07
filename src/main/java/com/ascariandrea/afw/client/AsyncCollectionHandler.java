@@ -3,7 +3,7 @@ package com.ascariandrea.afw.client;
 import android.util.Log;
 
 
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 import com.ascariandrea.afw.models.ModelCollection;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -16,7 +16,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public abstract class AsyncCollectionHandler<T extends BaseModel> extends AsyncHttpResponseHandler {
+public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpResponseHandler {
     private Class<T> mType;
     private String TAG = AsyncCollectionHandler.class.getSimpleName();
     private String wrapProperty;

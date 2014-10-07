@@ -10,7 +10,7 @@ import com.ascariandrea.afw.utils.FacebookUtils;
  */
 
 @JsonRootName("facebookUser")
-public class FacebookUser extends BaseModel {
+public class FacebookUser extends Model {
 
     public static String SINGLE_NAME = "user";
     public static String PLURAL_NAME = "users";
@@ -36,12 +36,12 @@ public class FacebookUser extends BaseModel {
     @JsonProperty("statusMessage")
     public String statusMessage;
 
-    public class ProfilePicture extends BaseModel {
+    public class ProfilePicture extends Model {
 
         @JsonProperty("data")
         public Data data;
 
-        public class Data extends BaseModel {
+        public class Data extends Model {
 
             @JsonProperty("url")
             public String url;

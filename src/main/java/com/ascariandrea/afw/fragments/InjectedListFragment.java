@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.ascariandrea.afw.client.AsyncCollectionHandler;
 import com.ascariandrea.afw.interfaces.OnFetchCollectionInterface;
-import com.ascariandrea.afw.models.BaseModel;
+import com.ascariandrea.afw.models.Model;
 import com.ascariandrea.afw.utils.Utils;
 
 import org.androidannotations.annotations.AfterInject;
@@ -19,14 +19,14 @@ import java.util.List;
  * Created by andreaascari on 01/07/14.
  */
 @EFragment
-public abstract class InjectedListFragment<T extends BaseModel> extends InjectedFragment implements OnFetchCollectionInterface<T> {
+public abstract class InjectedListFragment<T extends Model> extends InjectedFragment implements OnFetchCollectionInterface<T> {
 
     protected static final String TAG = InjectedListFragment.class.getSimpleName();
 
     private List<T> mCollection;
 
     private AsyncCollectionHandler<T> asyncCollectionHandler;
-    private Class<? extends BaseModel> mExtendedBaseModelClass;
+    private Class<? extends Model> mExtendedBaseModelClass;
 
     private boolean mNeedRepopulate = false;
 
@@ -89,7 +89,7 @@ public abstract class InjectedListFragment<T extends BaseModel> extends Injected
     }
 
 
-    protected void setModel(Class<? extends BaseModel> extendedBaseModel) {
+    protected void setModel(Class<? extends Model> extendedBaseModel) {
         mExtendedBaseModelClass = extendedBaseModel;
     }
 
