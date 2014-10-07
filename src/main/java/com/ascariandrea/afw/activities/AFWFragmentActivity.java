@@ -16,9 +16,9 @@ import org.androidannotations.annotations.EActivity;
  * Created by andreaascari on 22/01/14.
  */
 @EActivity
-public abstract class MainActivity extends FragmentActivity {
+public abstract class AFWFragmentActivity extends FragmentActivity {
 
-    private String TAG = MainActivity.class.getSimpleName();
+    private String TAG = AFWFragmentActivity.class.getSimpleName();
 
     public static final int RESULT_DONE = 4;
 

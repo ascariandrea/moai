@@ -23,7 +23,7 @@ import java.util.HashMap;
  */
 
 @EActivity
-public abstract class FragmentManagerActivity extends MainActivity {
+public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
 
     public static final String FRAGMENT_TO_SHOW = "fragment-to-show";
 
@@ -32,7 +32,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
 
     public static final int NON_EXISTENT_INDEX_FRAGMENT = -1;
 
-    private static final String TAG = FragmentManagerActivity.class.getSimpleName();
+    private static final String TAG = AFWFragmentManagerActivity.class.getSimpleName();
 
 
     private FragmentManager fragmentManager;
@@ -46,7 +46,7 @@ public abstract class FragmentManagerActivity extends MainActivity {
     protected LinearLayout fragmentContainerView;
 
 
-    public FragmentManagerActivity() {
+    public AFWFragmentManagerActivity() {
         super();
     }
 
