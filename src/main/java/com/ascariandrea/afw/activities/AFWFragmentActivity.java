@@ -10,6 +10,7 @@ import com.ascariandrea.afw.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 
 
 /**
@@ -27,7 +28,7 @@ public abstract class AFWFragmentActivity extends FragmentActivity {
 
     private boolean mLaunching;
 
-
+    @Extra public int stepToLaunch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
