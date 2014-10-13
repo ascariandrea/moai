@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
+import com.facebook.FacebookRequestError;
 import com.facebook.HttpMethod;
 import com.facebook.Request;
 import com.facebook.Response;
@@ -55,17 +56,33 @@ public class FacebookUtils {
     private static String TAG = FacebookUtils.class.getSimpleName();
 
 
-    public static void getMe(final FacebookUserCallback facebookUserCallback ) {
-        new Request(Session.getActiveSession(), "/me", null, HttpMethod.GET, new Request.Callback() {
+    public static void getMe(final FacebookUserCallback facebookUserCallback) {
+        getMe(null, facebookUserCallback);
+    }
+
+    public static void getMe(Bundle params, final FacebookUserCallback facebookUserCallback ) {
+        if (params == null) {
+            params = new Bundle();
+            params.putString("fields", "picture.width(800).height(800),about,first_name,last_name,email,address,age_range");
+        }
+
+        new Request(
+                Session.getActiveSession(),
+                "/me",
+                params,
+                HttpMethod.GET,
+                new Request.Callback() {
             @Override
             public void onCompleted(Response response) {
                 if (response != null) {
-                    if (response.getGraphObject() != null)
-                        facebookUserCallback.onSuccess((GraphUser) response.getGraphObject());
+                    if (response.getError() != null)
+                       facebookUserCallback.onError(response.getError(), response);
+                    else if (response.getGraphObjectAs(GraphUser.class) != null)
+                        facebookUserCallback.onSuccess(response.getGraphObjectAs(GraphUser.class));
                     else
-                        facebookUserCallback.onError(response);
+                        facebookUserCallback.onError(response.getError(), response);
                 } else
-                    facebookUserCallback.onError(null);
+                    facebookUserCallback.onError(response.getError(), null);
             }
 
         }).executeAsync();
@@ -340,7 +357,7 @@ public class FacebookUtils {
     public interface FacebookUserCallback {
         public void onSuccess(GraphUser fbUser);
 
-        public void onError(Response response);
+        public void onError(FacebookRequestError error, Response response);
     }
 
 }

@@ -60,6 +60,14 @@ public class PersistentPreferences {
         editor.commit();
     }
 
+    public String getCurrentUser() {
+        return getPref("user");
+    }
+
+    public void saveCurrentUser(String jsonUser) {
+        putPref("user",jsonUser);
+    }
+
 
     public String getFbImage(String fbUserId, int size) {
         return getPref("fb-image-" + fbUserId + "-" + size);

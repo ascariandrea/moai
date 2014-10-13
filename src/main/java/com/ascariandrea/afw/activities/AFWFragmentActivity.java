@@ -11,7 +11,6 @@ import com.ascariandrea.afw.utils.Utils;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
 
 
 /**
@@ -29,21 +28,23 @@ public abstract class AFWFragmentActivity extends FragmentActivity {
 
     private boolean mLaunching;
 
-    @Extra
-    public int stepToLaunch;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initFacebookSession(false);
-    }
-
-    @AfterInject
-    protected void afterCreation() {
         onCreated();
     }
 
     protected void onCreated() {
+
+    }
+
+    @AfterInject
+    protected void afterInjection() {
+        onInjection();
+    }
+
+    protected void onInjection() {
         // method stub
     }
 

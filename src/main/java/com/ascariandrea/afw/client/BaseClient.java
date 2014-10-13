@@ -1,7 +1,6 @@
 package com.ascariandrea.afw.client;
 
 
-import com.ascariandrea.afw.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -15,21 +14,23 @@ public abstract class BaseClient {
     private static final String TAG = BaseClient.class.getSimpleName();
     protected static final String PATH_SEPARATOR = "/";
     protected static AsyncHttpClient client = new AsyncHttpClient();
-    private String authHeader = null;
+    private String authHeaderValue = null;
+    private String authHeaderName = null;
 
 
-    public void setAuthHeader(String ah) {
-        authHeader = ah;
-        client.addHeader("Authorization", authHeader);
+    public void setAuthHeader(String ahn, String ahv) {
+        authHeaderName = ahn;
+        authHeaderValue = ahv;
+        client.addHeader(ahn, authHeaderValue);
     }
 
     public void resetAuthHeader() {
-        authHeader = null;
-        client.addHeader("Authorization", null);
+        authHeaderValue = null;
+        client.addHeader(authHeaderName, null);
     }
 
     public boolean isAuthenticated() {
-        return authHeader != null;
+        return authHeaderValue != null;
     }
 
     public void get(String url, AsyncHttpResponseHandler responseHandler) {
@@ -114,8 +115,8 @@ public abstract class BaseClient {
         client.setTimeout(timeout);
     }
 
-    public String getAuthHeader() {
-        return authHeader;
+    public String getAuthHeaderValue() {
+        return authHeaderValue;
     }
 
 }

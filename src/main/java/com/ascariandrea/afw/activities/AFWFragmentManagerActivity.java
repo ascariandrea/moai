@@ -15,7 +15,9 @@ import com.ascariandrea.afw.R;
 import com.ascariandrea.afw.fragments.InjectedFragment;
 import com.ascariandrea.afw.utils.Utils;
 
+import org.androidannotations.annotations.CustomTitle;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +50,9 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
     private int mPreviousActiveFragmentIndex;
     protected int mActiveFragmentIndex;
 
+    @Extra
+    public int stepToLaunch = -1;
+
     protected LinearLayout fragmentContainerView;
 
 
@@ -56,11 +61,15 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreated() {
         enableBackButton();
         fragmentManager = getSupportFragmentManager();
         setFragmentContainerId(getFragmentContainerId());
+
+        if (stepToLaunch != -1) {
+            addFragment(stepToLaunch);
+            showFragment(stepToLaunch);
+        }
     }
 
     @Override
