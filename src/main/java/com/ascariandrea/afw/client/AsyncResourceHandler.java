@@ -17,21 +17,25 @@ import java.lang.reflect.Type;
 public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpResponseHandler {
 
     private String TAG = AsyncResourceHandler.class.getSimpleName();
-    private String wrapProperty;
+    private String mWrapProperty;
     private Class<T> mType;
 
 
     public AsyncResourceHandler() {
-        wrapProperty = "data";
+        mWrapProperty = "data";
     }
 
     public AsyncResourceHandler(String wp) {
-        wrapProperty = wp;
+        mWrapProperty = wp;
     }
 
     public AsyncResourceHandler(Class<T> type) {
-        wrapProperty = "data";
+        mWrapProperty = "data";
         mType = type;
+    }
+
+    protected void setmWrapProperty(String wrapProperty) {
+        mWrapProperty = wrapProperty;
     }
 
     @SuppressWarnings("unchecked")
@@ -49,10 +53,11 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
 
     public final void onSuccess(String json) {
         if (json != null) Log.d(TAG, json);
+
         try {
             JSONObject jsonResponse = new JSONObject(json);
-            if (wrapProperty != null) {
-                json = jsonResponse.getJSONObject(wrapProperty).toString();
+            if (mWrapProperty != null) {
+                json = jsonResponse.getJSONObject(mWrapProperty).toString();
             }
             onSuccess(Model.fromJSON(json, getTypeParameterClass()));
         } catch (JSONException e) {

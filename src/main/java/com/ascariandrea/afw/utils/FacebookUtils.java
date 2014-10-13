@@ -12,6 +12,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.ascariandrea.afw.activities.AFWFragmentActivity;
@@ -54,6 +55,21 @@ public class FacebookUtils {
     private static String TAG = FacebookUtils.class.getSimpleName();
 
 
+    public static void getMe(final FacebookUserCallback facebookUserCallback ) {
+        new Request(Session.getActiveSession(), "/me", null, HttpMethod.GET, new Request.Callback() {
+            @Override
+            public void onCompleted(Response response) {
+                if (response != null) {
+                    if (response.getGraphObject() != null)
+                        facebookUserCallback.onSuccess((GraphUser) response.getGraphObject());
+                    else
+                        facebookUserCallback.onError(response);
+                } else
+                    facebookUserCallback.onError(null);
+            }
+
+        }).executeAsync();
+    }
 
     public static void getMeProfilePicture(Context context, int size, ImageRequestCallback callback) {
         getProfilePicture(context, "me", size, callback);
@@ -319,6 +335,12 @@ public class FacebookUtils {
         public void onSuccess(List<FacebookUser> friends);
 
         void onFailure(Response response);
+    }
+
+    public interface FacebookUserCallback {
+        public void onSuccess(GraphUser fbUser);
+
+        public void onError(Response response);
     }
 
 }

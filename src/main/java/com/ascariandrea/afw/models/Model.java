@@ -1,6 +1,5 @@
 package com.ascariandrea.afw.models;
 
-import com.ascariandrea.afw.interfaces.ModelNamingInterface;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -10,6 +9,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by andreaascari on 22/01/14.
@@ -21,23 +22,48 @@ public abstract class Model {
     public static String SINGLE_NAME = "baseModel";
     public static String PLURAL_NAME = "baseModels";
 
-    protected static void checkInitMapper() {
+
+    protected static <T extends Model> void checkInitMapper(T model) {
         if (mapper == null) {
             mapper = new ObjectMapper();
-            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
-            mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
+            for (DeserializationFeature ds : model.getDisabledDeserializationFeatures())
+                mapper.disable(ds);
+
+            for (DeserializationFeature ds : model.getEnabledDeserializationFeatures())
+                mapper.enable(ds);
+
+            for (SerializationFeature sf : model.getDisabledSerializationFeatures())
+                mapper.disable(sf);
+
+            for (SerializationFeature sf : model.getEnabledSerializationFeatures())
+                mapper.enable(sf);
         }
     }
 
-    public static ObjectMapper getMapper() {
-        checkInitMapper();
+    protected java.util.List<SerializationFeature> getDisabledSerializationFeatures() {
+        return Arrays.asList();
+    }
+
+    protected java.util.List<SerializationFeature> getEnabledSerializationFeatures() {
+        return Arrays.asList(SerializationFeature.WRAP_ROOT_VALUE);
+    }
+
+    protected java.util.List<DeserializationFeature> getDisabledDeserializationFeatures() {
+        return Arrays.asList();
+    }
+
+    protected java.util.List<DeserializationFeature> getEnabledDeserializationFeatures() {
+        return Arrays.asList(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    }
+
+    public static <T extends Model> ObjectMapper getMapper(T model) {
+        checkInitMapper(model);
         return mapper;
     }
 
 
     public String toJSON() {
-        checkInitMapper();
+        checkInitMapper(this);
         String ret = "{}";
 
         try {
@@ -49,8 +75,7 @@ public abstract class Model {
         return ret;
     }
 
-    public static <T> T fromJSON(String json, Class<T> model) {
-        checkInitMapper();
+    public static <T extends Model> T fromJSON(String json, Class<T> model) {
         T instance = null;
 
         try {
@@ -60,6 +85,8 @@ public abstract class Model {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
+        checkInitMapper(instance);
 
         try {
             instance = mapper.readValue(json, model);
