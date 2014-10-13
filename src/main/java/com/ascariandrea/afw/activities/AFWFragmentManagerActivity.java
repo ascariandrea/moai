@@ -1,6 +1,7 @@
 package com.ascariandrea.afw.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.LinearLayout;
 
+import com.ascariandrea.afw.BuildConfig;
+import com.ascariandrea.afw.R;
 import com.ascariandrea.afw.fragments.InjectedFragment;
 import com.ascariandrea.afw.utils.Utils;
 
@@ -31,6 +34,8 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
     protected static final int SLIDE_LEFT_TO_RIGHT = 1;
 
     public static final int NON_EXISTENT_INDEX_FRAGMENT = -1;
+
+    public static final int DEFAULT_CONTAINER_ID = 21;
 
     private static final String TAG = AFWFragmentManagerActivity.class.getSimpleName();
 
@@ -55,6 +60,7 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
         super.onCreate(savedInstanceState);
         enableBackButton();
         fragmentManager = getSupportFragmentManager();
+        setFragmentContainerId(getFragmentContainerId());
     }
 
     @Override
@@ -70,7 +76,9 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
     }
 
 
-    protected void setContainerId(int containerId) {
+    protected abstract int getFragmentContainerId();
+
+    protected void setFragmentContainerId(int containerId) {
         mContainerId = containerId;
     }
 
@@ -83,7 +91,8 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
         if (fragment != null)
             fragmentManager.beginTransaction().add(mContainerId, fragment).commit();
 
-        Log.d(TAG, "Stored fragment: " + fragment + " at index: " + fragmentIndex);
+        if (BuildConfig.DEBUG)
+            Log.d(TAG, "Stored fragment: " + fragment + " at index: " + fragmentIndex);
     }
 
     protected void setFragment(int fragmentIndex, InjectedFragment fragmentInstance) {
@@ -104,8 +113,10 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
 
         if (fragments.containsKey(fragmentIndex) && fragments.get(fragmentIndex) != null) {
             FragmentTransaction t = fragmentManager.beginTransaction();
-            Log.d(TAG, "Fragment to hide: " + fragments.get(mActiveFragmentIndex));
-            Log.d(TAG, "Fragment to show: " + fragments.get(fragmentIndex));
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "Fragment to hide: " + fragments.get(mActiveFragmentIndex));
+                Log.d(TAG, "Fragment to show: " + fragments.get(fragmentIndex));
+            }
 
             Utils.Views.hideKeyBoard(this, getWindow().getDecorView());
 
@@ -134,9 +145,6 @@ public abstract class AFWFragmentManagerActivity extends AFWFragmentActivity {
 
     protected abstract <F extends InjectedFragment> F getFragmentAtIndex(int nextFragmentIndex);
 
-    protected void toggleFragment(int index, boolean addToBackStack) {
-
-    }
 
     public void hideFragment(int fragmentIndex) {
         if (fragments.get(fragmentIndex) != null) {

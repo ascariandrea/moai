@@ -8,6 +8,7 @@ import com.facebook.Session;
 import com.ascariandrea.afw.persist.PersistentPreferences;
 import com.ascariandrea.afw.utils.Utils;
 
+import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -28,12 +29,22 @@ public abstract class AFWFragmentActivity extends FragmentActivity {
 
     private boolean mLaunching;
 
-    @Extra public int stepToLaunch;
+    @Extra
+    public int stepToLaunch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initFacebookSession(false);
+    }
+
+    @AfterInject
+    protected void afterCreation() {
+        onCreated();
+    }
+
+    protected void onCreated() {
+        // method stub
     }
 
     protected void initFacebookSession(boolean b) {

@@ -17,6 +17,7 @@ public abstract class BaseClient {
     protected static AsyncHttpClient client = new AsyncHttpClient();
     private String authHeader = null;
 
+
     public void setAuthHeader(String ah) {
         authHeader = ah;
         client.addHeader("Authorization", authHeader);
