@@ -11,6 +11,7 @@ import com.ascariandrea.afw.utils.Utils;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 
 
 /**
@@ -19,12 +20,16 @@ import org.androidannotations.annotations.EActivity;
 @EActivity
 public abstract class AFWFragmentActivity extends FragmentActivity {
 
+    private static final int NO_REQUEST_CODE = -99;
     private String TAG = AFWFragmentActivity.class.getSimpleName();
 
     public static final int RESULT_DONE = 4;
 
     private Session mFbSession;
     protected PersistentPreferences mPrefs;
+
+
+    @Extra public int requestCode = NO_REQUEST_CODE;
 
     private boolean mLaunching;
 

@@ -86,12 +86,13 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
 
 
     public boolean onBackPressed() {
+        boolean handled;
         if (isFirstBackPress()) {
-            Log.d(TAG, "firstpress");
+            Log.d(TAG, "first press");
             mFirstBackPress = false;
             return onFirstBackPressed();
         } else {
-            Log.d(TAG, "anotherpress");
+            Log.d(TAG, "another press");
             return onAnotherBackPressed();
         }
     }
