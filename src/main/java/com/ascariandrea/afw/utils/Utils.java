@@ -302,6 +302,7 @@ public class Utils {
         }
 
         public static java.lang.String join(java.lang.String[] s, java.lang.String glue) {
+            if (s == null) return "";
             int k = s.length;
             if (k == 0) return "";
             StringBuilder out = new StringBuilder();
@@ -401,4 +402,42 @@ public class Utils {
 
     }
 
+    public static class GoogleAuth {
+
+        public static final java.lang.String OAUTH2 = "oauth2:";
+        private static final java.lang.String PROFILE_EMAILS_READ_SCOPE = "https://www.googleapis.com/auth/plus.profile.emails.read";
+        private static java.lang.String mOauthUrl;
+
+        private static java.lang.String getServerOAuth2Prefix(java.lang.String serverClientId) {
+            java.lang.String oauthPrefix = OAUTH2;
+            if (serverClientId != null)
+                oauthPrefix = oauthPrefix.concat(":server:client_id:").concat(serverClientId).concat(":api_scopes:");
+
+            return oauthPrefix;
+        }
+
+        public static java.lang.String getServerOAuthUrl(java.lang.String serverClientId, boolean emailScope, java.lang.String... scopes) {
+            return getServerOAuth2Prefix(serverClientId).concat(getScopes(emailScope, scopes));
+        }
+
+        public static java.lang.String getOAuth2Url(boolean emailScope, java.lang.String... scopes) {
+            return OAUTH2.concat(getScopes(emailScope, scopes));
+        }
+
+        public static java.lang.String getScopes(boolean emailScope, java.lang.String... scopes) {
+            java.lang.String scopesString = "";
+            if (scopes != null) {
+                if (scopes.length == 1) {
+                    scopesString = scopesString.concat(scopes[0]).concat(" ");
+                } else {
+                    scopesString = scopesString
+                            .concat(Utils.String.join(scopes, " "));
+                }
+            }
+            if (emailScope)
+                scopesString = scopesString.concat(PROFILE_EMAILS_READ_SCOPE);
+
+            return scopesString;
+        }
+    }
 }

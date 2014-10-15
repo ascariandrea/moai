@@ -1,29 +1,56 @@
 package com.ascariandrea.afw.activities;
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
+import com.ascariandrea.afw.AFWApp;
+import com.ascariandrea.afw.BuildConfig;
 import com.ascariandrea.afw.fragments.InjectedFragment;
+import com.ascariandrea.afw.utils.Utils;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OnActivityResult;
+import org.androidannotations.annotations.UiThread;
+
+import java.io.IOException;
 
 /**
  * Created by andreaascari on 11/10/14.
  */
 @EActivity
-public abstract class AFWLoginActivity extends AFWFragmentManagerActivity {
+public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = AFWLoginActivity.class.getSimpleName();
     private static final int SPLASH = 0;
     private static final int SELECTION = 1;
 
+    private static final int RC_SIGN_IN = 0;
+    private static final int RC_AUTH = 1;
+    public static final int RE_AUTH_ACTIVITY_CODE = 100;
+
+    protected static final String GOOGLE_TYPE = "google";
+    protected static final String FACEBOOK_TYPE = "facebook";
+    protected static final String TWITTER_TYPE = "twitter";
 
 
+    private GoogleApiClient mPlusClient;
+
+    private boolean mIntentInProgress;
     private boolean isResumed = false;
     private boolean mFbLogging = false;
     private UiLifecycleHelper uiHelper;
@@ -73,6 +100,8 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity {
 
     protected abstract InjectedFragment getSelectionFragment();
 
+    // FACEBOOK
+
     public void onSessionStateChange(Session session, SessionState state, Exception exception) {
         // Only make changes if the activity is visible
         Log.d(TAG, session.toString());
@@ -98,7 +127,124 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity {
 
     }
 
+
     protected abstract void onFbSessionOpen(Session session);
+
+    // GOOGLE
+
+    // GOOGLE PLUS
+
+    public GoogleApiClient getGooglePlusClient() {
+        if (isGooglePlusLoginEnabled()) {
+            if (AFWApp.checkGooglePlayService(this)) {
+                if (mPlusClient == null) {
+                    mPlusClient = new GoogleApiClient.Builder(
+                            AFWLoginActivity.this,
+                            this,
+                            this)
+                            .addApi(Plus.API)
+                            .addScope(Plus.SCOPE_PLUS_LOGIN)
+                            .addScope(Plus.SCOPE_PLUS_PROFILE)
+                            .build();
+                }
+            }
+        }
+
+        return mPlusClient;
+    }
+
+    public abstract boolean isGooglePlusLoginEnabled();
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (BuildConfig.DEBUG && bundle != null)
+            Log.d(TAG, bundle.toString());
+
+        retrieveGoogleAuthToken();
+
+    }
+
+    @Override
+    public void onDisconnected() {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Background
+    protected void retrieveGoogleAuthToken() {
+        Bundle appActivities = new Bundle();
+        appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES, Utils.String.join(getAppActivitiesString(), " "));
+
+        String oauthScopes = Utils.GoogleAuth.getServerOAuthUrl(null, true, Scopes.PLUS_LOGIN);
+        String token = null;
+        try {
+
+            Log.d("scopes", oauthScopes);
+            token = GoogleAuthUtil.getToken(
+                    this,
+                    Plus.AccountApi.getAccountName(getGooglePlusClient()),
+                    oauthScopes);
+
+        } catch (UserRecoverableAuthException e) {
+            Log.d(TAG, e.getLocalizedMessage());
+            startActivityForResult(e.getIntent(), RC_AUTH);
+            return;
+
+        } catch (GoogleAuthException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (token != null) {
+            onGooglePlusAuth(token);
+        }
+
+    }
+
+    private String[] getAppActivitiesString() {
+        return null;
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.d("Connection failed: ", result.toString());
+        if (!mIntentInProgress && result.hasResolution()) {
+            try {
+                mIntentInProgress = true;
+                result.startResolutionForResult(this, RC_SIGN_IN);
+            } catch (IntentSender.SendIntentException e) {
+                // The intent was canceled before it was sent.  Return to the default
+                // state and attempt to connect to get an updated ConnectionResult.
+                mIntentInProgress = false;
+                getGooglePlusClient().connect();
+            }
+        }
+    }
+
+    @OnActivityResult(RC_SIGN_IN)
+    protected void onGoogleSignInRequest(int resultCode, Intent data) {
+        getGooglePlusClient().connect();
+    }
+
+    @OnActivityResult(RC_AUTH)
+    protected void onGoogleAuthRequest(int resultCode, Intent data) {
+        getGooglePlusClient().connect();
+    }
+
+
+    @UiThread
+    public void onGooglePlusAuth(String token) {
+
+    }
 
 
     @Override
@@ -125,6 +271,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity {
         uiHelper.onPause();
         isResumed = false;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -144,15 +291,18 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity {
         Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
     }
 
+
     public UiLifecycleHelper getUiHelper() {
         return uiHelper;
     }
 
-    protected void setFbLogging(boolean b) {
+    protected void setIsLogging(boolean b) {
         mFbLogging = true;
     }
 
-    protected boolean isFbLogging() {
+    protected boolean isLogging() {
         return mFbLogging;
     }
+
+
 }
