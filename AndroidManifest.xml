@@ -4,4 +4,7 @@
     android:versionCode="1"
     android:versionName="0.0.1">
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
 </manifest>
