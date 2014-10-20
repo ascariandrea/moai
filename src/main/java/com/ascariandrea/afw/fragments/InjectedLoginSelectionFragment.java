@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.ascariandrea.afw.AFWApp;
 import com.ascariandrea.afw.BuildConfig;
@@ -87,19 +88,36 @@ public abstract class InjectedLoginSelectionFragment extends InjectedFragment  {
     public void afterViewsInjected() {
         super.afterViewsInjected();
 
-        Log.d("GooglePlus enabled", String.valueOf(getLoginActivity() != null && getLoginActivity().isGooglePlusLoginEnabled()));
-        Log.d("Google plus button", String.valueOf(getGooglePlusButton() != null));
-        if (getLoginActivity() != null && getLoginActivity().isGooglePlusLoginEnabled()) {
-            if (getGooglePlusButton() != null) {
-                getGooglePlusButton().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getLoginActivity().getGooglePlusClient().connect();
-                    }
-                });
+
+        if (getLoginActivity() != null) {
+
+            if (getLoginActivity().isTwitterLoginEnabled()) {
+                if (getTwitterButton() != null) {
+                    getTwitterButton().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getLoginActivity().twitterLogin();
+                        }
+                    });
+                }
+            }
+
+            if (getLoginActivity().isGooglePlusLoginEnabled()) {
+                if (getGooglePlusButton() != null) {
+                    getGooglePlusButton().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getLoginActivity().getGooglePlusClient().connect();
+                        }
+                    });
+                }
             }
         }
     }
+
+
+    protected abstract Button getTwitterButton();
+
 
     protected abstract SignInButton getGooglePlusButton();
 

@@ -16,7 +16,9 @@ import java.net.URLDecoder;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 import twitter4j.auth.OAuthAuthorization;
+import twitter4j.conf.ConfigurationBuilder;
 
 
 /**
@@ -24,15 +26,13 @@ import twitter4j.auth.OAuthAuthorization;
  */
 public class TwitterUtils {
 
-    /////////////////Customizable fields and methods//////////////////////////
-    private static final String CONSUMER_KEY = "8U99vtcSLG4USG5ahuiK7q4qq";
-    private static final String CONSUMER_KEY_SECRET = "L8R0Cj8o7ym12Oi4Yn5702a8GssAVcxJvUvuE9noMWk1f7OYJC";
-    private static final String ACCESS_TOKEN = "452357036-51UlJfkPvmVOsbAy0hNigTKdwLkqAqQPttqLZkiy";
-    private static final String ACCESS_TOKEN_SECRET = "k9ojDcvoEtDlb9OIRw2fwWM70f4gvNjhyJ1qRw9TW1yYC";
+
     private static final String REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token";
     private static final String AUTHORIZE_URL = "https://api.twitter.com/oauth/authorize";
     private static final String ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token";
+    private static final String TAG = TwitterUtils.class.getSimpleName();
     private static TwitterUtils mInstance;
+    private Twitter mTwitter;
     private String mConsumerKey;
     private String mConsumerKeySecret;
     private String mCallbackURL;
@@ -42,11 +42,40 @@ public class TwitterUtils {
         TwitterUtils.getInstance().setConsumerKey(consumerKey);
         TwitterUtils.getInstance().setConsumerKeySecret(consumerKeySecret);
         TwitterUtils.getInstance().setCallbackURL(mCallbackURL);
+        TwitterUtils.getInstance().factory(consumerKey, consumerKeySecret);
     }
 
-    private static TwitterUtils getInstance() {
+    private Twitter factory(String consumerKey, String consumerKeySecret) {
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        builder.setDebugEnabled(true)
+                .setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerKeySecret)
+                .setJSONStoreEnabled(true);
+
+        TwitterFactory twitterFactory = new TwitterFactory(builder.build());
+        return (mTwitter = twitterFactory.getInstance());
+    }
+
+
+    public twitter4j.auth.RequestToken getRequestToken() {
+        try {
+            return  mTwitter.getOAuthRequestToken();
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+    public static TwitterUtils getInstance() {
         if (mInstance == null) mInstance = new TwitterUtils();
         return mInstance;
+    }
+
+    public static Twitter getTwitterInstance() {
+        return getInstance().mTwitter;
     }
 
     public static String getConsumerKey() {
@@ -72,9 +101,9 @@ public class TwitterUtils {
         return null;
     }
 
-    public static twitter4j.auth.RequestToken getOauthRequestToken() {
+    public  twitter4j.auth.RequestToken getOauthRequestToken() {
         try {
-            return TwitterFactory.getSingleton().getOAuthRequestToken(getCallbackURL());
+            return mTwitter.getOAuthRequestToken();
         } catch (TwitterException e) {
             e.printStackTrace();
         }
@@ -285,23 +314,22 @@ public class TwitterUtils {
 //        }
 //    }
 //
-//    private static User handleAccessToken(AccessToken a) throws TwitterException {
-//        // initialize Twitter4J
-//        ConfigurationBuilder builder = new ConfigurationBuilder();
-//        builder.setDebugEnabled(true)
-//                .setOAuthConsumerKey(TwitterOAuthHelper.CONSUMER_KEY)
-//                .setOAuthAccessTokenSecret(CONSUMER_KEY_SECRET)
-//                .setOAuthAccessToken(ACCESS_TOKEN)
-//                .setOAuthAccessTokenSecret(ACCESS_TOKEN_SECRET)
-//                .setJSONStoreEnabled(true);
-//
-//        TwitterFactory twitterFactory = new TwitterFactory(builder.build());
-//        Twitter twitter = twitterFactory.getInstance();
-//        twitter.setOAuthConsumer(TwitterOAuthHelper.CONSUMER_KEY, TwitterOAuthHelper.CONSUMER_KEY_SECRET);
-//        twitter.setOAuthAccessToken(a);
-//        TwitterOAuthHelper.saveTwitterSession(twitter);
-//        return twitter.showUser(a.getUserId());
-//    }
+    private static User handleAccessToken(twitter4j.auth.AccessToken a) throws TwitterException {
+        // initialize Twitter4J
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        builder.setDebugEnabled(true)
+                .setOAuthConsumerKey(getInstance().mConsumerKey)
+                .setOAuthAccessToken(a.getToken())
+                .setOAuthAccessTokenSecret(a.getTokenSecret())
+                .setJSONStoreEnabled(true);
+
+        TwitterFactory twitterFactory = new TwitterFactory(builder.build());
+        Twitter twitter = twitterFactory.getInstance();
+        twitter.setOAuthConsumer(getInstance().mConsumerKey, getInstance().mConsumerKeySecret);
+        twitter.setOAuthAccessToken(a);
+        //TwitterOAuthHelper.saveTwitterSession(twitter);
+        return twitter.showUser(a.getUserId());
+    }
 //
 //    public static interface TwitterOAuthSuccessCallback {
 //        public void onTwitterLoginSuccess(SerializableTWITTERuser user);

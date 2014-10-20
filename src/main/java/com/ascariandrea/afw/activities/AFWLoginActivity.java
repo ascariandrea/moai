@@ -2,13 +2,16 @@ package com.ascariandrea.afw.activities;
 
 import android.content.Intent;
 import android.content.IntentSender;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import com.ascariandrea.afw.AFWApp;
 import com.ascariandrea.afw.BuildConfig;
 import com.ascariandrea.afw.fragments.InjectedFragment;
+import com.ascariandrea.afw.utils.TwitterUtils;
 import com.ascariandrea.afw.utils.Utils;
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -28,6 +31,13 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 
 import java.io.IOException;
+
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.OAuth2Token;
+import twitter4j.auth.RequestToken;
 
 /**
  * Created by andreaascari on 11/10/14.
@@ -68,6 +78,12 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
 
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
+
+        if (android.os.Build.VERSION.SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
     }
 
     @Override
@@ -130,7 +146,32 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
 
     protected abstract void onFbSessionOpen(Session session);
 
-    // GOOGLE
+
+
+
+
+    // TWITTER
+
+    public abstract boolean isTwitterLoginEnabled();
+
+    public void twitterLogin() {
+
+        Thread twitterLoginThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final RequestToken requestToken = TwitterUtils.getInstance().getRequestToken();
+                AFWLoginActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requestToken.getAuthenticationURL())));
+            }
+        });
+
+        twitterLoginThread.start();
+
+
+    }
+
+
+
+    protected abstract void onTwitterAuthorization();
 
     // GOOGLE PLUS
 

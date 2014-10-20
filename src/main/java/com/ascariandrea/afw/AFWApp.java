@@ -15,12 +15,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EApplication;
-import org.androidannotations.annotations.UiThread;
-
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by andreaascari on 15/10/14.
