@@ -59,7 +59,7 @@ public abstract class InjectedLoginSelectionFragment extends InjectedFragment  {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, resultCode + " " + requestCode + data);
+        Log.d(TAG, resultCode + " " + requestCode + " " +  data);
         getLoginActivity().getUiHelper().onActivityResult(requestCode, resultCode, data);
     }
 
