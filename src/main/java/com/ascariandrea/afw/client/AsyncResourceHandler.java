@@ -72,16 +72,25 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
         else {
             String res = new String(bytes);
             onFailure(throwable, res);
-            try {
-                JSONObject jsonRes = new JSONObject(res);
-                int code = 500;
-                if (jsonRes.has("code") && !jsonRes.getString("code").isEmpty())
-                    code = Integer.parseInt(jsonRes.getString("code"));
+            Log.d("Throwable", throwable.getMessage());
 
-                String message = jsonRes.getString("message");
+            try {
+
+                String message = "";
+                int code = 500;
                 JSONArray errors = new JSONArray();
-                if (jsonRes.has("errors"))
-                      errors = jsonRes.getJSONArray("errors");
+                if (!res.isEmpty()) {
+                    JSONObject jsonRes = new JSONObject(res);
+
+
+                    if (jsonRes.has("code") && !jsonRes.getString("code").isEmpty())
+                        code = Integer.parseInt(jsonRes.getString("code"));
+
+                    message = jsonRes.getString("message");
+                    errors = new JSONArray();
+                    if (jsonRes.has("errors"))
+                        errors = jsonRes.getJSONArray("errors");
+                }
 
                 if (throwable instanceof HttpResponseException) {
                     HttpResponseException httpResponseException = (HttpResponseException) throwable;

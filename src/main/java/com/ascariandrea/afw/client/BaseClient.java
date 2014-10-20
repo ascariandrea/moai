@@ -6,9 +6,16 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Time;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 public abstract class BaseClient {
     private static final String TAG = BaseClient.class.getSimpleName();
@@ -84,6 +91,22 @@ public abstract class BaseClient {
 
     protected void postAuth(String url, AsyncHttpResponseHandler handler) {
         postAuth(url, new RequestParams(), handler);
+    }
+
+    protected void postFile(String url, String fileName, String fileUri, AsyncResourceHandler resourceHandler) {
+        RequestParams params = new RequestParams();
+        try {
+            params.put(fileName, new File(fileUri));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        client.post(null, url, params, resourceHandler);
+    }
+
+    protected void postFile(String url, String fileName, byte[] fileBuffer, String extension, AsyncResourceHandler resourceHandler) {
+        RequestParams params = new RequestParams();
+        params.put(fileName, new ByteArrayInputStream(fileBuffer), Calendar.getInstance().getTimeInMillis() + "." + extension );
+        client.post(null, url, params, resourceHandler);
     }
 
 
