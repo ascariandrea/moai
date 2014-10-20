@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -14,7 +15,9 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,9 @@ import android.widget.Toast;
 import com.ascariandrea.afw.R;
 import com.ascariandrea.afw.models.Model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Calendar;
@@ -438,6 +444,43 @@ public class Utils {
                 scopesString = scopesString.concat(PROFILE_EMAILS_READ_SCOPE);
 
             return scopesString;
+        }
+    }
+
+    public static class Image {
+
+        public static Bitmap decodeImage(Context context, Uri path, int max_width) {
+            ParcelFileDescriptor parcelFileDescriptor;
+            Bitmap b = null;
+            try {
+                parcelFileDescriptor = context.getContentResolver().openFileDescriptor(path, "r");
+                FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+
+                //Decode image size
+                BitmapFactory.Options o = new BitmapFactory.Options();
+                o.inJustDecodeBounds = true;
+                BitmapFactory.decodeFileDescriptor(fileDescriptor, null, o);
+                int scale = 1;
+                if (o.outWidth > max_width) {
+                    scale = (int) Math.pow(2, (int) Math.ceil(Math.log(max_width /
+                            (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
+                }
+                //Decode with inSampleSize
+                o = new BitmapFactory.Options();
+                o.inSampleSize = scale;
+                b = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, o);
+                return b;
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        public static byte[] BitmapToByteArray(Bitmap bmp) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            return stream.toByteArray();
         }
     }
 }
