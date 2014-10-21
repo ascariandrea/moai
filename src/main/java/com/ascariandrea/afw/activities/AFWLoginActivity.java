@@ -118,6 +118,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     public void onSessionStateChange(Session session, SessionState state, Exception exception) {
         // Only make changes if the activity is visible
         Log.d(TAG, session.toString());
+        Log.d(TAG, session.getAccessToken() + "");
         if (isResumed) {
             FragmentManager manager = getSupportFragmentManager();
             // Get the number of entries in the back stack

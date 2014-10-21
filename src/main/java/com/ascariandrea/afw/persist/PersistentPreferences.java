@@ -11,7 +11,7 @@ public class PersistentPreferences {
     private static final String TWITTER_ACCESS_TOKEN = "twitter-access-token";
     private static final String TWITTER_ACCESS_TOKEN_SECRET = "twitter-access-token-secret";
     private static final String TWITTER_LOGIN = "twitter-login";
-
+    private static final String USER_TOKEN = "user-token";
 
 
     protected Context mContext;
@@ -111,5 +111,9 @@ public class PersistentPreferences {
 
     public String getTwitterAccessTokenSecret() {
         return getPref(TWITTER_ACCESS_TOKEN_SECRET);
+    }
+
+    public void saveUserToken(String token) {
+        putPref(USER_TOKEN, token);
     }
 }

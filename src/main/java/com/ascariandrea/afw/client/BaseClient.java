@@ -28,7 +28,7 @@ public abstract class BaseClient {
     public void setAuthHeader(String ahn, String ahv) {
         authHeaderName = ahn;
         authHeaderValue = ahv;
-        client.addHeader(ahn, authHeaderValue);
+        client.addHeader(ahn, ahv);
     }
 
     public void resetAuthHeader() {

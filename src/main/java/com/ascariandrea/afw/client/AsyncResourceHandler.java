@@ -85,8 +85,9 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
 
                     if (jsonRes.has("code") && !jsonRes.getString("code").isEmpty())
                         code = Integer.parseInt(jsonRes.getString("code"));
+                    if (jsonRes.has("message"))
+                        message = jsonRes.getString("message");
 
-                    message = jsonRes.getString("message");
                     errors = new JSONArray();
                     if (jsonRes.has("errors"))
                         errors = jsonRes.getJSONArray("errors");
