@@ -108,6 +108,7 @@ public abstract class AFWFragmentActivity extends FragmentActivity {
 
 
     public PersistentPreferences getPrefs() {
+        if (mPrefs == null) mPrefs = new PersistentPreferences(this);
         return mPrefs;
     }
 

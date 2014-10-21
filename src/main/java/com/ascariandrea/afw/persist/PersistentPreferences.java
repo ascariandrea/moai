@@ -8,8 +8,11 @@ import java.util.Set;
 
 public class PersistentPreferences {
     private static final String PREFS_FILE = "hs-mPrefs";
+    private static final String TWITTER_ACCESS_TOKEN = "twitter-access-token";
+    private static final String TWITTER_ACCESS_TOKEN_SECRET = "twitter-access-token-secret";
+    private static final String TWITTER_LOGIN = "twitter-login";
 
-    private static final int MAX_STORED_STATUSES = 5;
+
 
     protected Context mContext;
     protected SharedPreferences mPrefs;
@@ -38,26 +41,26 @@ public class PersistentPreferences {
         if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         Editor editor = mPrefs.edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
 
-    protected void putPref(String key, boolean hasViewed) {
+    protected void putPref(String key, boolean b) {
         if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
-        mPrefs.edit().putBoolean(key, hasViewed).commit();
+        mPrefs.edit().putBoolean(key, b).apply();
     }
 
     protected void deletePref(String key) {
         if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         Editor editor = mPrefs.edit();
         editor.remove(key);
-        editor.commit();
+        editor.apply();
     }
 
     protected void deleteAll() {
         if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         Editor editor = mPrefs.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 
     public String getCurrentUser() {
@@ -83,5 +86,30 @@ public class PersistentPreferences {
 
     public void saveFbFriends(String fbFriends) {
         putPref("fb-friends",fbFriends);
+    }
+
+    public void saveTwitterAccessToken(String accessToken) {
+        putPref(TWITTER_ACCESS_TOKEN, accessToken);
+    }
+
+    public void saveTwitterAccessTokenSecret(String accessTokenSecret) {
+        putPref(TWITTER_ACCESS_TOKEN_SECRET, accessTokenSecret);
+    }
+
+    public void saveTwitterLogin(boolean b) {
+        putPref(TWITTER_LOGIN, b);
+
+    }
+
+    public boolean isTwitterLogged() {
+        return getBooleanPrefs(TWITTER_LOGIN);
+    }
+
+    public String getTwitterAccessToken() {
+        return getPref(TWITTER_ACCESS_TOKEN);
+    }
+
+    public String getTwitterAccessTokenSecret() {
+        return getPref(TWITTER_ACCESS_TOKEN_SECRET);
     }
 }

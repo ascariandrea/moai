@@ -1,8 +1,8 @@
 package com.ascariandrea.afw.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +11,7 @@ import android.util.Log;
 import com.ascariandrea.afw.AFWApp;
 import com.ascariandrea.afw.BuildConfig;
 import com.ascariandrea.afw.fragments.InjectedFragment;
+import com.ascariandrea.afw.persist.PersistentPreferences;
 import com.ascariandrea.afw.utils.TwitterUtils;
 import com.ascariandrea.afw.utils.Utils;
 import com.facebook.Session;
@@ -32,18 +33,14 @@ import org.androidannotations.annotations.UiThread;
 
 import java.io.IOException;
 
-import twitter4j.Twitter;
 import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
-import twitter4j.auth.OAuth2Token;
-import twitter4j.auth.RequestToken;
 
 /**
  * Created by andreaascari on 11/10/14.
  */
 @EActivity
-public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, TwitterUtils.TwitterOAuthInterface {
 
     private static final String TAG = AFWLoginActivity.class.getSimpleName();
     private static final int SPLASH = 0;
@@ -155,23 +152,29 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     public abstract boolean isTwitterLoginEnabled();
 
     public void twitterLogin() {
+        TwitterUtils.getInstance().authenticate(this, this);
+    }
 
-        Thread twitterLoginThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final RequestToken requestToken = TwitterUtils.getInstance().getRequestToken();
-                AFWLoginActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requestToken.getAuthenticationURL())));
-            }
-        });
+    @Override
+    public void onTwitterAuthenticationSuccess(Dialog dialog, AccessToken accessToken) {
+        Utils.Dialogs.clearScreen();
+        if (dialog != null)
+            dialog.dismiss();
+        TwitterUtils.getInstance().storeTwitterAuth(getPersistentPreferences(), accessToken);
+        onTwitterAuthorization(accessToken);
 
-        twitterLoginThread.start();
+    }
 
+    protected abstract PersistentPreferences getPersistentPreferences();
+
+    @Override
+    public void onTwitterAuthenticationFailure(TwitterException e) {
 
     }
 
 
-
-    protected abstract void onTwitterAuthorization();
+    @UiThread
+    protected abstract void onTwitterAuthorization(AccessToken token);
 
     // GOOGLE PLUS
 
@@ -344,6 +347,5 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     protected boolean isLogging() {
         return mFbLogging;
     }
-
 
 }

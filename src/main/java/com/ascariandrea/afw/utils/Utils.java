@@ -1,5 +1,6 @@
 package com.ascariandrea.afw.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
@@ -19,8 +21,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -482,5 +486,22 @@ public class Utils {
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             return stream.toByteArray();
         }
+    }
+
+    public static class Screen {
+
+            @SuppressWarnings("deprecation")
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+            public static Point getSize(WindowManager windowManager) {
+                Display display = windowManager.getDefaultDisplay();
+                Point size = new Point();
+                if (Utils.API.isGreatEqualsThan(13)) {
+                    display.getSize(size);
+                } else {
+                    size.x = display.getWidth();
+                    size.y = display.getHeight();
+                }
+                return size;
+            }
     }
 }
