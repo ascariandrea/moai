@@ -6,6 +6,7 @@ import android.util.Log;
 
 
 import com.ascariandrea.afw.interfaces.OnInjectionCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -110,6 +111,8 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
     public boolean isFirstBackPress() {
         return mFirstBackPress;
     }
+
+
 
     protected class DataObserver implements Observer {
 

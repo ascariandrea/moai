@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,9 +18,11 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -36,6 +39,7 @@ import android.widget.Toast;
 
 import com.ascariandrea.afw.R;
 import com.ascariandrea.afw.models.Model;
+import com.facebook.android.Util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
@@ -503,5 +507,35 @@ public class Utils {
                 }
                 return size;
             }
+    }
+
+    public static class Location {
+
+
+        public static boolean isLocationEnabled(Context context) {
+            boolean locationAvailable = false;
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                Log.d(TAG, "gps enabled");
+                locationAvailable = true;
+            }
+
+            if (lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                Log.d(TAG, "network enabled");
+                locationAvailable = true;
+            }
+
+            return locationAvailable;
+        }
+
+        public static AlertDialog.Builder getLocationDisabledDialog(Context context, java.lang.String appName, DialogInterface.OnClickListener ignoreListener, DialogInterface.OnClickListener settingsListener) {
+
+            return new AlertDialog.Builder(context)
+                    .setTitle(Utils.String.capitalize(context.getString(R.string.location_service_disabled)))
+                    .setMessage(context.getString(R.string.location_service_disabled_message, appName))
+                    .setNegativeButton(Utils.String.capitalize(context.getString(R.string.ignore)), ignoreListener)
+                    .setPositiveButton(Utils.String.capitalize(context.getString(R.string.settings)), settingsListener);
+
+        }
     }
 }
