@@ -306,8 +306,11 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     @Override
     protected void onResume() {
         super.onResume();
-        uiHelper.onResume();
         isResumed = true;
+        uiHelper.onResume();
+        onSessionStateChange(Session.getActiveSession(), Session.getActiveSession().getState(), null);
+
+
     }
 
     @Override
