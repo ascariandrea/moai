@@ -12,6 +12,7 @@ public class PersistentPreferences {
     private static final String TWITTER_ACCESS_TOKEN_SECRET = "twitter-access-token-secret";
     private static final String TWITTER_LOGIN = "twitter-login";
     private static final String USER_TOKEN = "user-token";
+    private static final String APP_AUTHORIZATION_TOKEN = "authorization-token";
 
 
     protected Context mContext;
@@ -88,6 +89,18 @@ public class PersistentPreferences {
         putPref("fb-friends",fbFriends);
     }
 
+
+    // APP TOKEN
+    public void saveAuthorizationToken(String authorizationToken) {
+        putPref(APP_AUTHORIZATION_TOKEN, authorizationToken);
+    }
+
+    public String getAppAuthorizationToken() {
+        return getPref(APP_AUTHORIZATION_TOKEN);
+    }
+
+
+    // TWITTER
     public void saveTwitterAccessToken(String accessToken) {
         putPref(TWITTER_ACCESS_TOKEN, accessToken);
     }
@@ -98,7 +111,6 @@ public class PersistentPreferences {
 
     public void saveTwitterLogin(boolean b) {
         putPref(TWITTER_LOGIN, b);
-
     }
 
     public boolean isTwitterLogged() {
