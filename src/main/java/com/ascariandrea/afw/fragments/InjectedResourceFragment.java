@@ -22,8 +22,8 @@ public abstract class InjectedResourceFragment<T extends Model> extends Injected
     private boolean mNeedRepopulate = false;
 
 
-    @AfterInject
-    protected void afterCreation() {
+    @Override
+    protected void toCallAfterCreation() {
         onCreated();
         initHandler();
         if (!mFetchDataIsDisabled)

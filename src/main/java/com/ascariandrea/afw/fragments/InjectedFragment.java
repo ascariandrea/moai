@@ -57,10 +57,16 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
 
     @AfterInject
     protected void afterCreation() {
+        toCallAfterCreation();
+    }
+
+    protected void toCallAfterCreation() {
         onCreated();
     }
 
-    protected void onCreated(){};
+    protected void onCreated() {
+
+    }
 
     @AfterViews
     public void afterViewsInjected() {

@@ -13,6 +13,7 @@ import com.androidmapsextensions.SupportMapFragment;
 public class ESupportMapFragment extends SupportMapFragment {
 
     private MapCreationListener mMapListener;
+    private boolean mFirstCall = true;
 
 
     public static ESupportMapFragment newInstance(MapCreationListener listener) {
@@ -35,9 +36,14 @@ public class ESupportMapFragment extends SupportMapFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        if (mMapListener != null) {
+        if (mMapListener != null && isFirstCall()) {
             mMapListener.onMapCreated();
+            mFirstCall = false;
         }
         return view;
+    }
+
+    private boolean isFirstCall() {
+        return mFirstCall;
     }
 }

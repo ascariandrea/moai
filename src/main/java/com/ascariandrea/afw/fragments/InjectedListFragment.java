@@ -1,6 +1,7 @@
 package com.ascariandrea.afw.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 
 
 import com.ascariandrea.afw.client.AsyncCollectionHandler;
@@ -32,19 +33,13 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @AfterInject
-    protected void afterCreation() {
+    protected void toCallAfterCreation() {
         onCreated();
         initHandler();
         if (!mFetchDataIsDisabled)
             fetchData();
     }
 
-    protected void onCreated() {}
 
 
     @SuppressWarnings("unchecked")
