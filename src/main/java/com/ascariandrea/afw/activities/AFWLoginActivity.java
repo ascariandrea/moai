@@ -308,10 +308,18 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
         super.onResume();
         isResumed = true;
         uiHelper.onResume();
-        onSessionStateChange(Session.getActiveSession(), Session.getActiveSession().getState(), null);
+        if (!hasAuthorizationToken()) {
+            onSessionStateChange(Session.getActiveSession(), Session.getActiveSession().getState(), null);
+        } else {
+            onAuthorizationTokenFound();
+        }
 
 
     }
+
+    protected abstract void onAuthorizationTokenFound();
+
+    protected abstract boolean hasAuthorizationToken();
 
     @Override
     protected void onPause() {

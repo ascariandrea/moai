@@ -93,21 +93,21 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
                         errors = jsonRes.getJSONArray("errors");
                 }
 
-                if (throwable instanceof HttpResponseException) {
-                    HttpResponseException httpResponseException = (HttpResponseException) throwable;
-                    switch(httpResponseException.getStatusCode()) {
-                        case 404:
-                            onNotFound(throwable, message, errors, code);
-                            break;
-                        case 401:
-                            onNotAuthorized(throwable, message, errors, code);
-                            break;
-                        default:
-                            onFailure(throwable, message, errors, code);
-                    }
-                } else {
-                    onFailure(throwable, message, errors, code);
+                Log.d(TAG, "code: " + i);
+
+                switch(i) {
+                    case 404:
+                        onNotFound(throwable, message, errors, code);
+                        break;
+                    case 401:
+                        onNotAuthorized(throwable, message, errors, code);
+                        break;
+                    case 403:
+                        onForbidden(throwable, res);
+                    default:
+                        onFailure(throwable, message, errors, code);
                 }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -125,6 +125,8 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
     }
 
     protected void onNotAuthorized(Throwable throwable, String message, JSONArray errors, int code) {}
+
+    protected void onForbidden(Throwable throwable, String res){}
 
     public void onNotFound(Throwable throwable, String message, JSONArray errors, int code) {}
 

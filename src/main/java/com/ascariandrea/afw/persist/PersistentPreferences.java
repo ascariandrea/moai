@@ -99,6 +99,10 @@ public class PersistentPreferences {
         return getPref(APP_AUTHORIZATION_TOKEN);
     }
 
+    public void deleteAuthorizationToken() {
+        deletePref(APP_AUTHORIZATION_TOKEN);
+    }
+
 
     // TWITTER
     public void saveTwitterAccessToken(String accessToken) {
@@ -109,12 +113,12 @@ public class PersistentPreferences {
         putPref(TWITTER_ACCESS_TOKEN_SECRET, accessTokenSecret);
     }
 
-    public void saveTwitterLogin(boolean b) {
-        putPref(TWITTER_LOGIN, b);
-    }
-
     public boolean isTwitterLogged() {
         return getBooleanPrefs(TWITTER_LOGIN);
+    }
+
+    public void saveTwitterLogin(boolean b) {
+        putPref(TWITTER_LOGIN, b);
     }
 
     public String getTwitterAccessToken() {
@@ -125,7 +129,13 @@ public class PersistentPreferences {
         return getPref(TWITTER_ACCESS_TOKEN_SECRET);
     }
 
-    public void saveUserToken(String token) {
-        putPref(USER_TOKEN, token);
+    public void deleteTwitterAccessToken() {
+        deletePref(TWITTER_ACCESS_TOKEN);
     }
+
+    public void deleteTwitterAccessTokenSecret() {
+        deletePref(TWITTER_ACCESS_TOKEN_SECRET);
+    }
+
+
 }
