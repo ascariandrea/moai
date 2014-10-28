@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Set;
 
 public class PersistentPreferences {
@@ -13,6 +15,8 @@ public class PersistentPreferences {
     private static final String TWITTER_LOGIN = "twitter-login";
     private static final String USER_TOKEN = "user-token";
     private static final String APP_AUTHORIZATION_TOKEN = "authorization-token";
+    private static final String LAST_LATITUDE = "last-latitude";
+    private static final String LAST_LONGITUDE = "last-longitude";
 
 
     protected Context mContext;
@@ -138,4 +142,22 @@ public class PersistentPreferences {
     }
 
 
+    public void saveUserLastLocation(double latitude, double longitude) {
+        putPref(LAST_LATITUDE, String.valueOf(latitude));
+        putPref(LAST_LONGITUDE, String.valueOf(longitude));
+    }
+
+    public LatLng getUserLastLocation() {
+        LatLng lastLocation;
+        if (!isEmpty(getPref(LAST_LATITUDE)) && !isEmpty(getPref(LAST_LONGITUDE))) {
+            return new LatLng(Double.parseDouble(getPref(LAST_LATITUDE)), Double.parseDouble(getPref(LAST_LONGITUDE)));
+        }
+
+        return null;
+    }
+
+
+    public static boolean isEmpty(String prefs) {
+        return prefs.equals("{}");
+    }
 }

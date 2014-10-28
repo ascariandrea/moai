@@ -23,7 +23,7 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     protected static final String TAG = InjectedListFragment.class.getSimpleName();
 
-    private List<T> mCollection;
+    protected List<T> mCollection;
 
     private AsyncCollectionHandler<T> asyncCollectionHandler;
     private Class<? extends Model> mExtendedBaseModelClass;
