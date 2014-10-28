@@ -40,7 +40,6 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
     protected void afterCreation() {
         onCreated();
         initHandler();
-        fetchData();
         if (!mFetchDataIsDisabled)
             fetchData();
     }
