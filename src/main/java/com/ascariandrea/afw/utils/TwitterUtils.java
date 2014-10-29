@@ -181,6 +181,7 @@ public class TwitterUtils {
         persistentPreferences.saveTwitterAccessToken(accessToken.getToken());
         persistentPreferences.saveTwitterAccessTokenSecret(accessToken.getTokenSecret());
         persistentPreferences.saveTwitterLogin(true);
+        init(mConsumerKey, mConsumerKeySecret, accessToken.getToken(), accessToken.getTokenSecret());
     }
 
 

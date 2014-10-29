@@ -23,7 +23,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -326,6 +328,9 @@ public class Utils {
             return out.toString();
         }
 
+        public static boolean isValidEmail(java.lang.String s) {
+            return !TextUtils.isEmpty(s) && Patterns.EMAIL_ADDRESS.matcher(s).matches();
+        }
     }
 
     public static class API {

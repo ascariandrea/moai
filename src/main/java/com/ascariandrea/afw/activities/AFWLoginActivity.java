@@ -147,7 +147,6 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
 
 
 
-
     // TWITTER
 
     public abstract boolean isTwitterLoginEnabled();
@@ -158,6 +157,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
 
     @Override
     public void onTwitterAuthenticationSuccess(Dialog dialog, AccessToken accessToken) {
+        showFragment(SPLASH);
         Utils.Dialogs.clearScreen();
         if (dialog != null)
             dialog.dismiss();

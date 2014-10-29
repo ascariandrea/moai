@@ -65,5 +65,6 @@ dependencies {
     compile 'oauth.signpost:signpost-commonshttp4:1.2'
     compile "com.google.android.gms:play-services:6.1.11"
     compile 'com.androidmapsextensions:android-maps-extensions:2.1.0'
+    compile 'com.mobsandgeeks:android-saripaar:1.0.2'
     provided project(':facebook')
 }
