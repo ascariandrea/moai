@@ -296,7 +296,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     protected void onResumeFragments() {
         super.onResumeFragments();
         Session session = Session.getActiveSession();
-        if (session != null && session.isOpened()) {
+        if ((session != null && session.isOpened()) || hasAuthorizationToken()) {
             showFragment(SPLASH);
         } else {
             showFragment(SELECTION);
