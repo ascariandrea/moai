@@ -3,6 +3,7 @@ package com.ascariandrea.afw.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
@@ -166,6 +167,12 @@ public class TwitterUtils {
                                 mAuthDialog = new TwitterDialog(activity, requestToken, twitterOAuthInterface);
                                 mAuthDialog.setOwnerActivity(activity);
                                 mAuthDialog.show();
+                                mAuthDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        Utils.Dialogs.clearScreen();
+                                    }
+                                });
                             }
                         });
 
