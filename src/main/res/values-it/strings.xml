@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="an_error_has_occured">An error has occured.</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
+    <string name="alert_error_message">Something went wrong :(</string>
+    <string name="location_service_disabled">location services disabled</string>
+    <string name="location_service_disabled_message">%1$s need access to your location. Please turn on location access.</string>
+    <string name="ignore">ignore</string>
+    <string name="settings">settings</string>
+</resources>

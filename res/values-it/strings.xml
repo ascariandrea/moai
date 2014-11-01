@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="an_error_has_occured">An error has occured.</string>
-    <string name="done">Done</string>
-    <string name="cancel">Cancel</string>
-    <string name="alert_error_message">Something went wrong :(</string>
-</resources>
