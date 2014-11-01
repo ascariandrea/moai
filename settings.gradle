@@ -1,0 +1,5 @@
+include ':framework', ':facebook', ':sample'
+
+project(':facebook').projectDir = new File('libs/facebook/facebook');
+
+
