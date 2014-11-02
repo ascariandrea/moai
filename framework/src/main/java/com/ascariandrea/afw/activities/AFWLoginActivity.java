@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.ascariandrea.afw.AFWApp;
 import com.ascariandrea.afw.BuildConfig;
+import com.ascariandrea.afw.R;
 import com.ascariandrea.afw.fragments.InjectedFragment;
 import com.ascariandrea.afw.fragments.InjectedLoginSelectionFragment;
 import com.ascariandrea.afw.persist.PersistentPreferences;
@@ -36,6 +37,8 @@ import java.io.IOException;
 
 import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
+
+import static com.ascariandrea.afw.R.layout;
 
 /**
  * Created by andreaascari on 11/10/14.
@@ -73,6 +76,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(layout.fragment_manager_activity);
 
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
@@ -82,6 +86,11 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
             StrictMode.setThreadPolicy(policy);
         }
 
+    }
+
+    @Override
+    protected int getFragmentContainerId() {
+        return R.id.fragmentManagerContainer;
     }
 
     @Override

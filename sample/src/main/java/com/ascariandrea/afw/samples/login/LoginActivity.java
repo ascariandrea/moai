@@ -19,6 +19,7 @@ import twitter4j.auth.AccessToken;
 @EActivity
 public class LoginActivity extends AFWLoginActivity {
 
+
     @Override
     protected InjectedFragment getSplashFragment() {
         return SplashFragment_.builder().build();
@@ -64,8 +65,4 @@ public class LoginActivity extends AFWLoginActivity {
         return false;
     }
 
-    @Override
-    protected int getFragmentContainerId() {
-        return 0;
-    }
 }
