@@ -29,6 +29,7 @@ public class LauncherActivity extends ListActivity {
         switch (position) {
             case 0:
                 LoginActivity_.intent(this).start();
+                break;
             default:
                 LoginActivity_.intent(this).start();
         }
