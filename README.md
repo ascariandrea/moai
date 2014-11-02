@@ -11,10 +11,10 @@ and follow the instruction in the boilerplate README file.
 
 ## Components
 * [Activities](https://github.com/ascariandrea/afw/wiki/Activities)
-* [Fragments](./wiki/Fragments)
-* [Models](./wiki/Models)
-* [Utils](./wiki/Utils)
-* [Views](./wiki/Views)
+* [Fragments](https://github.com/ascariandrea/afw/wiki/Fragments)
+* [Models](https://github.com/ascariandrea/afw/wiki/Models)
+* [Utils](https://github.com/ascariandrea/afw/wiki/Utils)
+* [Views](https://github.com/ascariandrea/afw/wiki/Views)
 
 
 ## Samples
