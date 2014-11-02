@@ -11,6 +11,7 @@ import android.util.Log;
 import com.ascariandrea.afw.AFWApp;
 import com.ascariandrea.afw.BuildConfig;
 import com.ascariandrea.afw.fragments.InjectedFragment;
+import com.ascariandrea.afw.fragments.InjectedLoginSelectionFragment;
 import com.ascariandrea.afw.persist.PersistentPreferences;
 import com.ascariandrea.afw.utils.TwitterUtils;
 import com.ascariandrea.afw.utils.Utils;
@@ -111,7 +112,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     protected abstract InjectedFragment getSplashFragment();
 
 
-    protected abstract InjectedFragment getSelectionFragment();
+    protected abstract InjectedLoginSelectionFragment getSelectionFragment();
 
     // FACEBOOK
 

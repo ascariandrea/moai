@@ -1,26 +1,62 @@
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'https://oss.sonatype.org/content/groups/public'
+        }
+    }
+
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
+}
+
+def appId = 'com.ascariandrea.afw.samples'
+
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile
+        resourcePackageName appId
+        logConsoleAppender true
+
+    }
+}
+
 
 android {
-    compileSdkVersion 'android-L'
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 19
+    buildToolsVersion '20.0.0'
+
 
     defaultConfig {
-        applicationId "com.ascariandrea.afw"
+        applicationId appId
         minSdkVersion 14
-        targetSdkVersion 'L'
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 19
     }
+
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java', 'build/generated/source/apt/${variant.dirName}']
+        }
+    }
 }
+def AAVersion = '3.0.+'
 
 dependencies {
-    compile project(':framework')
+    apt "org.androidannotations:androidannotations:$AAVersion"
+    compile "org.androidannotations:androidannotations-api:$AAVersion"
+    provided project(':framework')
     provided project(':facebook')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
