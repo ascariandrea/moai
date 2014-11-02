@@ -33,9 +33,7 @@ import java.io.IOException;
 @EFragment
 public abstract class InjectedLoginSelectionFragment extends InjectedFragment  {
 
-    private String TAG = InjectedLoginSelectionFragment.class.getSimpleName();
-    private final String[] READ_PERMISSION = new String[]{"email", "public_profile"};
-    /* Request code used to invoke sign in user interactions. */
+    protected final String[] READ_PERMISSION = new String[]{"email", "public_profile"};
 
     private Bundle mSavedInstanceState;
 
@@ -60,7 +58,6 @@ public abstract class InjectedLoginSelectionFragment extends InjectedFragment  {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, resultCode + " " + requestCode + " " +  data);
         getLoginActivity().getUiHelper().onActivityResult(requestCode, resultCode, data);
     }
 
