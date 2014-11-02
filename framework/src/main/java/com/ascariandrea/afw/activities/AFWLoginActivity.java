@@ -127,8 +127,6 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
 
     public void onSessionStateChange(Session session, SessionState state, Exception exception) {
         // Only make changes if the activity is visible
-        Log.d(TAG, session.toString());
-        Log.d(TAG, session.getAccessToken() + "");
         if (isResumed) {
             FragmentManager manager = getSupportFragmentManager();
             // Get the number of entries in the back stack
@@ -141,7 +139,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
                 // If the session state is open:
                 // Show the authenticated fragment
                 showFragment(SPLASH, false);
-                onFbSessionOpen(session);
+                onFacebookAuthentication(session);
             } else if (state.isClosed()) {
                 // If the session state is closed:
                 // Show the login fragment
@@ -152,9 +150,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     }
 
 
-    protected abstract void onFbSessionOpen(Session session);
-
-
+    protected abstract void onFacebookAuthentication(Session session);
 
 
     // TWITTER
@@ -172,7 +168,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
         if (dialog != null)
             dialog.dismiss();
         TwitterUtils.getInstance().storeTwitterAuth(getPersistentPreferences(), accessToken);
-        onTwitterAuthorization(accessToken);
+        onTwitterAuthentication(accessToken);
 
     }
 
@@ -185,7 +181,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
 
 
     @UiThread
-    protected abstract void onTwitterAuthorization(AccessToken token);
+    protected abstract void onTwitterAuthentication(AccessToken token);
 
     // GOOGLE PLUS
 
@@ -306,7 +302,7 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
     protected void onResumeFragments() {
         super.onResumeFragments();
         Session session = Session.getActiveSession();
-        if ((session != null && session.isOpened()) || hasAuthorizationToken()) {
+        if ((session != null && session.isOpened()) || getAuthorizationToken() != null) {
             showFragment(SPLASH);
         } else {
             showFragment(SELECTION);
@@ -318,18 +314,25 @@ public abstract class AFWLoginActivity extends AFWFragmentManagerActivity implem
         super.onResume();
         isResumed = true;
         uiHelper.onResume();
-        if (!hasAuthorizationToken()) {
+        if (getAuthorizationToken() == null) {
             onSessionStateChange(Session.getActiveSession(), Session.getActiveSession().getState(), null);
         } else {
-            onAuthorizationTokenFound();
+            onAuthorizationTokenFound(getAuthorizationToken());
         }
 
 
     }
 
-    protected abstract void onAuthorizationTokenFound();
+    protected String getAuthorizationToken() {
+        if (!getPrefs().getAppAuthorizationToken().equals("{}"))
+            return getPrefs().getAppAuthorizationToken();
 
-    protected abstract boolean hasAuthorizationToken();
+        return null;
+    }
+
+    protected abstract void onAuthorizationTokenFound(String authorizationToken);
+
+
 
     @Override
     protected void onPause() {
