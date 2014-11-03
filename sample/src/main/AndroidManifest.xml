@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ascariandrea.afw.samples">
+    package="com.ascariandrea.moai.samples">
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LauncherActivity_"
+            android:name="com.ascariandrea.moai.samples.LauncherActivity_"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +17,13 @@
             </intent-filter>
         </activity>
 
-        <!-- LOGIN ACTIVITY -->
-        <activity android:name=".login.LoginActivity_"
+        <!--
+            LOGIN ACTIVITY
+
+            Remember to declare the com.facebook.LoginActivity
+            to complete the facebook login.
+        -->
+        <activity android:name="com.ascariandrea.moai.samples.login.LoginActivity_"
             android:label="@string/login">
         </activity>
 
