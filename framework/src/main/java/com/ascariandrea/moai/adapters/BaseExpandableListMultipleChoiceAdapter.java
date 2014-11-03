@@ -15,30 +15,24 @@ import java.util.Arrays;
  */
 public abstract class BaseExpandableListMultipleChoiceAdapter extends BaseExpandableListAdapter {
 
-    private static final String TAG = BaseExpandableListMultipleChoiceAdapter.class.getSimpleName();
     /**
      * Multiple choice for all the groups
      */
     public static final int CHOICE_MODE_MULTIPLE = AbsListView.CHOICE_MODE_MULTIPLE;
-
     public static final int CHOICE_MODE_MULTIPLE_MODAL = AbsListView.CHOICE_MODE_MULTIPLE_MODAL;
-
     /**
      * No child could be selected
      */
     public static final int CHOICE_MODE_NONE = AbsListView.CHOICE_MODE_NONE;
-
     /**
      * One single choice per group
      */
     public static final int CHOICE_MODE_SINGLE_PER_GROUP = AbsListView.CHOICE_MODE_SINGLE;
-
     /**
      * One single choice for all the groups
      */
     public static final int CHOICE_MODE_SINGLE_ABSOLUTE = 10001;
-
-
+    private static final String TAG = BaseExpandableListMultipleChoiceAdapter.class.getSimpleName();
     private SparseArray<SparseBooleanArray> checkedPositions = new SparseArray<SparseBooleanArray>();
     private int mChoiceMode;
 
@@ -132,7 +126,7 @@ public abstract class BaseExpandableListMultipleChoiceAdapter extends BaseExpand
         // Notify that some data has been changed
         notifyDataSetChanged();
         Log.v(TAG, "List position updated");
-        for(int i = 0; i < checkedPositions.size(); i++) {
+        for (int i = 0; i < checkedPositions.size(); i++) {
             Log.v(TAG, "group " + i + " " + Arrays.asList(checkedPositions.get(i)).toString());
         }
     }

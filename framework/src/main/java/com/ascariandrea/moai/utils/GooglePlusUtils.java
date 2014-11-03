@@ -12,7 +12,7 @@ public class GooglePlusUtils {
     public static Person getMe(GoogleApiClient googleApiClient) {
         Person me = null;
         if (googleApiClient != null && Plus.PeopleApi.getCurrentPerson(googleApiClient) != null) {
-             me = Plus.PeopleApi.getCurrentPerson(googleApiClient);
+            me = Plus.PeopleApi.getCurrentPerson(googleApiClient);
         }
 
         return me;

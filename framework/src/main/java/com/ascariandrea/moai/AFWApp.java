@@ -32,12 +32,6 @@ public abstract class AFWApp extends Application {
     private String regId;
     private PersistentPreferences mPrefs;
 
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
     public static boolean checkGooglePlayService(Activity activity) {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
         if (resultCode != ConnectionResult.SUCCESS) {
@@ -55,6 +49,10 @@ public abstract class AFWApp extends Application {
         return true;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 
     public void registerDeviceToken(Activity activity) {
         if (checkGooglePlayService(activity)) {

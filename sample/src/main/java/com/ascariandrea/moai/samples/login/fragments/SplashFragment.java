@@ -11,7 +11,7 @@ import org.androidannotations.annotations.EFragment;
 
 @EFragment(R.layout.fragment_splash)
 public class SplashFragment extends InjectedFragment {
-    
+
     @Override
     public void onViewInjected() {
 

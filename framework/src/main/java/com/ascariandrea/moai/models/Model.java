@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -16,11 +15,9 @@ import java.util.Arrays;
  */
 public abstract class Model {
     private static final String TAG = Model.class.getSimpleName();
-    protected static ObjectMapper mapper;
-
     public static String SINGLE_NAME = "Model";
     public static String PLURAL_NAME = "Models";
-
+    protected static ObjectMapper mapper;
 
     protected static <T extends Model> void checkInitMapper(T model) {
         if (mapper == null) {
@@ -39,39 +36,9 @@ public abstract class Model {
         }
     }
 
-    protected java.util.List<SerializationFeature> getDisabledSerializationFeatures() {
-        return Arrays.asList();
-    }
-
-    protected java.util.List<SerializationFeature> getEnabledSerializationFeatures() {
-        return Arrays.asList(SerializationFeature.WRAP_ROOT_VALUE);
-    }
-
-    protected java.util.List<DeserializationFeature> getDisabledDeserializationFeatures() {
-        return Arrays.asList();
-    }
-
-    protected java.util.List<DeserializationFeature> getEnabledDeserializationFeatures() {
-        return Arrays.asList(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-    }
-
     public static <T extends Model> ObjectMapper getMapper(T model) {
         checkInitMapper(model);
         return mapper;
-    }
-
-
-    public String toJSON() {
-        checkInitMapper(this);
-        String ret = "{}";
-
-        try {
-            ret = mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return ret;
     }
 
     public static <T extends Model> T fromJSON(String json, Class<T> model) {
@@ -98,6 +65,35 @@ public abstract class Model {
         }
 
         return instance;
+    }
+
+    protected java.util.List<SerializationFeature> getDisabledSerializationFeatures() {
+        return Arrays.asList();
+    }
+
+    protected java.util.List<SerializationFeature> getEnabledSerializationFeatures() {
+        return Arrays.asList(SerializationFeature.WRAP_ROOT_VALUE);
+    }
+
+    protected java.util.List<DeserializationFeature> getDisabledDeserializationFeatures() {
+        return Arrays.asList();
+    }
+
+    protected java.util.List<DeserializationFeature> getEnabledDeserializationFeatures() {
+        return Arrays.asList(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    }
+
+    public String toJSON() {
+        checkInitMapper(this);
+        String ret = "{}";
+
+        try {
+            ret = mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
     }
 
 }

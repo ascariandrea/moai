@@ -56,31 +56,6 @@ public class Utils {
 
     public static final java.lang.String TAG = Utils.class.getSimpleName();
 
-
-    public static class Color {
-
-        public static int getTransparentColor(int color, float factor) {
-            int alpha = Math.round(android.graphics.Color.alpha(color) * factor);
-            int red = android.graphics.Color.red(color);
-            int green = android.graphics.Color.green(color);
-            int blue = android.graphics.Color.blue(color);
-            return android.graphics.Color.argb(alpha, red, green, blue);
-        }
-
-        public static boolean isTooLight(int color) {
-
-            int r = (color >> 16) & 0xFF;
-            int g = (color >> 8) & 0xFF;
-            int b = (color >> 0) & 0xFF;
-
-            double luma = 0.299 * r + 0.587 * g + 0.114 * b; // per ITU-R BT.709
-
-            return luma > 160;
-
-        }
-
-    }
-
     @SuppressWarnings("unchecked")
     public static <T extends Model> Class<T> getTypeParameter(Object o) {
 
@@ -114,6 +89,36 @@ public class Utils {
 
     }
 
+    public static java.lang.String getLoremPixel(int w, int h, boolean g) {
+        java.lang.String loremPixelEndpoint = "http://lorempixel.com/";
+        if (g) loremPixelEndpoint += "g/";
+        return loremPixelEndpoint + w + "/" + h + "/?" + Calendar.getInstance().getTimeInMillis() + Math.random();
+    }
+
+    public static class Color {
+
+        public static int getTransparentColor(int color, float factor) {
+            int alpha = Math.round(android.graphics.Color.alpha(color) * factor);
+            int red = android.graphics.Color.red(color);
+            int green = android.graphics.Color.green(color);
+            int blue = android.graphics.Color.blue(color);
+            return android.graphics.Color.argb(alpha, red, green, blue);
+        }
+
+        public static boolean isTooLight(int color) {
+
+            int r = (color >> 16) & 0xFF;
+            int g = (color >> 8) & 0xFF;
+            int b = (color >> 0) & 0xFF;
+
+            double luma = 0.299 * r + 0.587 * g + 0.114 * b; // per ITU-R BT.709
+
+            return luma > 160;
+
+        }
+
+    }
+
     public static class Views {
 
         private static boolean mKeyboardOpened;
@@ -139,7 +144,7 @@ public class Utils {
 
 
         public static void setColorToMany(int color, TextView... views) {
-            for(TextView v : views) {
+            for (TextView v : views) {
                 v.setTextColor(color);
             }
         }
@@ -290,13 +295,6 @@ public class Utils {
         }
     }
 
-
-    public static java.lang.String getLoremPixel(int w, int h, boolean g) {
-        java.lang.String loremPixelEndpoint = "http://lorempixel.com/";
-        if (g) loremPixelEndpoint += "g/";
-        return loremPixelEndpoint + w + "/" + h + "/?" + Calendar.getInstance().getTimeInMillis() + Math.random();
-    }
-
     /**
      * Created by andreaascari on 06/05/14.
      */
@@ -401,11 +399,11 @@ public class Utils {
             if (buttonText == null)
                 buttonText = context.getString(R.string.done);
 
-            return show(context, title, message,null, null, buttonText, neutralListener, null, null);
+            return show(context, title, message, null, null, buttonText, neutralListener, null, null);
 
         }
 
-        public static AlertDialog show(Context context, java.lang.String title, java.lang.String message, java.lang.String positiveLabel, DialogInterface.OnClickListener positiveListener,  java.lang.String neutralLabel, DialogInterface.OnClickListener neutralListener, java.lang.String negativeLabel, DialogInterface.OnClickListener negativeListener) {
+        public static AlertDialog show(Context context, java.lang.String title, java.lang.String message, java.lang.String positiveLabel, DialogInterface.OnClickListener positiveListener, java.lang.String neutralLabel, DialogInterface.OnClickListener neutralListener, java.lang.String negativeLabel, DialogInterface.OnClickListener negativeListener) {
 
             clearScreen();
 
@@ -529,19 +527,19 @@ public class Utils {
 
     public static class Screen {
 
-            @SuppressWarnings("deprecation")
-            @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-            public static Point getSize(WindowManager windowManager) {
-                Display display = windowManager.getDefaultDisplay();
-                Point size = new Point();
-                if (Utils.API.isGreatEqualsThan(13)) {
-                    display.getSize(size);
-                } else {
-                    size.x = display.getWidth();
-                    size.y = display.getHeight();
-                }
-                return size;
+        @SuppressWarnings("deprecation")
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+        public static Point getSize(WindowManager windowManager) {
+            Display display = windowManager.getDefaultDisplay();
+            Point size = new Point();
+            if (Utils.API.isGreatEqualsThan(13)) {
+                display.getSize(size);
+            } else {
+                size.x = display.getWidth();
+                size.y = display.getHeight();
             }
+            return size;
+        }
     }
 
     public static class Location {

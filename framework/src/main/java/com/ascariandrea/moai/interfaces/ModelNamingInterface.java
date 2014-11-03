@@ -9,7 +9,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public interface ModelNamingInterface {
     public String SINGLE_NAME = null;
 
-    @JsonIgnore public String getSingleName();
-    @JsonIgnore public String getPluralName();
+    @JsonIgnore
+    public String getSingleName();
+
+    @JsonIgnore
+    public String getPluralName();
 
 }

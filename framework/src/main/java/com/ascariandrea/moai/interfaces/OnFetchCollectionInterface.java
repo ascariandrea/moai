@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface OnFetchCollectionInterface<T extends Model> {
 
-    public void fetchData(AsyncCollectionHandler<T> asyncCollectionHandler );
+    public void fetchData(AsyncCollectionHandler<T> asyncCollectionHandler);
 
     public void fetchCompleted(boolean completed);
 

@@ -14,7 +14,7 @@ import org.androidannotations.annotations.EFragment;
  * Created by andreaascari on 11/10/14.
  */
 @EFragment
-public abstract class InjectedLoginSelectionFragment extends InjectedFragment  {
+public abstract class InjectedLoginSelectionFragment extends InjectedFragment {
 
     protected final String[] READ_PERMISSION = new String[]{"email", "public_profile"};
 

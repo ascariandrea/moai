@@ -11,10 +11,8 @@ import android.renderscript.ScriptIntrinsicBlur;
 
 public class BlurBitmapHelper {
     private static final int MIN_SIZE = 20;
-    private static int[] scales = new int[]{2, 2, 2, 2};
-
-
     private static final String TAG = "Blur";
+    private static int[] scales = new int[]{2, 2, 2, 2};
 
 
     public BlurBitmapHelper() {

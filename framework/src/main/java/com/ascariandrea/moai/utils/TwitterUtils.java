@@ -23,16 +23,15 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterUtils {
 
 
+    public static final int RC_TWITTER_AUTH = 345;
     private static final String REQUEST_TOKEN_URL = "https://api.twitter.com/oauth/request_token";
     private static final String AUTHORIZE_URL = "https://api.twitter.com/oauth/authorize";
     private static final String ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token";
     private static final String CALLBACK_URL = "callback://oauth_callback";
     private static final String TAG = TwitterUtils.class.getSimpleName();
-    public static final int RC_TWITTER_AUTH = 345;
-
-    public TwitterDialog mAuthDialog;
     private static TwitterUtils mInstance;
     private static TwitterFactory mTwitterFactory;
+    public TwitterDialog mAuthDialog;
     private Twitter mTwitter;
     private String mConsumerKey;
     private String mConsumerKeySecret;
@@ -56,31 +55,6 @@ public class TwitterUtils {
         getInstance().factory(consumerKey, consumerKeySecret, twitterAccessToken, twitterAccessTokenSecret);
     }
 
-    private Twitter factory(String consumerKey, String consumerKeySecret, String twitterAccessToken, String twitterAccessTokenSecret) {
-        ConfigurationBuilder builder = new ConfigurationBuilder();
-        builder.setOAuthConsumerKey(consumerKey)
-                .setOAuthConsumerSecret(consumerKeySecret);
-
-        if (twitterAccessToken != null)
-            builder.setOAuthAccessToken(twitterAccessToken);
-
-        if (twitterAccessTokenSecret != null)
-            builder.setOAuthAccessTokenSecret(twitterAccessTokenSecret);
-
-        mTwitterFactory = new TwitterFactory(builder.build());
-        return (mTwitterFactory.getInstance());
-    }
-
-
-    private void setAccessTokenSecret(String twitterAccessTokenSecret) {
-        mAccessTokenSecret = twitterAccessTokenSecret;
-    }
-
-    private void setAccessToken(String twitterAccessToken) {
-        mAccessToken = twitterAccessToken;
-    }
-
-
     public static TwitterUtils getInstance() {
         if (mInstance == null) mInstance = new TwitterUtils();
         return mInstance;
@@ -92,11 +66,6 @@ public class TwitterUtils {
 
     public static String getConsumerKey() {
         return TwitterUtils.getInstance().mConsumerKey;
-    }
-
-
-    private void setConsumerKeySecret(String consumerKeySecret) {
-        this.mConsumerKeySecret = consumerKeySecret;
     }
 
     private void setConsumerKey(String consumerKey) {
@@ -112,13 +81,8 @@ public class TwitterUtils {
         return null;
     }
 
-    public  twitter4j.auth.RequestToken getOauthRequestToken() {
-        try {
-            return mTwitter.getOAuthRequestToken();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private void setAccessToken(String twitterAccessToken) {
+        mAccessToken = twitterAccessToken;
     }
 
     private static String getCallbackURL() {
@@ -130,6 +94,38 @@ public class TwitterUtils {
 
     public void setCallbackURL(String callbackURL) {
         this.mCallbackURL = callbackURL;
+    }
+
+    private Twitter factory(String consumerKey, String consumerKeySecret, String twitterAccessToken, String twitterAccessTokenSecret) {
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        builder.setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerKeySecret);
+
+        if (twitterAccessToken != null)
+            builder.setOAuthAccessToken(twitterAccessToken);
+
+        if (twitterAccessTokenSecret != null)
+            builder.setOAuthAccessTokenSecret(twitterAccessTokenSecret);
+
+        mTwitterFactory = new TwitterFactory(builder.build());
+        return (mTwitterFactory.getInstance());
+    }
+
+    private void setAccessTokenSecret(String twitterAccessTokenSecret) {
+        mAccessTokenSecret = twitterAccessTokenSecret;
+    }
+
+    private void setConsumerKeySecret(String consumerKeySecret) {
+        this.mConsumerKeySecret = consumerKeySecret;
+    }
+
+    public twitter4j.auth.RequestToken getOauthRequestToken() {
+        try {
+            return mTwitter.getOAuthRequestToken();
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void authenticate(final Activity activity, final TwitterOAuthInterface twitterOAuthInterface) {
@@ -184,9 +180,9 @@ public class TwitterUtils {
 
 
     public static interface TwitterOAuthInterface {
-      public void onTwitterAuthenticationSuccess(Dialog dialog, AccessToken accessToken);
+        public void onTwitterAuthenticationSuccess(Dialog dialog, AccessToken accessToken);
 
-      public void onTwitterAuthenticationFailure(TwitterException e);
-  }
+        public void onTwitterAuthenticationFailure(TwitterException e);
+    }
 
 }

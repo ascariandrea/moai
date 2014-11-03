@@ -14,7 +14,7 @@ import org.androidannotations.annotations.EActivity;
 public class LauncherActivity extends ListActivity {
 
 
-    private final String[] mSamples = { "LoginActivity" };
+    private final String[] mSamples = {"LoginActivity"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

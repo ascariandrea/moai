@@ -15,6 +15,17 @@ public abstract class DebouncedOnItemClickListener implements AdapterView.OnItem
     private final long minimumInterval;
     private Map<View, Long> lastClickMap;
 
+    public DebouncedOnItemClickListener() {
+        this.minimumInterval = 1000;
+        this.lastClickMap = new WeakHashMap<View, Long>();
+    }
+
+
+    public DebouncedOnItemClickListener(long minimumIntervalMsec) {
+        this.minimumInterval = minimumIntervalMsec;
+        this.lastClickMap = new WeakHashMap<View, Long>();
+    }
+
     /**
      * Implement this in your subclass instead of onClick
      *
@@ -24,17 +35,6 @@ public abstract class DebouncedOnItemClickListener implements AdapterView.OnItem
      * @param id
      */
     public abstract void onDebouncedItemClick(AdapterView<?> parent, View v, int position, long id);
-
-
-    public DebouncedOnItemClickListener() {
-        this.minimumInterval = 1000;
-        this.lastClickMap = new WeakHashMap<View, Long>();
-    }
-
-    public DebouncedOnItemClickListener(long minimumIntervalMsec) {
-        this.minimumInterval = minimumIntervalMsec;
-        this.lastClickMap = new WeakHashMap<View, Long>();
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View clickedView, int position, long id) {

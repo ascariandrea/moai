@@ -29,7 +29,10 @@ public abstract class InjectedResourceFragment<T extends Model> extends Injected
             fetchData();
     }
 
-    protected void onCreated(){};
+    protected void onCreated() {
+    }
+
+    ;
 
 
     protected void fetchData() {
