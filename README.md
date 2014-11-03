@@ -23,7 +23,7 @@ and follow the instruction in the boilerplate README file.
 
 
 
-### Fragments
+## Fragments
 
 There are three principal classes of fragments:
 
@@ -37,7 +37,41 @@ Such as `onViewsInjected()` that permits to run code right after views injection
 
 
 #### InjectedResourceFragment
-This class is more complete than the above one.
+This class is more complete than the above one. You can attach a resource to the fragment and avoid a full manual
+setup to fetch the resource from the API server, you can simply declare your fragment as:
+
+```java
+public class ActivitiesFragment extends InjectedResourceFragments<Activity> {
+  
+}
+```
+
+Assuming that your `Activity` class is a subclass of Moai `Model` class.
+
+#### InjectedListFragment
+As the `InjectedResourceFragment` permits to deal with your single resource through your api service, this fragment do the same with resources collections.
+
+
+## Model & ModelCollection
+
+The `Model` & `ModelCollection` are classes that made simple json deserialization and serialization and passing well formed payload to your backend.
+
+```java
+@JsonRootValue("activity")
+public Activity extends Model {
+  
+  @JsonProperty("id")
+  public int id;
+
+  @JsonProperty("text")
+  public String text;
+
+}
+```
+
+You can map your json payload properties to class property and don't care about anything else.
+The `ModelCollection` is committed to handle json collection and porting them to `List<Model>` and vice versa.
+
 
 ## Contributors
 
