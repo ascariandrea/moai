@@ -10,12 +10,15 @@ buildscript {
     }
 }
 
+def appId = 'com.ascariandrea.moai'
+
+
 apply plugin: 'com.android.library'
 apply plugin: 'android-apt'
 apt {
     arguments {
         androidManifestFile variant.processResources.manifestFile
-        resourcePackageName 'com.ascariandrea.afw'
+        resourcePackageName appId
         logConsoleAppender true
 
     }
@@ -26,7 +29,7 @@ android {
     buildToolsVersion '20.0.0'
     defaultConfig {
         minSdkVersion 14
-        applicationId 'com.ascariandrea.afw'
+        applicationId appId
     }
     sourceSets {
         main {
