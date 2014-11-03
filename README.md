@@ -22,6 +22,23 @@ and follow the instruction in the boilerplate README file.
 * [Simple Social Login](https://github.com/ascariandrea/afw/tree/master/sample/src/main/java/com/ascariandrea/afw/samples/login)
 
 
+
+### Fragments
+
+There are three principal classes of fragments:
+
+* InjectedFragment
+* InjectedResourceFragment
+* InjectedListFragment
+
+#### InjectedFragment
+This class provide methods to run your logic in specific fragment life cycle points.
+Such as `onViewsInjected()` that permits to run code right after views injection by android annotations.
+
+
+#### InjectedResourceFragment
+This class is more complete than the above one.
+
 ## Contributors
 
 
