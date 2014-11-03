@@ -21,7 +21,8 @@ and follow the instruction in the boilerplate README file.
 
 * [Simple Social Login](https://github.com/ascariandrea/moai/tree/master/sample/src/main/java/com/ascariandrea/afw/samples/login)
 
-
+## Activities
+To be documented.
 
 ## Fragments
 
