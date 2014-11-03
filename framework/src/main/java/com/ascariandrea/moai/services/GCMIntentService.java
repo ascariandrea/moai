@@ -98,22 +98,9 @@ public class GCMIntentService extends IntentService {
             this.mMessage = message;
         }
 
-        public void setTitle(String title) {
-            this.mTitle = title;
-        }
-
-        public void setMessage(String message) {
-            this.mMessage = message;
-        }
-
         public void setmSmallIcon(int smallIcon) {
             this.mSmallIcon = smallIcon;
         }
-
-        public void setLargeIcon(int largeIcon) {
-            mLargeIcon = largeIcon;
-        }
-
 
         public int getSmallIcon() {
             return mSmallIcon;
@@ -123,12 +110,24 @@ public class GCMIntentService extends IntentService {
             return mTitle;
         }
 
+        public void setTitle(String title) {
+            this.mTitle = title;
+        }
+
         public String getMessage() {
             return mMessage;
         }
 
+        public void setMessage(String message) {
+            this.mMessage = message;
+        }
+
         public int getLargeIcon() {
             return mLargeIcon;
+        }
+
+        public void setLargeIcon(int largeIcon) {
+            mLargeIcon = largeIcon;
         }
     }
 

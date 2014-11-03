@@ -27,29 +27,19 @@ import java.util.HashMap;
 public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
 
     public static final String FRAGMENT_TO_SHOW = "fragment-to-show";
-
+    public static final int NON_EXISTENT_INDEX_FRAGMENT = -1;
+    public static final int DEFAULT_CONTAINER_ID = 21;
     protected static final int SLIDE_RIGHT_TO_LEFT = 0;
     protected static final int SLIDE_LEFT_TO_RIGHT = 1;
-
-    public static final int NON_EXISTENT_INDEX_FRAGMENT = -1;
-
-    public static final int DEFAULT_CONTAINER_ID = 21;
-
     private static final String TAG = MoaiFragmentManagerActivity.class.getSimpleName();
-
-
-    private FragmentManager fragmentManager;
-
-    private HashMap<Integer, Fragment> fragments = new HashMap<Integer, Fragment>();
-
-    private int mContainerId;
-    private int mPreviousActiveFragmentIndex;
-    protected int mActiveFragmentIndex;
-
     @Extra
     public int stepToLaunch = -1;
-
+    protected int mActiveFragmentIndex;
     protected LinearLayout fragmentContainerView;
+    private FragmentManager fragmentManager;
+    private HashMap<Integer, Fragment> fragments = new HashMap<Integer, Fragment>();
+    private int mContainerId;
+    private int mPreviousActiveFragmentIndex;
 
 
     public MoaiFragmentManagerActivity() {
@@ -217,8 +207,6 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
             super.onBackPressed();
         }
     }
-
-
 
 
     @Override

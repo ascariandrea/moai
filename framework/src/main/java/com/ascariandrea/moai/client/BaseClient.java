@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public abstract class BaseClient {
-    private static final String TAG = BaseClient.class.getSimpleName();
     protected static final String PATH_SEPARATOR = "/";
+    private static final String TAG = BaseClient.class.getSimpleName();
     protected static AsyncHttpClient client = new AsyncHttpClient();
     private String authHeaderValue = null;
     private String authHeaderName = null;
@@ -102,7 +102,7 @@ public abstract class BaseClient {
 
     protected void postFile(String url, String fileName, byte[] fileBuffer, String extension, AsyncResourceHandler resourceHandler) {
         RequestParams params = new RequestParams();
-        params.put(fileName, new ByteArrayInputStream(fileBuffer), Calendar.getInstance().getTimeInMillis() + "." + extension );
+        params.put(fileName, new ByteArrayInputStream(fileBuffer), Calendar.getInstance().getTimeInMillis() + "." + extension);
         client.post(null, url, params, resourceHandler);
     }
 

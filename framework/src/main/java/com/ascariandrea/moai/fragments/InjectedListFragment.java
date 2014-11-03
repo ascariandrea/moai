@@ -9,7 +9,6 @@ import com.ascariandrea.moai.utils.Utils;
 import org.androidannotations.annotations.EFragment;
 
 import java.lang.reflect.Field;
-
 import java.util.List;
 
 /**
@@ -35,7 +34,6 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
         if (!mFetchDataIsDisabled)
             fetchData();
     }
-
 
 
     @SuppressWarnings("unchecked")

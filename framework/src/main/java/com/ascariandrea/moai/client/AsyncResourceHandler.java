@@ -94,7 +94,7 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
 
                 Log.d(TAG, "code: " + i);
 
-                switch(i) {
+                switch (i) {
                     case 404:
                         onNotFound(throwable, message, errors, code);
                         break;
@@ -123,20 +123,20 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
         }
     }
 
-    protected void onNotAuthorized(Throwable throwable, String message, JSONArray errors, int code) {}
+    protected void onNotAuthorized(Throwable throwable, String message, JSONArray errors, int code) {
+    }
 
-    protected void onForbidden(Throwable throwable, String res){}
+    protected void onForbidden(Throwable throwable, String res) {
+    }
 
-    public void onNotFound(Throwable throwable, String message, JSONArray errors, int code) {}
+    public void onNotFound(Throwable throwable, String message, JSONArray errors, int code) {
+    }
 
-    protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {}
-
+    protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {
+    }
 
 
     public abstract void onSuccess(T res);
-
-
-
 
 
 }

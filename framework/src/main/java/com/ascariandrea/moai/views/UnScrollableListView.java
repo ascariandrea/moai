@@ -31,8 +31,7 @@ public class UnScrollableListView extends ListView {
             // a special meaning, hence we can't use them to describe height.
             heightSpec = MeasureSpec.makeMeasureSpec(
                     Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-        }
-        else {
+        } else {
             // Any other height should be respected as is.
             heightSpec = heightMeasureSpec;
         }

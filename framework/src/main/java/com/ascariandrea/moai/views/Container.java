@@ -35,6 +35,21 @@ public class Container extends LinearLayout implements Target {
         init();
     }
 
+    protected static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        Bitmap bitmap =
+                Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                        Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
     private void init() {
         if (getBackground() != null) setBackgroundDrawable(getBackground());
     }
@@ -60,7 +75,7 @@ public class Container extends LinearLayout implements Target {
                 // calculate the size with width ratio
                 scaledWidth = (int) (bitmapContainerWidthRatio() * bW);
                 scaledHeight = (int) (bitmapContainerWidthRatio() * bH);
-            } else  {
+            } else {
                 scaledWidth = (int) (bitmapContainerHeightRatio() * bW);
                 scaledHeight = (int) (bitmapContainerHeightRatio() * bH);
             }
@@ -84,21 +99,6 @@ public class Container extends LinearLayout implements Target {
 
         c.drawBitmap(bitmap, left, top, null);
         return result;
-    }
-
-    protected static Bitmap drawableToBitmap(Drawable drawable) {
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable) drawable).getBitmap();
-        }
-
-        Bitmap bitmap =
-                Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
-                        Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
     }
 
     private float bitmapContainerWidthRatio() {

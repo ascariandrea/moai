@@ -27,42 +27,53 @@ public class PersistentPreferences {
         mContext = context;
     }
 
+    public static boolean isEmpty(String prefs) {
+        return prefs.equals("{}");
+    }
+
     protected String getPref(String key) {
-        if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        if (mPrefs == null)
+            mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         return mPrefs.getString(key, "{}");
     }
 
     protected boolean getBooleanPrefs(String key) {
-        if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        if (mPrefs == null)
+            mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         return mPrefs.getBoolean(key, false);
     }
 
     protected Set<String> getSetPref(String key) {
-        if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        if (mPrefs == null)
+            mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         return mPrefs.getStringSet(key, null);
     }
 
     protected void putPref(String key, String value) {
-        if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        if (mPrefs == null)
+            mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         Editor editor = mPrefs.edit();
         editor.putString(key, value);
         editor.apply();
     }
 
     protected void putPref(String key, boolean b) {
-        if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        if (mPrefs == null)
+            mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         mPrefs.edit().putBoolean(key, b).apply();
     }
 
     protected void deletePref(String key) {
-        if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        if (mPrefs == null)
+            mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         Editor editor = mPrefs.edit();
         editor.remove(key);
         editor.apply();
     }
 
     protected void deleteAll() {
-        if (mPrefs == null) mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
+        if (mPrefs == null)
+            mPrefs = mContext.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE);
         Editor editor = mPrefs.edit();
         editor.clear();
         editor.apply();
@@ -73,9 +84,8 @@ public class PersistentPreferences {
     }
 
     public void saveCurrentUser(String jsonUser) {
-        putPref("user",jsonUser);
+        putPref("user", jsonUser);
     }
-
 
     public String getFbImage(String fbUserId, int size) {
         return getPref("fb-image-" + fbUserId + "-" + size);
@@ -90,9 +100,8 @@ public class PersistentPreferences {
     }
 
     public void saveFbFriends(String fbFriends) {
-        putPref("fb-friends",fbFriends);
+        putPref("fb-friends", fbFriends);
     }
-
 
     // APP TOKEN
     public void saveAuthorizationToken(String authorizationToken) {
@@ -106,7 +115,6 @@ public class PersistentPreferences {
     public void deleteAuthorizationToken() {
         deletePref(APP_AUTHORIZATION_TOKEN);
     }
-
 
     // TWITTER
     public void saveTwitterAccessToken(String accessToken) {
@@ -141,7 +149,6 @@ public class PersistentPreferences {
         deletePref(TWITTER_ACCESS_TOKEN_SECRET);
     }
 
-
     public void saveUserLastLocation(double latitude, double longitude) {
         putPref(LAST_LATITUDE, String.valueOf(latitude));
         putPref(LAST_LONGITUDE, String.valueOf(longitude));
@@ -154,10 +161,5 @@ public class PersistentPreferences {
         }
 
         return null;
-    }
-
-
-    public static boolean isEmpty(String prefs) {
-        return prefs.equals("{}");
     }
 }

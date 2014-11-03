@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.facebook.Session;
 import com.ascariandrea.moai.persist.PersistentPreferences;
 import com.ascariandrea.moai.utils.Utils;
+import com.facebook.Session;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -20,17 +20,13 @@ import org.androidannotations.annotations.Extra;
 @EActivity
 public abstract class MoaiFragmentActivity extends FragmentActivity {
 
-    private static final int NO_REQUEST_CODE = -99;
-    private String TAG = MoaiFragmentActivity.class.getSimpleName();
-
     public static final int RESULT_DONE = 4;
-
-    private Session mFbSession;
+    private static final int NO_REQUEST_CODE = -99;
+    @Extra
+    public int requestCode = NO_REQUEST_CODE;
     protected PersistentPreferences mPrefs;
-
-
-    @Extra public int requestCode = NO_REQUEST_CODE;
-
+    private String TAG = MoaiFragmentActivity.class.getSimpleName();
+    private Session mFbSession;
     private boolean mLaunching;
 
     @Override

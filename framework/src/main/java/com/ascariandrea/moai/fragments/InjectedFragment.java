@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-
 import com.ascariandrea.moai.interfaces.OnInjectionCallback;
 
 import org.androidannotations.annotations.AfterInject;
@@ -24,10 +23,11 @@ import java.util.Observer;
 public abstract class InjectedFragment extends Fragment implements OnInjectionCallback {
 
     private static final String TAG = InjectedFragment.class.getSimpleName();
-    private boolean mViewInjected = false;
-    private boolean mFetchingCompleted = false;
     protected boolean mFetchDataIsDisabled = false;
     protected boolean mFetching = false;
+    protected DataObserver mObserver = new DataObserver();
+    private boolean mViewInjected = false;
+    private boolean mFetchingCompleted = false;
     private boolean mFirstBackPress = true;
 
     public static InjectedFragment newInstance(Bundle args) {
@@ -53,7 +53,6 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
         return (T) InjectedFragment.newInstance(args);
     }
 
-
     @AfterInject
     protected void afterCreation() {
         toCallAfterCreation();
@@ -74,8 +73,6 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
         mObserver.update(null, true);
     }
 
-
-
     public void fetchCompleted(boolean completed) {
         mFetchingCompleted = completed;
         mFetching = !completed;
@@ -89,7 +86,6 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
     public void enableFetchData() {
         mFetchDataIsDisabled = false;
     }
-
 
     public boolean onBackPressed() {
         boolean handled;
@@ -111,13 +107,16 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
         return false;
     }
 
-    protected DataObserver mObserver = new DataObserver();
-
     public boolean isFirstBackPress() {
         return mFirstBackPress;
     }
 
+    protected void canPopulateView() {
+        populateView();
+    }
 
+    protected void populateView() {
+    }
 
     protected class DataObserver implements Observer {
 
@@ -129,11 +128,5 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
         }
 
     }
-
-    protected void canPopulateView() {
-        populateView();
-    }
-
-    protected void populateView() {}
 
 }

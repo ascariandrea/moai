@@ -17,7 +17,7 @@ public class ESupportMapFragment extends SupportMapFragment {
 
 
     public static ESupportMapFragment newInstance(MapCreationListener listener) {
-        ESupportMapFragment eSupportMapFragment =  new ESupportMapFragment();
+        ESupportMapFragment eSupportMapFragment = new ESupportMapFragment();
         eSupportMapFragment.setMapCreationListener(listener);
         return eSupportMapFragment;
     }
@@ -26,12 +26,6 @@ public class ESupportMapFragment extends SupportMapFragment {
     public void setMapCreationListener(MapCreationListener listener) {
         mMapListener = listener;
     }
-
-
-    public interface MapCreationListener {
-        void onMapCreated();
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,5 +39,9 @@ public class ESupportMapFragment extends SupportMapFragment {
 
     private boolean isFirstCall() {
         return mFirstCall;
+    }
+
+    public interface MapCreationListener {
+        void onMapCreated();
     }
 }

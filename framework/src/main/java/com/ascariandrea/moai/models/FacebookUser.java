@@ -1,9 +1,9 @@
 package com.ascariandrea.moai.models;
 
+import com.ascariandrea.moai.utils.FacebookUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.ascariandrea.moai.utils.FacebookUtils;
 
 /**
  * Created by andreaascari on 22/01/14.
@@ -39,21 +39,6 @@ public class FacebookUser extends Model {
     @JsonProperty("statusMessage")
     public String statusMessage;
 
-
-    public class ProfilePicture extends Model {
-
-        @JsonProperty("data")
-        public Data data;
-
-        public class Data extends Model {
-
-            @JsonProperty("url")
-            public String url;
-
-        }
-
-    }
-
     @JsonIgnore
     public String getDisplayName() {
         if (this.firstName != null && this.lastName != null)
@@ -72,7 +57,21 @@ public class FacebookUser extends Model {
         if (this.picture != null && this.picture.data != null && this.picture.data.url != null && size == -1)
             return this.picture.data.url;
 
-        return FacebookUtils.GRAPH_ENDPOINT + "/" + this.id + "/picture?width=" + size +"&height=" + size ;
+        return FacebookUtils.GRAPH_ENDPOINT + "/" + this.id + "/picture?width=" + size + "&height=" + size;
+    }
+
+    public class ProfilePicture extends Model {
+
+        @JsonProperty("data")
+        public Data data;
+
+        public class Data extends Model {
+
+            @JsonProperty("url")
+            public String url;
+
+        }
+
     }
 
 }

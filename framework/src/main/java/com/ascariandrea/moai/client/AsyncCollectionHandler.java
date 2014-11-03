@@ -2,7 +2,6 @@ package com.ascariandrea.moai.client;
 
 import android.util.Log;
 
-
 import com.ascariandrea.moai.models.Model;
 import com.ascariandrea.moai.models.ModelCollection;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -110,7 +109,9 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
 
     public abstract void onSuccess(List<T> res);
 
-    public void onUnauthorized(Throwable t, String res) {}
+    public void onUnauthorized(Throwable t, String res) {
+    }
 
-    protected void onFailure(Throwable throwable, JSONObject jsonRes, int code) {}
+    protected void onFailure(Throwable throwable, JSONObject jsonRes, int code) {
+    }
 }

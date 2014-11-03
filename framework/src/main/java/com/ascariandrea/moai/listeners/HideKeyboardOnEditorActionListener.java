@@ -19,7 +19,7 @@ public class HideKeyboardOnEditorActionListener implements TextView.OnEditorActi
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if ( (event.getAction() == KeyEvent.ACTION_DOWN) && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) ) {
+        if ((event.getAction() == KeyEvent.ACTION_DOWN) && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
             Utils.Views.hideKeyBoard(mContext, v);
             return true;
         }

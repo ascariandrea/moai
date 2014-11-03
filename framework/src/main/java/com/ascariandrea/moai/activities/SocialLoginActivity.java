@@ -46,19 +46,15 @@ import static com.ascariandrea.moai.R.layout;
 @EActivity
 public abstract class SocialLoginActivity extends MoaiFragmentManagerActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, TwitterUtils.TwitterOAuthInterface {
 
-    private static final String TAG = SocialLoginActivity.class.getSimpleName();
-    private static final int SPLASH = 0;
-    private static final int SELECTION = 1;
-
-    private static final int RC_SIGN_IN = 0;
-    private static final int RC_AUTH = 1;
     public static final int RE_AUTH_ACTIVITY_CODE = 100;
-
     protected static final String GOOGLE_TYPE = "google";
     protected static final String FACEBOOK_TYPE = "facebook";
     protected static final String TWITTER_TYPE = "twitter";
-
-
+    private static final String TAG = SocialLoginActivity.class.getSimpleName();
+    private static final int SPLASH = 0;
+    private static final int SELECTION = 1;
+    private static final int RC_SIGN_IN = 0;
+    private static final int RC_AUTH = 1;
     private GoogleApiClient mPlusClient;
 
     private boolean mIntentInProgress;
@@ -331,7 +327,6 @@ public abstract class SocialLoginActivity extends MoaiFragmentManagerActivity im
     }
 
     protected abstract void onAuthorizationTokenFound(String authorizationToken);
-
 
 
     @Override

@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ascariandrea.moai.activities.MoaiFragmentActivity;
+import com.ascariandrea.moai.models.FacebookUser;
+import com.ascariandrea.moai.models.ModelCollection;
+import com.ascariandrea.moai.persist.PersistentPreferences;
+import com.ascariandrea.moai.views.PoweredImageView;
 import com.facebook.FacebookException;
 import com.facebook.FacebookOperationCanceledException;
 import com.facebook.FacebookRequestError;
@@ -17,10 +21,6 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
-import com.ascariandrea.moai.models.FacebookUser;
-import com.ascariandrea.moai.models.ModelCollection;
-import com.ascariandrea.moai.persist.PersistentPreferences;
-import com.ascariandrea.moai.views.PoweredImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -36,20 +36,16 @@ import java.util.List;
  */
 public class FacebookUtils {
 
-    public static String GRAPH_ENDPOINT = "http://graph.facebook.com";
-
     public static final String PARAM_NAME = "name";
     public static final String PARAM_CAPTION = "caption";
     public static final String PARAM_DESC = "description";
     public static final String PARAM_LINK = "link";
     public static final String PARAM_PICTURE = "picture";
     public static final String PARAM_MESSAGE = "message";
-
     public static final int ONLY_USERS_WITH_APP = 1;
     public static final int ONLY_USERS_WITHOUT_APP = 2;
     public static final int BOTH_USERS = 3;
-
-
+    public static String GRAPH_ENDPOINT = "http://graph.facebook.com";
     private static int mToastMessageResource = android.R.string.cancel;
 
 
@@ -60,7 +56,7 @@ public class FacebookUtils {
         getMe(null, facebookUserCallback);
     }
 
-    public static void getMe(Bundle params, final FacebookUserCallback facebookUserCallback ) {
+    public static void getMe(Bundle params, final FacebookUserCallback facebookUserCallback) {
         if (params == null) {
             params = new Bundle();
             params.putString("fields", "picture.width(800).height(800),about,first_name,last_name,email,address,age_range");
@@ -72,20 +68,20 @@ public class FacebookUtils {
                 params,
                 HttpMethod.GET,
                 new Request.Callback() {
-            @Override
-            public void onCompleted(Response response) {
-                if (response != null) {
-                    if (response.getError() != null)
-                       facebookUserCallback.onError(response.getError(), response);
-                    else if (response.getGraphObjectAs(GraphUser.class) != null)
-                        facebookUserCallback.onSuccess(response.getGraphObjectAs(GraphUser.class));
-                    else
-                        facebookUserCallback.onError(response.getError(), response);
-                } else
-                    facebookUserCallback.onError(response.getError(), null);
-            }
+                    @Override
+                    public void onCompleted(Response response) {
+                        if (response != null) {
+                            if (response.getError() != null)
+                                facebookUserCallback.onError(response.getError(), response);
+                            else if (response.getGraphObjectAs(GraphUser.class) != null)
+                                facebookUserCallback.onSuccess(response.getGraphObjectAs(GraphUser.class));
+                            else
+                                facebookUserCallback.onError(response.getError(), response);
+                        } else
+                            facebookUserCallback.onError(response.getError(), null);
+                    }
 
-        }).executeAsync();
+                }).executeAsync();
     }
 
     public static void getMeProfilePicture(Context context, int size, ImageRequestCallback callback) {
@@ -160,6 +156,7 @@ public class FacebookUtils {
             }
         });
     }
+
     public static void loadProfilePictureInto(Context context, String fbUserId, int i, final PoweredImageView targetView) {
         FacebookUtils.getProfilePicture(context, fbUserId, i, new ImageRequestCallback() {
             @Override
@@ -252,7 +249,7 @@ public class FacebookUtils {
                         if (postId != null) {
                             //toastMessageResource = R.string.successfull_fb_post_creation;
                         } else {
-                          //  toastMessageResource = R.string.canceled_fb_post_creation;
+                            //  toastMessageResource = R.string.canceled_fb_post_creation;
                         }
                     } else if (error instanceof FacebookOperationCanceledException) {
                         //toastMessageResource = R.string.canceled_fb_post_creation;
@@ -301,7 +298,31 @@ public class FacebookUtils {
         return finalFacebookUsers;
     }
 
+    private static boolean isValidFbRes(Response response) {
+        return (response != null && response.getGraphObject() != null);
+    }
 
+    public interface RequestCallback {
+
+        public void onSuccess(JSONObject obj);
+    }
+
+
+    public interface ImageRequestCallback {
+        public void onSuccess(String url);
+    }
+
+    public interface FriendsRequestCallback {
+        public void onSuccess(List<FacebookUser> friends);
+
+        void onFailure(Response response);
+    }
+
+    public interface FacebookUserCallback {
+        public void onSuccess(GraphUser fbUser);
+
+        public void onError(FacebookRequestError error, Response response);
+    }
 
     public static abstract class OnPostCallback implements FacebookDialog.Callback {
 
@@ -332,32 +353,6 @@ public class FacebookUtils {
                 //toastMessageResource = R.string.error_fb_post_creation;
             }
         }
-    }
-
-    private static boolean isValidFbRes(Response response) {
-        return (response != null && response.getGraphObject() != null);
-    }
-
-
-    public interface RequestCallback {
-
-        public void onSuccess(JSONObject obj);
-    }
-
-    public interface ImageRequestCallback {
-        public void onSuccess(String url);
-    }
-
-    public interface FriendsRequestCallback {
-        public void onSuccess(List<FacebookUser> friends);
-
-        void onFailure(Response response);
-    }
-
-    public interface FacebookUserCallback {
-        public void onSuccess(GraphUser fbUser);
-
-        public void onError(FacebookRequestError error, Response response);
     }
 
 }
