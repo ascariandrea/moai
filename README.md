@@ -73,9 +73,10 @@ You can map your json payload properties to class property and don't care about 
 The `ModelCollection` is committed to handle json collection and porting them to `List<Model>` and vice versa.
 
 
-## Contributors
+## Contributing
 
+Any help in project development and documentation improvement will be appreciated.
 
-Detailed documentation in [Wiki](https://github.com/ascariandrea/moai/wiki).
+<!-- Detailed documentation in [Wiki](https://github.com/ascariandrea/moai/wiki). -->
 
 
