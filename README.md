@@ -3,9 +3,9 @@
 The Android FrameWork is a framework to speed up the android development, providing simple APIs to build applications that interacts with RESTful api services.
 
 ## Usage
-You can include this framework as library in your project, or you can start from the boilerplate I've created for intelliJ and gradle environment by cloning the boilerplate repo
+You can include this framework as library in your project, or you can start from the boilerplate I've created for intelliJ and gradle environment by cloning the boilerplate [repo](https://github.com/ascariandrea/moai-boilerplate).
 ```
-$ git clone git@github.com:ascariandrea/afw-boilerplate.git my-new-project
+$ git clone git@github.com:ascariandrea/moai-boilerplate.git my-new-project
 ```
 and follow the instruction in the boilerplate README file.
 
@@ -19,7 +19,7 @@ and follow the instruction in the boilerplate README file.
 
 ## Samples
 
-* [Simple Social Login](https://github.com/ascariandrea/moai/tree/master/sample/src/main/java/com/ascariandrea/afw/samples/login)
+* [Simple Social Login](https://github.com/ascariandrea/moai/tree/master/sample/src/main/java/com/ascariandrea/moai/samples/login)
 
 ## Activities
 To be documented.
