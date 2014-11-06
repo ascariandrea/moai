@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.ascariandrea.moai.models.Model;
 import com.ascariandrea.moai.models.ModelCollection;
+import com.ascariandrea.moai.utils.Utils;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -11,6 +12,7 @@ import org.apache.http.client.HttpResponseException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -19,18 +21,33 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
     private Class<T> mType;
     private String TAG = AsyncCollectionHandler.class.getSimpleName();
     private String wrapProperty;
-    private String collection;
+    private String mCollection;
 
     public AsyncCollectionHandler(String colName) {
-        wrapProperty = "data";
-        collection = colName;
-        Log.d(TAG, "ColName: " + colName);
+        this(null, null);
     }
 
-    public AsyncCollectionHandler(String colName, Class<T> type) {
-        this(colName);
+    public AsyncCollectionHandler(Class<T> type) {
+        this(null, type);
+    }
+
+
+    public AsyncCollectionHandler(String collectionName, Class<T> type) {
+        init(collectionName, type);
+    }
+
+
+    private void init(String collectionName, Class<T> type) {
+        wrapProperty = "data";
+
+        if (collectionName == null)
+            collectionName = getModelExtensionClassPluralName();
+
+        mCollection = collectionName;
         mType = type;
     }
+
+
 
 
     @Override
@@ -49,18 +66,33 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
         return (Class<T>) paramType.getActualTypeArguments()[0];
     }
 
+    private String getModelExtensionClassPluralName() {
+        Class<T> klass = Utils.getTypeParameter(this);
+        try {
+            Field m = klass.getDeclaredField("PLURAL_NAME");
+            m.setAccessible(true);
+            return (String) m.get(null);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public void onSuccess(int i, Header[] headers, byte[] bytes) {
         onSuccess(new String(bytes));
     }
 
-    public final void onSuccess(String json) {
+    public void onSuccess(String json) {
         try {
             JSONObject jsonResponse = new JSONObject(json);
             if (wrapProperty != null) {
                 json = jsonResponse.getJSONObject(wrapProperty).toString();
             }
-            onSuccess(new ModelCollection<T>(collection).fromJSONList(json, getTypeParameterClass()));
+            onSuccess(new ModelCollection<T>(mCollection).fromJSONList(json, getTypeParameterClass()));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,4 +146,10 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
 
     protected void onFailure(Throwable throwable, JSONObject jsonRes, int code) {
     }
+
+    protected String getWrapProperty() {
+        return wrapProperty;
+    }
+
+    protected String getCollectionName() { return mCollection; }
 }

@@ -1,5 +1,7 @@
 package com.ascariandrea.moai.models;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -10,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +48,6 @@ public class ModelCollection<T extends Model> {
             e.printStackTrace();
         }
 
-        return null;
+        return new ArrayList<T>();
     }
 }

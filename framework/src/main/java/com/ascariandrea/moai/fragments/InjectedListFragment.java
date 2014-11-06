@@ -1,6 +1,8 @@
 package com.ascariandrea.moai.fragments;
 
 
+import android.util.Log;
+
 import com.ascariandrea.moai.client.AsyncCollectionHandler;
 import com.ascariandrea.moai.interfaces.OnFetchCollectionInterface;
 import com.ascariandrea.moai.models.Model;
@@ -21,7 +23,7 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     protected List<T> mCollection;
 
-    private AsyncCollectionHandler<T> asyncCollectionHandler;
+    protected AsyncCollectionHandler<T> asyncCollectionHandler;
     private Class<? extends Model> mExtendedModelClass;
 
     private boolean mNeedRepopulate = false;
@@ -38,33 +40,24 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @SuppressWarnings("unchecked")
     protected void initHandler() {
-        asyncCollectionHandler = new AsyncCollectionHandler<T>(getModelExtensionClassPluralName(), (Class<T>) Utils.getTypeParameter(this)) {
+        asyncCollectionHandler = new AsyncCollectionHandler<T>((Class<T>) Utils.getTypeParameter(this)) {
             @Override
             public void onSuccess(List<T> res) {
                 mCollection = res;
                 fetchCompleted(true);
             }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                mFetching = false;
+            }
         };
     }
 
 
-    private String getModelExtensionClassPluralName() {
-        Class<T> klass = Utils.getTypeParameter(this);
-        try {
-            Field m = klass.getDeclaredField("PLURAL_NAME");
-            m.setAccessible(true);
-            return (String) m.get(null);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
     protected void fetchData() {
+        mFetching = true;
         fetchData(asyncCollectionHandler);
     }
 
@@ -96,7 +89,8 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @Override
     public void onResume() {
-        if (mCollection == null)
+        Log.d(TAG, "on resume: " + (mCollection == null) + " fetching: " + mFetching);
+        if (mCollection == null && !mFetching)
             fetchData();
         else if (mNeedRepopulate)
             populateViewAgain();

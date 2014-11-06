@@ -32,8 +32,6 @@ public abstract class InjectedResourceFragment<T extends Model> extends Injected
     protected void onCreated() {
     }
 
-    ;
-
 
     protected void fetchData() {
         mFetching = true;
