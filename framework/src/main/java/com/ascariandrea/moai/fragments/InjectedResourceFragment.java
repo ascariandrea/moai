@@ -92,7 +92,7 @@ public abstract class InjectedResourceFragment<T extends Model> extends Injected
     @Override
     public void onResume() {
         super.onResume();
-        if (mResource == null && !isFetching())
+        if (mResource == null && !isFetching() && !mFetchDataIsDisabled)
             fetchData();
         else if (mNeedRepopulate && getActivity() != null)
             populateViewAgain();

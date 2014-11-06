@@ -89,7 +89,6 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @Override
     public void onResume() {
-        Log.d(TAG, "on resume: " + (mCollection == null) + " fetching: " + mFetching);
         if (mCollection == null && !mFetching)
             fetchData();
         else if (mNeedRepopulate)
