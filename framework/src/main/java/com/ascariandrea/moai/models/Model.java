@@ -1,5 +1,6 @@
 package com.ascariandrea.moai.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -14,10 +15,17 @@ import java.util.Arrays;
  * Created by andreaascari on 22/01/14.
  */
 public abstract class Model {
+
+
+
     private static final String TAG = Model.class.getSimpleName();
     public static String SINGLE_NAME = "Model";
     public static String PLURAL_NAME = "Models";
     protected static ObjectMapper mapper;
+
+
+    @JsonProperty("id")
+    public int id;
 
     protected static <T extends Model> void checkInitMapper(T model) {
         if (mapper == null) {

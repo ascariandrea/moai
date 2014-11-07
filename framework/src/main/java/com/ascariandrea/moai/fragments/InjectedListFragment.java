@@ -89,9 +89,15 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @Override
     public void onResume() {
-        if (mCollection == null && !mFetching)
+
+        if (!hasViewInjected())
+            afterViewsInjected();
+
+        if (mCollection == null && !mFetching && !mFetchDataIsDisabled) {
+            if (getAsyncCollectionHandler() == null)
+                initHandler();
             fetchData();
-        else if (mNeedRepopulate)
+        } else if (mNeedRepopulate)
             populateViewAgain();
         super.onResume();
     }
@@ -101,4 +107,7 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
     }
 
 
+    public AsyncCollectionHandler<T> getAsyncCollectionHandler() {
+        return asyncCollectionHandler;
+    }
 }

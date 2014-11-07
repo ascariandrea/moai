@@ -119,12 +119,16 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
 
         @Override
         public void update(Observable observable, Object data) {
-            Log.d("update", mViewInjected + " " + mFetchingCompleted);
             if (mViewInjected && mFetchingCompleted) {
                 canPopulateView();
             }
         }
 
+    }
+
+
+    protected final boolean hasViewInjected() {
+        return mViewInjected;
     }
 
 }
