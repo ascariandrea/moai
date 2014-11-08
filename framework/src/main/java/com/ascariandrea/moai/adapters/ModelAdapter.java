@@ -38,6 +38,10 @@ public class ModelAdapter<T extends Model> extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        mModels.clear();
+    }
+
     public List<T> getList() {
         return mModels;
     }
@@ -61,4 +65,6 @@ public class ModelAdapter<T extends Model> extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         return null;
     }
+
+
 }
