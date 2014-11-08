@@ -3,6 +3,16 @@
 
     <!-- MAIN TAB BAR INDICATOR -->
 
+    <!-- Base application theme. -->
+    <style name="MoaiTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="tabBarIndicatorStyle">@style/tabIndicator</item>
+        <item name="simpleTabStyle">@style/simpleTab</item>
+        <item name="centerLeftTab">@style/simpleTab.centerLeft</item>
+        <item name="centerRightTab">@style/simpleTab.centerRight</item>
+
+    </style>
+
     <style name="tabIndicator">
         <item name="android:layout_centerInParent">true</item>
         <item name="android:layout_height">wrap_content</item>
