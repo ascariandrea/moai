@@ -1,5 +1,6 @@
-include ':framework', ':facebook', ':sample'
+include ':framework', ':facebook', ':ViewPagerIndicator', ':sample'
 
 project(':facebook').projectDir = new File('libs/facebook/facebook');
+project(':ViewPagerIndicator').projectDir = new File('libs/ViewPagerIndicator');
 
 

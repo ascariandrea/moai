@@ -8,4 +8,20 @@
         <attr name="android:fadingEdgeLength" />
     </declare-styleable>
 
+    <!-- Defines the custom XML attributes supported for a TabBarIndicator -->
+
+    <declare-styleable name="TabBarIndicator">
+        <attr name="viewPager" format="string"/>
+        <attr name="tabLayout" format="reference" />
+    </declare-styleable>
+
+
+
+    <attr name="tabBarIndicatorStyle" format="reference" />
+    <attr name="simpleTabStyle" format="reference"/>
+    <attr name="centerLeftTab" format="reference"/>
+    <attr name="centerRightTab" format="reference"/>
+
+    <attr name="profileTabPageIndicator" format="reference" />
+
 </resources>
