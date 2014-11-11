@@ -51,7 +51,7 @@ public abstract class InjectedResourceFragment<T extends Model> extends Injected
 
             @Override
             protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {
-                Utils.Views.showLongToast(getActivity(), errorMessage);
+                Utils.Toast.showLongToast(getActivity(), errorMessage);
             }
 
             @Override

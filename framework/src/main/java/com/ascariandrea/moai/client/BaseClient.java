@@ -131,6 +131,10 @@ public abstract class BaseClient {
         client.delete(null, url, handler);
     }
 
+    public void deleteAuth(String url, AsyncHttpResponseHandler responseHandler) {
+        client.delete(null, url, responseHandler);
+    }
+
     public void setTimeout(int timeout) {
         client.setTimeout(timeout);
     }

@@ -47,7 +47,6 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
 import java.util.Calendar;
 
@@ -233,14 +232,6 @@ public class Utils {
             }
         }
 
-
-        public static void showLongToast(Context context, int resource) {
-            Toast.makeText(context, context.getString(resource), Toast.LENGTH_LONG).show();
-        }
-
-        public static void showLongToast(Context context, java.lang.String message) {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-        }
 
         public static void drawCircle(ImageView v, Canvas canvas) {
             Drawable drawable = v.getDrawable();
@@ -593,6 +584,28 @@ public class Utils {
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             return networkInfo != null && networkInfo.isConnectedOrConnecting();
 
+        }
+    }
+
+
+    public static class Toast {
+
+        private static android.widget.Toast mLastToast;
+
+        public static void showLongToast(Context context, java.lang.String message) {
+            mLastToast = android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_LONG);
+            mLastToast.show();
+        }
+
+        public static void showLongToast(Context context, int resource) {
+            mLastToast = android.widget.Toast.makeText(context, context.getString(resource), android.widget.Toast.LENGTH_LONG);
+            mLastToast.show();
+        }
+
+        public static void cancelToast() {
+            if (mLastToast != null) {
+                mLastToast.cancel();
+            }
         }
     }
 }

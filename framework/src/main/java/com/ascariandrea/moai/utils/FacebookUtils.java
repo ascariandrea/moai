@@ -256,7 +256,7 @@ public class FacebookUtils {
                     } else {
                         //toastMessageResource = com.R.string.error_fb_post_creation;
                     }
-                    Utils.Views.showLongToast(activity, "Choose Friends");
+                    Utils.Toast.showLongToast(activity, "Choose Friends");
 
                 }
             });
