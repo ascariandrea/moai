@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-def appId = 'com.ascariandrea.afw.samples'
+def appId = 'com.ascariandrea.moai.samples'
 
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'

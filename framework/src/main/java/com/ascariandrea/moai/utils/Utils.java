@@ -60,7 +60,7 @@ public class Utils {
 
     @SuppressWarnings("unchecked")
     public static <T extends Model> Class<T> getTypeParameter(Object o) {
-        Type[] actualTypes;
+        Type[] actualTypes = new Type[0];
         boolean typeFound = false;
         Class klass = o.getClass();
         Class<T> tClass = null;
@@ -70,15 +70,23 @@ public class Utils {
             count++;
 
             try {
+                Log.d(TAG, klass.getName() + " type parameters: " + Arrays.toString(klass.getTypeParameters()));
                 if (klass.getTypeParameters().length > 0) {
                     actualTypes = klass.getTypeParameters()[0].getBounds();
                 } else {
                     ParameterizedType parameterizedType = (ParameterizedType) klass.getGenericSuperclass();
                     actualTypes = parameterizedType.getActualTypeArguments();
                 }
-                tClass = (Class<T>) actualTypes[0];
-                typeFound = true;
+                if (actualTypes.length > 0) {
+                    Log.d(TAG, Arrays.toString(actualTypes));
+                    tClass = (Class<T>) actualTypes[0];
+                    Log.d(TAG, "class found!: " + tClass);
+                    typeFound = true;
+                } else {
+                    Log.d(TAG, "no type found for: " + klass.getName());
+                }
             } catch (ClassCastException e) {
+                Log.d(TAG, "error casting to: " + Arrays.asList(actualTypes).toString());
                 if (klass.getSuperclass() != null) {
                     klass = klass.getSuperclass();
                 } else {

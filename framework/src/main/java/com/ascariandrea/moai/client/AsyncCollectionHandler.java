@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpResponseHandler {
@@ -24,7 +25,7 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
     private String mCollection;
 
     public AsyncCollectionHandler(String colName) {
-        this(null, null);
+        this(colName, null);
     }
 
     public AsyncCollectionHandler(Class<T> type) {
@@ -40,11 +41,13 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
     private void init(String collectionName, Class<T> type) {
         wrapProperty = "data";
 
+        mType = type;
+
         if (collectionName == null)
             collectionName = getModelExtensionClassPluralName();
 
         mCollection = collectionName;
-        mType = type;
+
     }
 
 
@@ -67,7 +70,12 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
     }
 
     private String getModelExtensionClassPluralName() {
-        Class<T> klass = Utils.getTypeParameter(this);
+        Class<T> klass;
+        if (mType == null)
+            klass = Utils.getTypeParameter(this);
+        else
+            klass = mType;
+
         try {
             Field m = klass.getDeclaredField("PLURAL_NAME");
             m.setAccessible(true);
@@ -87,12 +95,16 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
     }
 
     public void onSuccess(String json) {
+        Log.d(TAG, json);
         try {
             JSONObject jsonResponse = new JSONObject(json);
             if (wrapProperty != null) {
                 json = jsonResponse.getJSONObject(wrapProperty).toString();
             }
-            onSuccess(new ModelCollection<T>(mCollection).fromJSONList(json, getTypeParameterClass()));
+
+            Log.d(TAG, getCollectionName() + "");
+
+            onSuccess(new ModelCollection<T>(getCollectionName()).fromJSONList(json, getTypeParameterClass()));
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -11,6 +11,7 @@ import com.ascariandrea.moai.utils.Utils;
 import org.androidannotations.annotations.EFragment;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @SuppressWarnings("unchecked")
     protected void initHandler() {
-        asyncCollectionHandler = new AsyncCollectionHandler<T>((Class<T>) Utils.getTypeParameter(this)) {
+        asyncCollectionHandler = new AsyncCollectionHandler<T>((Class<T>)  Utils.getTypeParameter(this)) {
             @Override
             public void onSuccess(List<T> res) {
                 mCollection = res;
