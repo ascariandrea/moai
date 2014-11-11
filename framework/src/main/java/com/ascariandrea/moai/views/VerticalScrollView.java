@@ -22,6 +22,7 @@ public class VerticalScrollView extends ScrollView {
 
     public VerticalScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
     }
 
 

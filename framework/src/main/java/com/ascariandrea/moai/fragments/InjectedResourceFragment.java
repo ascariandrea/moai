@@ -15,7 +15,7 @@ import org.json.JSONArray;
 @EFragment
 public abstract class InjectedResourceFragment<T extends Model> extends InjectedFragment implements OnFetchResourceInterface<T> {
 
-    private T mResource;
+    protected T mResource;
 
     private AsyncResourceHandler<T> asyncResourceHandler;
     private boolean mNeedRepopulate = false;

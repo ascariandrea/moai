@@ -24,4 +24,12 @@
 
     <attr name="profileTabPageIndicator" format="reference" />
 
+
+    <declare-styleable name="SquareFrameLayout">
+        <attr name="use_measure" format="enum">
+            <enum name="width" value="0" />
+            <enum name="height" value="1" />
+        </attr>
+    </declare-styleable>
+
 </resources>
