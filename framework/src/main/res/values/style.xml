@@ -30,22 +30,26 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="simpleTab.centerLeft">
+    <style name="simpleTab.centered">
         <item name="android:layout_centerHorizontal">false</item>
-        <item name="android:paddingLeft">10dp</item>
+        <item name="android:layout_centerInParent">false</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="simpleTab.centerLeft" parent="simpleTab.centered">
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:scaleType">fitStart</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:scaleGravity">center_vertical|left</item>
+        <item name="android:scaleType">fitEnd</item>
         <item name="android:gravity">left</item>
     </style>
 
-    <style name="simpleTab.centerRight">
-        <item name="android:layout_centerHorizontal">false</item>
-        <item name="android:layout_centerInParent">false</item>
+    <style name="simpleTab.centerRight" parent="simpleTab.centered">
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:paddingRight">12dp</item>
         <item name="android:scaleGravity">center_vertical|right</item>
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:scaleType">fitEnd</item>
         <item name="android:gravity">right</item>
+        <item name="android:background">@android:color/holo_blue_bright</item>
     </style>
 </resources>

@@ -297,6 +297,10 @@ public class Utils {
         public static int getDpMeasure(Context context, int i) {
             return (int) ((context.getResources().getDisplayMetrics().density * i) + 0.5f);
         }
+
+        public static int getSpMeasure(Context context, int i) {
+            return (int) ((context.getResources().getDisplayMetrics().scaledDensity * i));
+        }
     }
 
     /**

@@ -186,6 +186,7 @@ public class TabBarIndicator extends HorizontalScrollView implements PageIndicat
         ImageView tabIconView = (ImageView) tabView.findViewById(R.id.tabIcon);
         if (tabIconView != null && iconResId != 0) {
             tabIconView.setImageDrawable(getResources().getDrawable(iconResId));
+            tabIconView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             tabIconView.setClickable(false);
             tabView.invalidate();
         }
