@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:1.0.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
@@ -17,7 +17,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'android-apt'
 apt {
     arguments {
-        androidManifestFile variant.processResources.manifestFile
+        androidManifestFile variant.outputs[0].processResources.manifestFile
         resourcePackageName appId
         logConsoleAppender true
 
@@ -29,7 +29,6 @@ android {
     buildToolsVersion '20.0.0'
     defaultConfig {
         minSdkVersion 14
-        applicationId appId
     }
     sourceSets {
         main {
@@ -48,11 +47,11 @@ android {
     }
 
 }
-def AAVersion = '3.0.+'
+def AAVersion = '3.2'
 
 dependencies {
-    compile 'com.android.support:support-v4:20.0.0'
-    compile 'com.google.android.gms:play-services:6.1.11'
+    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.loopj.android:android-async-http:1.4.5@jar'
     compile 'com.squareup.picasso:picasso:2.1.1@jar'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.4'
@@ -66,7 +65,6 @@ dependencies {
     compile 'it.sephiroth.android.library.horizontallistview:library:1.2.1'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
     compile 'oauth.signpost:signpost-commonshttp4:1.2'
-    compile 'com.google.android.gms:play-services:6.1.11'
     compile 'com.androidmapsextensions:android-maps-extensions:2.1.0'
     compile 'com.mobsandgeeks:android-saripaar:1.0.2'
     compile project(':ViewPagerIndicator')
