@@ -34,14 +34,12 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
     protected void toCallAfterCreation() {
         onCreated();
         initHandler();
-        if (!mFetchDataIsDisabled)
-            fetchData();
     }
 
 
     @SuppressWarnings("unchecked")
     protected void initHandler() {
-        asyncCollectionHandler = new AsyncCollectionHandler<T>((Class<T>)  Utils.getTypeParameter(this)) {
+        asyncCollectionHandler = new AsyncCollectionHandler<T>((Class<T>) Utils.getTypeParameter(this)) {
             @Override
             public void onSuccess(List<T> res) {
                 mCollection = res;
@@ -56,6 +54,15 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
         };
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            fetchDataIfNeeded();
+            populateViewIfNeeded();
+        }
+    }
 
     protected void fetchData() {
         mFetching = true;
@@ -94,13 +101,23 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
         if (!hasViewInjected())
             afterViewsInjected();
 
+        super.onResume();
+    }
+
+    public void fetchDataIfNeeded() {
         if (mCollection == null && !mFetching && !mFetchDataIsDisabled) {
+            Log.d(TAG, "A fetch data is needed!");
             if (getAsyncCollectionHandler() == null)
                 initHandler();
             fetchData();
-        } else if (mNeedRepopulate)
+        }
+    }
+
+    private void populateViewIfNeeded() {
+        if (mCollection != null && !mFetching && mNeedRepopulate) {
+            Log.d(TAG, "A populate view is needed!");
             populateViewAgain();
-        super.onResume();
+        }
     }
 
     protected void populateViewAgain() {
