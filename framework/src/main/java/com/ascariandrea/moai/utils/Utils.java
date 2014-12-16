@@ -455,6 +455,9 @@ public class Utils {
         }
 
 
+        public static void lastDialog(AlertDialog alertDialog) {
+            mLastDialog = alertDialog;
+        }
     }
 
     public static class GoogleAuth {
