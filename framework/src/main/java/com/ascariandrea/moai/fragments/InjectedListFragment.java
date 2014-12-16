@@ -28,6 +28,7 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
     private Class<? extends Model> mExtendedModelClass;
 
     private boolean mNeedRepopulate = false;
+    private boolean mIsVisibleToUser;
 
 
     @Override
@@ -57,8 +58,9 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        mIsVisibleToUser = isVisibleToUser;
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
+        if (isResumed() && mIsVisibleToUser) {
             fetchDataIfNeeded();
             populateViewIfNeeded();
         }
@@ -101,11 +103,14 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
         if (!hasViewInjected())
             afterViewsInjected();
 
+        fetchDataIfNeeded();
+        populateViewIfNeeded();
+
         super.onResume();
     }
 
     public void fetchDataIfNeeded() {
-        if (mCollection == null && !mFetching && !mFetchDataIsDisabled) {
+        if (mCollection == null && !mFetching && !mFetchDataIsDisabled && mIsVisibleToUser) {
             Log.d(TAG, "A fetch data is needed!");
             if (getAsyncCollectionHandler() == null)
                 initHandler();
@@ -114,7 +119,7 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
     }
 
     private void populateViewIfNeeded() {
-        if (mCollection != null && !mFetching && mNeedRepopulate) {
+        if (mCollection != null && !mFetching && mNeedRepopulate && mIsVisibleToUser) {
             Log.d(TAG, "A populate view is needed!");
             populateViewAgain();
         }
