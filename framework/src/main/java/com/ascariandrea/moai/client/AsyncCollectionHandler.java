@@ -119,9 +119,10 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
                 HttpResponseException httpResponseException = (HttpResponseException) t;
                 int statusCode = httpResponseException.getStatusCode();
                 switch (statusCode) {
-                    case 403: {
+                    case 401:
                         onUnauthorized(t, res);
-                    }
+                        break;
+
                     default:
                         break;
                 }
