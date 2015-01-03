@@ -39,8 +39,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.ascariandrea.moai.R;
 import com.ascariandrea.moai.models.Model;
+
+import net.sf.jfuzzydate.FuzzyDateFormat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
@@ -49,6 +52,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by andreaascari on 05/02/14.
@@ -352,6 +356,12 @@ public class Utils {
 
         public static java.lang.String defaultGiftImageUrl() {
             return S3_ENDPOINT + "/default-gift-image@2x.png";
+        }
+    }
+
+    public static class Date {
+        public static java.lang.String getFuzzyDate(java.util.Date date) {
+            return FuzzyDateFormat.getInstance().formatDistance(date);
         }
     }
 
