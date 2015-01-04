@@ -598,9 +598,7 @@ public class Utils {
 
         public static boolean hasConnectivity(Context context) {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-            return networkInfo != null && networkInfo.isConnectedOrConnecting();
-
+            return cm != null && cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting();
         }
     }
 
