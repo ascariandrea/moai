@@ -1,6 +1,7 @@
 package com.ascariandrea.moai.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -39,7 +40,9 @@ public class ModelAdapter<T extends Model> extends BaseAdapter {
     }
 
     public void clear() {
-        mModels.clear();
+        if (mModels != null) {
+            mModels.clear();
+        }
     }
 
     public List<T> getList() {

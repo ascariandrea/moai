@@ -112,8 +112,7 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
         populateView();
     }
 
-    protected void populateView() {
-    }
+    protected void populateView() {}
 
     protected class DataObserver implements Observer {
 
