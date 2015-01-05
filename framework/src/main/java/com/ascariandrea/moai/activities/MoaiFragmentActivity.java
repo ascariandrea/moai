@@ -1,6 +1,8 @@
 package com.ascariandrea.moai.activities;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -22,6 +24,7 @@ public abstract class MoaiFragmentActivity extends FragmentActivity {
 
     public static final int RESULT_DONE = 4;
     private static final int NO_REQUEST_CODE = -99;
+    private static final java.lang.String FACEBOOK_SDK_APP_ID = "com.facebook.sdk.ApplicationId";
     @Extra
     public int requestCode = NO_REQUEST_CODE;
     protected PersistentPreferences mPrefs;
@@ -50,7 +53,17 @@ public abstract class MoaiFragmentActivity extends FragmentActivity {
     }
 
     protected void initFacebookSession(boolean b) {
-        mFbSession = new Session(this);
+        try {
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            String fbId = bundle.getString(FACEBOOK_SDK_APP_ID);
+            if (fbId != null && !fbId.isEmpty()) {
+                mFbSession = new Session(this);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
