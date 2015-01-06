@@ -23,10 +23,6 @@ public abstract class Model {
     public static String PLURAL_NAME = "Models";
     protected static ObjectMapper mapper;
 
-
-    @JsonProperty("id")
-    public int id;
-
     protected static <T extends Model> void checkInitMapper(T model) {
         if (mapper == null) {
             mapper = new ObjectMapper();

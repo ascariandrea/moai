@@ -61,7 +61,7 @@ public class ModelAdapter<T extends Model> extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return mModels.get(position).id;
+        return mModels.get(position).hashCode();
     }
 
     @Override

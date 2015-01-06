@@ -21,6 +21,10 @@ public abstract class BaseClient {
     private String authHeaderValue = null;
     private String authHeaderName = null;
 
+    public void setBasicAuth(String username, String password) {
+        client.setBasicAuth(username, password);
+    }
+
 
     public void setAuthHeader(String ahn, String ahv) {
         authHeaderName = ahn;
