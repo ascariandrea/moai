@@ -24,7 +24,9 @@ public abstract class InjectedLoginSelectionFragment extends InjectedFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSavedInstanceState = savedInstanceState;
-        getLoginActivity().getUiHelper().onCreate(mSavedInstanceState);
+        if (getLoginActivity().getUiHelper() != null) {
+            getLoginActivity().getUiHelper().onCreate(mSavedInstanceState);
+        }
     }
 
 
