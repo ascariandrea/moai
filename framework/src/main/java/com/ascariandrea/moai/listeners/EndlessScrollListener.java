@@ -69,13 +69,13 @@ public abstract class EndlessScrollListener<T extends Model> implements AbsListV
         // the visibleThreshold and need to reload more data.
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-            onLoadMore(getLastItemLoaded(), totalItemCount);
+            onLoadMore(getLastItemLoaded(), totalItemCount, currentPage);
             loading = true;
         }
     }
 
     // Defines the process for actually loading more data based on page
-    public abstract void onLoadMore(T lastItemLoaded, int totalItemsCount);
+    public abstract void onLoadMore(T lastItemLoaded, int totalItemCount, int totalItemsCount);
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {

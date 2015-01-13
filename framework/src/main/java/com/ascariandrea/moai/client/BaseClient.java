@@ -14,15 +14,20 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public abstract class BaseClient {
+public abstract class BaseClient extends AsyncHttpClient {
     protected static final String PATH_SEPARATOR = "/";
     private static final String TAG = BaseClient.class.getSimpleName();
     protected static AsyncHttpClient client = new AsyncHttpClient();
     private String authHeaderValue = null;
     private String authHeaderName = null;
 
+
     public void setBasicAuth(String username, String password) {
         client.setBasicAuth(username, password);
+    }
+
+    public void setProxy(String hostName, int port) {
+        client.setProxy(hostName, port);
     }
 
 
