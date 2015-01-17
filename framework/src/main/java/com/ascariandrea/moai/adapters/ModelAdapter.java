@@ -17,7 +17,7 @@ import java.util.List;
  * Created by andreaascari on 09/07/14.
  */
 @EBean
-public class ModelAdapter<T extends Model> extends BaseAdapter {
+public abstract class ModelAdapter<T extends Model> extends BaseAdapter {
 
 
     @RootContext
@@ -28,6 +28,7 @@ public class ModelAdapter<T extends Model> extends BaseAdapter {
     protected final Context getContext() {
         return context;
     }
+
 
     public void init(List<T> list) {
         mModels = list;
@@ -64,10 +65,6 @@ public class ModelAdapter<T extends Model> extends BaseAdapter {
         return mModels.get(position).hashCode();
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
 
 
 }
