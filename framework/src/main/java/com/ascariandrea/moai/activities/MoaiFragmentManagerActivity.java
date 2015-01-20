@@ -36,7 +36,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
     protected static final int SLIDE_LEFT_TO_RIGHT = 1;
     private static final String TAG = MoaiFragmentManagerActivity.class.getSimpleName();
     @Extra
-    public int stepToLaunch = -1;
+    public int stepToLaunch = 0;
     protected int mActiveFragmentIndex;
     protected LinearLayout fragmentContainerView;
     private FragmentManager fragmentManager;
@@ -98,7 +98,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
 
     protected void addFragment(int fragmentIndex, InjectedFragment fragment) {
         fragments.put(fragmentIndex, fragment);
-        if (fragment != null)
+        if (fragment != null && fragmentManager != null)
             fragmentManager.beginTransaction().add(mContainerId, fragment).commit();
 
         if (BuildConfig.DEBUG)
