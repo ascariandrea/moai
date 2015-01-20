@@ -52,4 +52,9 @@
         <item name="android:gravity">right</item>
         <item name="android:background">@android:color/holo_blue_bright</item>
     </style>
+
+    <declare-styleable name="CustomFontTxtView">
+        <attr name="customFont" format="string" />
+    </declare-styleable>
+
 </resources>
