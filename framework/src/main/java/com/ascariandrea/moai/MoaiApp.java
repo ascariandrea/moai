@@ -21,13 +21,13 @@ import java.io.IOException;
  * Created by andreaascari on 15/10/14.
  */
 
-public abstract class AFWApp extends Application {
+public abstract class MoaiApp extends Application {
 
     private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
 
     private static final int PLAY_SERVICE_RESOLUTION_REQUEST = 9000;
-    private static final String TAG = AFWApp.class.getSimpleName();
+    private static final String TAG = MoaiApp.class.getSimpleName();
     private GoogleCloudMessaging mGcm;
     private String regId;
     private PersistentPreferences mPrefs;

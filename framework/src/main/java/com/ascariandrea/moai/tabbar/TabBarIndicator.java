@@ -57,7 +57,7 @@ public class TabBarIndicator extends HorizontalScrollView implements PageIndicat
 
     private TabView mLastTabViewSelected = null;
 
-    private final OnClickListener mTabClickListener = new OnClickListener() {
+    protected final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
             TabView tabView = (TabView) view;
             final int oldSelected = mViewPager.getCurrentItem();
@@ -84,8 +84,8 @@ public class TabBarIndicator extends HorizontalScrollView implements PageIndicat
 
     public TabBarIndicator(Context context) {
         this(context, null);
-
     }
+
 
     public TabBarIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -170,17 +170,7 @@ public class TabBarIndicator extends HorizontalScrollView implements PageIndicat
         }
     }
 
-
-    private void addTab(int index, CharSequence text, int iconResId) {
-
-        LinearLayout tabContainer = new LinearLayout(getContext(), null, getAttrs(index));
-        final TabView tabView = (TabView) ((LinearLayout) inflate(getContext(), mTabLayoutResource, tabContainer)).getChildAt(0);
-
-        tabView.setIndex(index);
-        tabView.setMaxTabWith(mMaxTabWidth);
-        tabView.setFocusable(true);
-        tabView.setClickable(true);
-        tabView.setOnClickListener(mTabClickListener);
+    public void getTabView(TabView tabView, CharSequence text, int iconResId) {
 
 
         ImageView tabIconView = (ImageView) tabView.findViewById(R.id.tabIcon);
@@ -195,20 +185,29 @@ public class TabBarIndicator extends HorizontalScrollView implements PageIndicat
         if (tabTextView != null) {
             tabTextView.setText(text);
         }
+    }
 
+    private void addTab(int index, CharSequence text, int iconResId) {
+
+        LinearLayout tabContainer = new LinearLayout(getContext(), null, getAttrs(index));
+        final TabView tabView = (TabView) ((LinearLayout) inflate(getContext(), mTabLayoutResource, tabContainer)).getChildAt(0);
+
+        tabView.setIndex(index);
+        tabView.setMaxTabWith(mMaxTabWidth);
+        tabView.setFocusable(true);
+        tabView.setClickable(true);
+        tabView.setOnClickListener(mTabClickListener);
+
+        getTabView(tabView, text, iconResId);
 
         mTabLayout.addView(tabContainer, new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT, 1));
     }
 
     public void setLayoutType(int type) {
-        if (type == EQUAL_TABS_LAYOUT) {
-            mEqualTabs = true;
-        } else {
-            mEqualTabs = false;
-        }
+        mEqualTabs = type == EQUAL_TABS_LAYOUT;
     }
 
-    private int getAttrs(int index) {
+    protected int getAttrs(int index) {
         int style;
         if (!mEqualTabs) {
             switch (index) {

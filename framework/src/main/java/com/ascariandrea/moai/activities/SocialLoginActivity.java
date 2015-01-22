@@ -8,7 +8,7 @@ import android.os.StrictMode;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
-import com.ascariandrea.moai.AFWApp;
+import com.ascariandrea.moai.MoaiApp;
 import com.ascariandrea.moai.BuildConfig;
 import com.ascariandrea.moai.R;
 import com.ascariandrea.moai.fragments.InjectedFragment;
@@ -183,7 +183,7 @@ public abstract class SocialLoginActivity extends MoaiFragmentManagerActivity im
 
     public GoogleApiClient getGooglePlusClient() {
         if (isGooglePlusLoginEnabled()) {
-            if (AFWApp.checkGooglePlayService(this)) {
+            if (MoaiApp.checkGooglePlayService(this)) {
                 if (mPlusClient == null) {
                     mPlusClient = new GoogleApiClient.Builder(
                             SocialLoginActivity.this,
