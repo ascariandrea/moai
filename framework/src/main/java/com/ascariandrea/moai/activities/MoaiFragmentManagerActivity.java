@@ -63,7 +63,6 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
 
     @Override
     protected void onCreated() {
-        enableBackButton();
         fragmentManager = getSupportFragmentManager();
         setFragmentContainerId(getFragmentContainerId());
 

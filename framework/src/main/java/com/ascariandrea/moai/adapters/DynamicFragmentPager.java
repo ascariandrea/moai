@@ -23,7 +23,12 @@ public class DynamicFragmentPager extends android.support.v4.app.FragmentPagerAd
 
     @Override
     public Fragment getItem(int i) {
-        return mFragments.get(i);
+        return mFragments != null && mFragments.get(i) != null ? mFragments.get(i) : new InjectedFragment() {
+            @Override
+            public void onViewInjected() {
+
+            }
+        };
     }
 
     @Override
@@ -34,6 +39,7 @@ public class DynamicFragmentPager extends android.support.v4.app.FragmentPagerAd
     public void addPage(int i, String pageTitle, InjectedFragment fragment) {
         mFragments.put(i, fragment);
         mFragmentsTitles.put(i, pageTitle);
+        notifyDataSetChanged();
     }
 
     @Override
