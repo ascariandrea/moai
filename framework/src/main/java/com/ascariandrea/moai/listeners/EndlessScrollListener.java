@@ -75,7 +75,7 @@ public abstract class EndlessScrollListener<T extends Model> implements AbsListV
     }
 
     // Defines the process for actually loading more data based on page
-    public abstract void onLoadMore(T lastItemLoaded, int totalItemCount, int totalItemsCount);
+    public abstract void onLoadMore(T lastItemLoaded, int totalItemCount, int currentPage);
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {

@@ -213,10 +213,6 @@ public class Utils {
 
                 groupView.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
                 view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-//                Log.d(TAG, "totalHeight: " + totalHeight);
-//                Log.d(TAG, "groupView [measuredHeight" + groupView.getMeasuredHeight() + "]");
-//                Log.d(TAG, "view [measuredHeight " + view.getMeasuredHeight() + "]");
-//                Log.d(TAG, "divider [height " + expandableListView.getDividerHeight() + "] [count " + (expandableListAdapter.getChildrenCount(i) - 1) + "]");
                 totalHeight += groupView.getMeasuredHeight() + view.getMeasuredHeight() * expandableListAdapter.getChildrenCount(i) + (expandableListView.getDividerHeight() * (expandableListAdapter.getChildrenCount(i) - 1));
             }
             ViewGroup.LayoutParams params = expandableListView.getLayoutParams();
@@ -339,6 +335,19 @@ public class Utils {
 
         public static boolean isValidEmail(java.lang.String s) {
             return !TextUtils.isEmpty(s) && Patterns.EMAIL_ADDRESS.matcher(s).matches();
+        }
+
+        public static java.lang.String capitalizeWords(java.lang.String s) {
+            final StringBuilder result = new StringBuilder(s.length());
+            java.lang.String[] words = s.split("\\s");
+            for(int i=0,l=words.length;i<l;++i) {
+                if(i>0) result.append(" ");
+                result.append(Character.toUpperCase(words[i].charAt(0)))
+                        .append(words[i].substring(1));
+
+            }
+
+            return result.toString();
         }
     }
 
