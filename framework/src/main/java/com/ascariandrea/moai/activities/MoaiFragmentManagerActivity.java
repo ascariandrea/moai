@@ -74,7 +74,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
 
     @Override
     public void afterViews() {
-        if (fragmentManager.getFragments() != null && fragmentManager.getFragments().size() > 0) {
+        if (fragmentManager != null && fragmentManager.getFragments() != null && fragmentManager.getFragments().size() > 0) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             for (Fragment f : fragmentManager.getFragments()) {
                 transaction.hide(f);

@@ -2,7 +2,6 @@ package com.ascariandrea.moai.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -18,11 +17,6 @@ import com.squareup.picasso.Transformation;
  * Created by andreaascari on 27/01/14.
  */
 public class PoweredImageView extends ImageView implements Target {
-
-    private Drawable mAvatar;
-    private Bitmap mBitmapAvatar;
-    private Paint mCirclePaint;
-    private String TAG = PoweredImageView.class.getSimpleName();
 
     public PoweredImageView(Context context) {
         super(context);
@@ -41,8 +35,10 @@ public class PoweredImageView extends ImageView implements Target {
         setImageUrl(imageUrl, true, null);
     }
 
+
     public void setImageUrl(String imageUrl, boolean fromCache, Transformation transformation) {
         RequestCreator rc = Picasso.with(getContext()).load(imageUrl);
+
         if (!fromCache)
             rc.skipMemoryCache();
 

@@ -44,6 +44,7 @@ public abstract class ModelAdapter<T extends Model> extends BaseAdapter {
         if (mModels != null) {
             mModels.clear();
         }
+        notifyDataSetInvalidated();
     }
 
     public List<T> getList() {

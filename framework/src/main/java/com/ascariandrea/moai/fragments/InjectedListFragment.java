@@ -1,8 +1,10 @@
 package com.ascariandrea.moai.fragments;
 
 
+import android.app.Activity;
 import android.util.Log;
 
+import com.ascariandrea.moai.BuildConfig;
 import com.ascariandrea.moai.client.AsyncCollectionHandler;
 import com.ascariandrea.moai.interfaces.OnFetchCollectionInterface;
 import com.ascariandrea.moai.models.Model;
@@ -99,6 +101,9 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @Override
     public void onResume() {
+        if (getUserVisibleHint()) {
+            mIsVisibleToUser = true;
+        }
 
         if (!hasViewInjected())
             afterViewsInjected();
@@ -109,9 +114,12 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
         super.onResume();
     }
 
+
     public void fetchDataIfNeeded() {
         if (mCollection == null && !mFetching && !mFetchDataIsDisabled && mIsVisibleToUser) {
-            Log.d(TAG, "A fetch data is needed!");
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "A fetch data is needed!");
+            }
             if (getAsyncCollectionHandler() == null)
                 initHandler();
             fetchData();
@@ -120,7 +128,9 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     private void populateViewIfNeeded() {
         if (mCollection != null && !mFetching && mNeedRepopulate && mIsVisibleToUser) {
-            Log.d(TAG, "A populate view is needed!");
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "A populate view is needed!");
+            }
             populateViewAgain();
         }
     }

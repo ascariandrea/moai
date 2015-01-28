@@ -30,28 +30,6 @@ public abstract class InjectedFragment extends Fragment implements OnInjectionCa
     private boolean mFetchingCompleted = false;
     private boolean mFirstBackPress = true;
 
-    public static InjectedFragment newInstance(Bundle args) {
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T extends Fragment> T newInstance(Bundle args, Class<? extends Fragment> fragmentClass) {
-        try {
-            Constructor<? extends Fragment> newInstanceMethod = fragmentClass.getConstructor();
-            newInstanceMethod.newInstance();
-            return (T) fragmentClass.newInstance();
-        } catch (java.lang.InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        return (T) InjectedFragment.newInstance(args);
-    }
 
     @AfterInject
     protected void afterCreation() {
