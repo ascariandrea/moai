@@ -23,7 +23,7 @@ public abstract class ModelAdapter<T extends Model> extends BaseAdapter {
     @RootContext
     public Context context;
 
-    private List<T> mModels;
+    protected List<T> mModels;
 
     protected final Context getContext() {
         return context;
