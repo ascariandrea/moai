@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.ascariandrea.moai.persist.PersistentPreferences;
@@ -21,7 +23,7 @@ import java.io.IOException;
  * Created by andreaascari on 15/10/14.
  */
 
-public abstract class MoaiApp extends Application {
+public abstract class MoaiApp extends MultiDexApplication {
 
     private static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
@@ -52,6 +54,12 @@ public abstract class MoaiApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
     }
 
     public void registerDeviceToken(Activity activity) {
