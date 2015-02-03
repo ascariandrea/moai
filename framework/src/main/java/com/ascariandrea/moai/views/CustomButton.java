@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.ascariandrea.moai.R;
 

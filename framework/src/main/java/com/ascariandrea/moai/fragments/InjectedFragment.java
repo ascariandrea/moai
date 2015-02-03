@@ -1,8 +1,6 @@
 package com.ascariandrea.moai.fragments;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import com.ascariandrea.moai.interfaces.OnInjectionCallback;
 
@@ -10,8 +8,6 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
 

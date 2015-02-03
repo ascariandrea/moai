@@ -2,11 +2,8 @@ package com.ascariandrea.moai.tabbar;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.ascariandrea.moai.R;
 
 /**
  * Created by andreaascari on 08/11/14.

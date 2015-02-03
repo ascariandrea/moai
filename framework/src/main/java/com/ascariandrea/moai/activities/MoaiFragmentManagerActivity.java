@@ -79,7 +79,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
             for (Fragment f : fragmentManager.getFragments()) {
                 transaction.hide(f);
             }
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
         }
         onViewInjected();
     }
@@ -98,7 +98,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
     protected void addFragment(int fragmentIndex, InjectedFragment fragment) {
         fragments.put(fragmentIndex, fragment);
         if (fragment != null && fragmentManager != null)
-            fragmentManager.beginTransaction().add(mContainerId, fragment).commit();
+            fragmentManager.beginTransaction().add(mContainerId, fragment).commitAllowingStateLoss();
 
         if (BuildConfig.DEBUG)
             Log.d(TAG, "Stored fragment: " + fragment + " at index: " + fragmentIndex);
@@ -135,7 +135,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
             t.show(fragments.get(fragmentIndex));
             if (b)
                 t.addToBackStack(null);
-            t.commit();
+            t.commitAllowingStateLoss();
             mActiveFragmentIndex = fragmentIndex;
         } else {
             throw new RuntimeException("Check passed index to show [fragment " + fragmentIndex + "]");
@@ -157,7 +157,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
 
     public void hideFragment(int fragmentIndex) {
         if (fragments.get(fragmentIndex) != null) {
-            fragmentManager.beginTransaction().hide(fragments.get(fragmentIndex)).commit();
+            fragmentManager.beginTransaction().hide(fragments.get(fragmentIndex)).commitAllowingStateLoss();
             mActiveFragmentIndex = mPreviousActiveFragmentIndex;
             mPreviousActiveFragmentIndex = fragmentIndex;
         } else {
@@ -173,14 +173,14 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
         t.replace(mContainerId, f);
         if (addToBackStack)
             t.addToBackStack(f.getTag());
-        t.commit();
+        t.commitAllowingStateLoss();
         mActiveFragmentIndex = index;
     }
 
 
     protected void removeFragment(int fragmentIndex) {
         if (fragments.get(fragmentIndex) != null) {
-            fragmentManager.beginTransaction().remove(fragments.get(fragmentIndex)).commit();
+            fragmentManager.beginTransaction().remove(fragments.get(fragmentIndex)).commitAllowingStateLoss();
             fragments.put(fragmentIndex, null);
         }
     }

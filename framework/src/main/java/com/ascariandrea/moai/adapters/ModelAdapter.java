@@ -1,9 +1,6 @@
 package com.ascariandrea.moai.adapters;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.ascariandrea.moai.models.Model;

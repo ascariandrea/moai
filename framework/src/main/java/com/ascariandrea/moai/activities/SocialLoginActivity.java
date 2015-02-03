@@ -8,8 +8,8 @@ import android.os.StrictMode;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
-import com.ascariandrea.moai.MoaiApp;
 import com.ascariandrea.moai.BuildConfig;
+import com.ascariandrea.moai.MoaiApp;
 import com.ascariandrea.moai.R;
 import com.ascariandrea.moai.fragments.InjectedFragment;
 import com.ascariandrea.moai.fragments.InjectedLoginSelectionFragment;

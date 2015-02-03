@@ -1,7 +1,6 @@
 package com.ascariandrea.moai.fragments;
 
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.ascariandrea.moai.BuildConfig;
@@ -12,8 +11,6 @@ import com.ascariandrea.moai.utils.Utils;
 
 import org.androidannotations.annotations.EFragment;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 
 /**

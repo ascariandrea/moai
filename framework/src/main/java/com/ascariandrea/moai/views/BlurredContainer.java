@@ -2,7 +2,6 @@ package com.ascariandrea.moai.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 
 import com.ascariandrea.moai.utils.BlurBitmapHelper;

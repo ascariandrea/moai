@@ -1,7 +1,6 @@
 package com.ascariandrea.moai.views;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.util.AttributeSet;

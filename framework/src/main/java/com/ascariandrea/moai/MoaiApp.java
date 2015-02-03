@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.ascariandrea.moai.persist.PersistentPreferences;

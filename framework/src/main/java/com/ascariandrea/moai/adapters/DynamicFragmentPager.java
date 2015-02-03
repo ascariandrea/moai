@@ -1,6 +1,7 @@
 package com.ascariandrea.moai.adapters;
 
-import android.support.v4.app.*;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.SparseArray;
 
 import com.ascariandrea.moai.fragments.InjectedFragment;
