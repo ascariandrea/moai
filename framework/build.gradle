@@ -15,6 +15,7 @@ def appId = 'com.ascariandrea.moai'
 
 apply plugin: 'com.android.library'
 apply plugin: 'android-apt'
+
 apt {
     arguments {
         androidManifestFile variant.outputs[0].processResources.manifestFile
@@ -43,7 +44,14 @@ android {
         abortOnError false
     }
     buildTypes {
-        debug {}
+        debug {
+            minifyEnabled = true
+
+        }
+
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
     dexOptions {
@@ -51,9 +59,10 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    productFlavors {
 
+    }
 }
-def AAVersion = '3.2'
 
 dependencies {
     compile 'com.android.support:multidex:1.0.0'
@@ -64,8 +73,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.2.4'
     compile 'com.fasterxml.jackson.core:jackson-core:2.2.4'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.2.4'
-    apt "org.androidannotations:androidannotations:$AAVersion"
-    compile "org.androidannotations:androidannotations:$AAVersion"
+    compile 'org.androidannotations:androidannotations-api:3.2'
+    apt 'org.androidannotations:androidannotations:3.2'
     compile 'joda-time:joda-time:2.3@jar'
     compile 'ch.acra:acra:4.5.0RC@jar'
     compile 'it.sephiroth.android.library.horizontallistview:library:1.2.1'
