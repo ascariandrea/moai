@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.ascariandrea.moai.R;
+import com.ascariandrea.moai.utils.FontCache;
 
 /**
  * Created by andreaascari on 20/01/15.
@@ -38,14 +39,7 @@ public class CustomTextView extends TextView {
 
 
     public boolean setCustomFont(Context ctx, String asset) {
-        Typeface tf = null;
-        try {
-            tf = Typeface.createFromAsset(ctx.getAssets(), asset);
-        } catch (Exception e) {
-            Log.e(TAG, "Error to get typeface: " + e.getMessage());
-            return false;
-        }
-        setTypeface(tf);
+        setTypeface(FontCache.getFont(ctx, asset));
         return true;
     }
 }

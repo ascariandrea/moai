@@ -54,14 +54,6 @@ public abstract class MoaiApp extends MultiDexApplication {
         return true;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        if (mPicasso == null) {
-            mPicasso = new Picasso.Builder(this).memoryCache(new LruCache(2 * 1024)).build();
-        }
-    }
-
 
     @Override
     protected void attachBaseContext(Context base) {

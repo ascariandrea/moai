@@ -244,7 +244,10 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
 
     @Override
     protected void onDestroy() {
+        fragments = null;
+        fragmentManager = null;
         System.gc();
         super.onDestroy();
     }
+
 }
