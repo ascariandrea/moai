@@ -121,8 +121,21 @@ public abstract class MoaiFragmentActivity extends FragmentActivity {
 
     @Override
     protected void onDestroy() {
+        System.gc();
         super.onDestroy();
+    }
 
+
+    @Override
+    protected void onStop() {
+        System.gc();
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        System.gc();
+        super.onPause();
     }
 
     public boolean isLaunching() {

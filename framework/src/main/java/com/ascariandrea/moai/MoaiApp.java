@@ -16,6 +16,8 @@ import com.ascariandrea.moai.utils.Utils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -33,6 +35,7 @@ public abstract class MoaiApp extends MultiDexApplication {
     private GoogleCloudMessaging mGcm;
     private String regId;
     private PersistentPreferences mPrefs;
+    private static Picasso mPicasso;
 
     public static boolean checkGooglePlayService(Activity activity) {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
@@ -54,7 +57,11 @@ public abstract class MoaiApp extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (mPicasso == null) {
+            mPicasso = new Picasso.Builder(this).memoryCache(new LruCache(2 * 1024)).build();
+        }
     }
+
 
     @Override
     protected void attachBaseContext(Context base) {

@@ -33,3 +33,5 @@
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
+
+-dontwarn com.squareup.okhttp.**

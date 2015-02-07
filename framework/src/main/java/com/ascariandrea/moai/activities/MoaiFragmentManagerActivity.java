@@ -230,4 +230,21 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
             fragments.get(getCurrentActiveIndex()).onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onStop() {
+        System.gc();
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        System.gc();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        System.gc();
+        super.onDestroy();
+    }
 }
