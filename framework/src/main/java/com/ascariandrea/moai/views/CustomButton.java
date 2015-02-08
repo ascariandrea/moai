@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.ascariandrea.moai.R;
+import com.ascariandrea.moai.utils.FontCache;
 
 /**
  * Created by andreaascari on 20/01/15.
@@ -38,14 +39,7 @@ public class CustomButton extends Button {
 
 
     public boolean setCustomFont(Context ctx, String asset) {
-        Typeface tf;
-        try {
-            tf = Typeface.createFromAsset(ctx.getAssets(), asset);
-            setTypeface(tf);
-            return true;
-        } catch (Exception e) {
-            Log.e(TAG, "Error to get typeface: " + e.getMessage());
-        }
-        return false;
+        setTypeface(FontCache.getFont(ctx, asset));
+        return true;
     }
 }

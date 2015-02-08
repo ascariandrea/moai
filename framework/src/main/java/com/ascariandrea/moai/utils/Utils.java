@@ -305,7 +305,10 @@ public class Utils {
     public static class String {
 
         public static java.lang.String capitalize(java.lang.String string) {
-            return string.substring(0, 1).toUpperCase() + string.substring(1);
+            if (string != null) {
+                return string.substring(0, 1).toUpperCase() + string.substring(1);
+            }
+            return null;
         }
 
         public static java.lang.String buildUrl(java.lang.String host, java.lang.String[] path) {
