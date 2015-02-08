@@ -47,4 +47,11 @@ public class DynamicFragmentPager extends android.support.v4.app.FragmentPagerAd
     public CharSequence getPageTitle(int position) {
         return mFragmentsTitles.get(position);
     }
+
+
+    public void reset() {
+        mFragments.clear();
+        mFragments = null;
+    }
+
 }
