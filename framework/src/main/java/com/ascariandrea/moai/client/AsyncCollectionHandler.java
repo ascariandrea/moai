@@ -9,6 +9,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpResponseException;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -110,46 +111,76 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
         }
     }
 
-    public void onFailure(Throwable t, String res) {
-        if (res != null)
-            Log.i(TAG, res);
-        if (t != null) {
-            try {
-                HttpResponseException httpResponseException = (HttpResponseException) t;
-                int statusCode = httpResponseException.getStatusCode();
-                switch (statusCode) {
-                    case 401:
-                        onUnauthorized(t, res);
-                        break;
-
-                    default:
-                        break;
-                }
-            } catch (ClassCastException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
         if (bytes == null)
-            onFailure(throwable, new String());
+            onFailure(throwable, "");
         else {
             String res = new String(bytes);
             onFailure(throwable, res);
+            Log.d("Throwable", throwable.getMessage());
+
             try {
-                JSONObject jsonRes = new JSONObject(res);
-                int code = jsonRes.get("code").equals("") ? 0 : jsonRes.getInt("code");
-                if (code != 0) {
-                    onFailure(throwable, jsonRes, code);
+
+                String message = "";
+                int code = 500;
+                JSONArray errors = new JSONArray();
+                if (!res.isEmpty()) {
+                    JSONObject jsonRes = new JSONObject(res);
+
+
+                    if (jsonRes.has("code") && !jsonRes.getString("code").isEmpty())
+                        code = Integer.parseInt(jsonRes.getString("code"));
+                    if (jsonRes.has("message"))
+                        message = jsonRes.getString("message");
+
+                    errors = new JSONArray();
+                    if (jsonRes.has("errors"))
+                        errors = jsonRes.getJSONArray("errors");
                 }
+
+                Log.d(TAG, "code: " + i);
+
+                switch (i) {
+                    case 404:
+                        onNotFound(throwable, message, errors, code);
+                        break;
+                    case 401:
+                        onNotAuthorized(throwable, message, errors, code);
+                        break;
+                    case 403:
+                        onForbidden(throwable, res);
+                    default:
+                        onFailure(throwable, message, errors, code);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
     }
+
+
+    public void onFailure(Throwable t, String res) {
+        Log.d(TAG, t.getStackTrace().toString());
+        t.printStackTrace();
+        if (res != null) {
+            Log.i(TAG, res);
+        }
+    }
+
+    protected void onNotAuthorized(Throwable throwable, String message, JSONArray errors, int code) {
+    }
+
+    protected void onForbidden(Throwable throwable, String res) {
+    }
+
+    public void onNotFound(Throwable throwable, String message, JSONArray errors, int code) {
+    }
+
+    protected void onFailure(Throwable throwable, String errorMessage, JSONArray errors, int apiCode) {
+    }
+
 
     public abstract void onSuccess(List<T> res);
 

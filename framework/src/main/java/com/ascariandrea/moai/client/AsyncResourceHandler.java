@@ -67,7 +67,7 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
 
     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
         if (bytes == null)
-            onFailure(throwable, new String());
+            onFailure(throwable, "");
         else {
             String res = new String(bytes);
             onFailure(throwable, res);

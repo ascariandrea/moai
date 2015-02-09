@@ -361,7 +361,7 @@ public abstract class SocialLoginActivity extends MoaiFragmentManagerActivity im
     }
 
     protected void setIsLogging(boolean b) {
-        mFbLogging = true;
+        mFbLogging = b;
     }
 
     protected boolean isLogging() {
