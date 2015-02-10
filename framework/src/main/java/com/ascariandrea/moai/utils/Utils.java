@@ -244,12 +244,21 @@ public class Utils {
 
                 Bitmap b = ((BitmapDrawable) drawable).getBitmap();
 
-                Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+                Bitmap bitmap;
+                if (!b.isRecycled()) {
+                    bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+                } else {
+                    bitmap = Bitmap.createBitmap(b);
+                }
+
 
                 int w = v.getWidth(), h = v.getHeight();
 
                 Bitmap roundBitmap = Utils.Views.getCroppedBitmap(bitmap, w);
                 canvas.drawBitmap(roundBitmap, 0, 0, null);
+//                bitmap.recycle();
+//                roundBitmap.recycle();
+//                b.recycle();
             }
 
         }
