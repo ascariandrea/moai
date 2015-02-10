@@ -73,12 +73,11 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
     @Override
     protected void canPopulateView() {
         Log.d(TAG, "call canPopulateView()");
-        Log.d(TAG, "isResumed? " + isResumed());
-        if (isResumed()) {
-            if (mCollection != null)
-                populateView(mCollection);
-            else
-                throw new RuntimeException("Can't call populateView(mCollection) with null collection.");
+        if (mCollection != null) {
+            populateView(mCollection);
+        }
+        else {
+            Log.d(TAG, "Can't call populateView(mCollection) with null collection.");
         }
     }
 

@@ -81,9 +81,9 @@ public abstract class AsyncCollectionHandler<T extends Model> extends AsyncHttpR
             m.setAccessible(true);
             return (String) m.get(null);
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         return null;

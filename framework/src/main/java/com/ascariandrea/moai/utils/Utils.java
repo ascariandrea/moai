@@ -69,7 +69,7 @@ public class Utils {
             count++;
 
             try {
-                Log.d(TAG, klass.getName() + " type parameters: " + Arrays.toString(klass.getTypeParameters()));
+//                Log.d(TAG, klass.getName() + " type parameters: " + Arrays.toString(klass.getTypeParameters()));
                 if (klass.getTypeParameters().length > 0) {
                     actualTypes = klass.getTypeParameters()[0].getBounds();
                 } else {
@@ -77,15 +77,15 @@ public class Utils {
                     actualTypes = parameterizedType.getActualTypeArguments();
                 }
                 if (actualTypes.length > 0) {
-                    Log.d(TAG, Arrays.toString(actualTypes));
+//                    Log.d(TAG, Arrays.toString(actualTypes));
                     tClass = (Class<T>) actualTypes[0];
-                    Log.d(TAG, "class found!: " + tClass);
+//                    Log.d(TAG, "class found!: " + tClass);
                     typeFound = true;
                 } else {
-                    Log.d(TAG, "no type found for: " + klass.getName());
+                    //Log.d(TAG, "no type found for: " + klass.getName());
                 }
             } catch (ClassCastException e) {
-                Log.d(TAG, "error casting to: " + Arrays.asList(actualTypes).toString());
+//                Log.d(TAG, "error casting to: " + Arrays.asList(actualTypes).toString());
                 if (klass.getSuperclass() != null) {
                     klass = klass.getSuperclass();
                 } else {
