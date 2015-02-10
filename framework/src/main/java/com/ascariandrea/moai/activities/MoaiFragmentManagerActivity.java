@@ -36,7 +36,7 @@ public abstract class MoaiFragmentManagerActivity extends MoaiFragmentActivity {
     protected static final int SLIDE_LEFT_TO_RIGHT = 1;
     private static final String TAG = MoaiFragmentManagerActivity.class.getSimpleName();
     @Extra
-    public int stepToLaunch = 0;
+    public int stepToLaunch;
     protected int mActiveFragmentIndex;
     protected LinearLayout fragmentContainerView;
     private FragmentManager fragmentManager;

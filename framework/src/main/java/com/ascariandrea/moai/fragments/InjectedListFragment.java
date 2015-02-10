@@ -72,6 +72,8 @@ public abstract class InjectedListFragment<T extends Model> extends InjectedFrag
 
     @Override
     protected void canPopulateView() {
+        Log.d(TAG, "call canPopulateView()");
+        Log.d(TAG, "isResumed? " + isResumed());
         if (isResumed()) {
             if (mCollection != null)
                 populateView(mCollection);
