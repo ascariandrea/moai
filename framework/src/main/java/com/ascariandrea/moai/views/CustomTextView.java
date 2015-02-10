@@ -31,15 +31,19 @@ public class CustomTextView extends TextView {
     }
 
     private void setCustomFont(Context ctx, AttributeSet attrs) {
-        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.CustomFontTxtView);
-        String customFont = a.getString(R.styleable.CustomFontTxtView_customFont);
-        setCustomFont(ctx, customFont);
-        a.recycle();
+        if (!isInEditMode()) {
+            TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.CustomFontTxtView);
+            String customFont = a.getString(R.styleable.CustomFontTxtView_customFont);
+            setCustomFont(ctx, customFont);
+            a.recycle();
+        }
     }
 
 
     public boolean setCustomFont(Context ctx, String asset) {
-        setTypeface(FontCache.getFont(ctx, asset));
+        if (!isInEditMode()) {
+            setTypeface(FontCache.getFont(ctx, asset));
+        }
         return true;
     }
 }
