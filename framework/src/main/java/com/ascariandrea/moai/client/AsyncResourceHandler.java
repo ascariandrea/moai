@@ -17,7 +17,7 @@ public abstract class AsyncResourceHandler<T extends Model> extends AsyncHttpRes
 
     private String TAG = AsyncResourceHandler.class.getSimpleName();
     private String mWrapProperty;
-    private Class<T> mType;
+    protected Class<T> mType;
 
 
     public AsyncResourceHandler() {
