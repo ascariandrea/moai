@@ -39,7 +39,9 @@ public class CustomButton extends Button {
 
 
     public boolean setCustomFont(Context ctx, String asset) {
-        setTypeface(FontCache.getFont(ctx, asset));
+        if (!isInEditMode()) {
+            setTypeface(FontCache.getFont(ctx, asset));
+        }
         return true;
     }
 }
