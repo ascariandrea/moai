@@ -245,11 +245,7 @@ public class Utils {
                 Bitmap b = ((BitmapDrawable) drawable).getBitmap();
 
                 Bitmap bitmap;
-                if (!b.isRecycled()) {
-                    bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
-                } else {
-                    bitmap = Bitmap.createBitmap(b);
-                }
+                bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
 
 
                 int w = v.getWidth(), h = v.getHeight();
