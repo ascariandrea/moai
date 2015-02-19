@@ -8,6 +8,7 @@ import com.ascariandrea.moai.models.Model;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public abstract class ModelAdapter<T extends Model> extends BaseAdapter {
     @RootContext
     public Context context;
 
-    protected List<T> mModels;
+    protected List<T> mModels = new ArrayList<>();
 
     protected final Context getContext() {
         return context;
@@ -28,8 +29,10 @@ public abstract class ModelAdapter<T extends Model> extends BaseAdapter {
 
 
     public void init(List<T> list) {
-        mModels = list;
         notifyDataSetInvalidated();
+        mModels.clear();
+        mModels.addAll(list);
+        notifyDataSetChanged();
     }
 
     public void append(List<T> list) {
